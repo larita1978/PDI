@@ -1,0 +1,2 @@
+rootProject.name='ProjetoPDI'
+include ':app'
