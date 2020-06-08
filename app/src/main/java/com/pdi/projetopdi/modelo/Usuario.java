@@ -7,18 +7,11 @@ import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
 
-@Entity
 public class Usuario implements Serializable {
-    @PrimaryKey (autoGenerate = true)
+
     private long idUsuario;
-
-    @ColumnInfo (name = "nome")
     private String nome;
-
-    @ColumnInfo (name = "login")
     private String login;
-
-    @ColumnInfo (name = "senha")
     private String senha;
 
     public Usuario(long idUsuario, String nome, String login, String senha){
@@ -28,14 +21,16 @@ public class Usuario implements Serializable {
         this.senha = senha;
     }
 
-//    @Ignore
-//    public Usuario(String login, String senha) {
-//        this.login = login;
-//        this.senha = senha;
-//    }
+    public Usuario(){
+
+    }
 
     public long getIdUsuario() {
         return idUsuario;
+    }
+
+    public void setIdUsuario(long idUsuario) {
+        this.idUsuario = idUsuario;
     }
 
     public String getNome() {
@@ -56,5 +51,9 @@ public class Usuario implements Serializable {
 
     public String getSenha() {
         return senha;
+    }
+
+    public void setSenha(String senha) {
+        this.senha = senha;
     }
 }
