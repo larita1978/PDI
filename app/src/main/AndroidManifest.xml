@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ui.activity.ListaPedidos"></activity>
+        <activity android:name=".ui.activity.EditarProduto"></activity>
+        <activity android:name=".ui.activity.ListaPedidos" />
         <activity android:name=".ui.activity.NovoProduto" />
         <activity android:name=".ui.activity.ListaProdutosActivity">
             <intent-filter>

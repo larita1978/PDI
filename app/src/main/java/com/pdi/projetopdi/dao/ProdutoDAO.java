@@ -1,5 +1,6 @@
 package com.pdi.projetopdi.dao;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -70,6 +71,19 @@ public class ProdutoDAO implements Closeable {
         return produtos;
     }
 
+    public Produto buscaProdutoPorID(Long idProduto){
+        String sql = "SELECT * FROM " + PRODUTO + " WHERE " + IDPRODUTO + " = " + idProduto;
+        Cursor c = dao.getReadableDatabase().rawQuery(sql,null);
+
+        Produto prod = new Produto();
+
+        while(c.moveToNext()){
+            prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
+            prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
+            prod.setPreco(c.getFloat(c.getColumnIndex(PRECO)));
+        }
+        return prod;
+    }
 
     public ArrayList<Produto> buscaProdutoDescricao(String valor){
         ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
@@ -98,6 +112,28 @@ public class ProdutoDAO implements Closeable {
             setInserirProduto(new Produto("Calça Jeans", 70.50));
             setInserirProduto(new Produto("Macacão", 150.58));
         }
+    }
+
+    @SuppressLint("Recycle")
+    public void updateProduto(Produto produto){
+        //ContentValues dados = new ContentValues();
+
+//        StringBuilder sql = new StringBuilder();
+//        sql.append("UPDATE " + PRODUTO);
+//        sql.append(" SET " + DESCRICAO + " = " + produto.getDescricao() + " ");
+//        sql.append(PRECO + " = " + produto.getPreco());
+//        sql.append(" WHERE " + IDPRODUTO + " = " + produto.getIdproduto() + ";");
+
+
+//        String sql = "UPDATE " + PRODUTO + " SET " + DESCRICAO + " = '" + produto.getDescricao() + "' "
+//                + PRECO + " = " + produto.getPreco() +" WHERE " + IDPRODUTO + " = " + produto.getIdproduto() + ";";
+
+        ContentValues data=new ContentValues();
+        data.put(DESCRICAO,produto.getDescricao());
+        data.put(PRECO,produto.getPreco());
+//        data.put("Field3","male");
+        dao.getDb().update(PRODUTO, data, IDPRODUTO + produto.getIdproduto(),null);
+//        dao.getDb().execSQL(sql);
     }
 
     @Override

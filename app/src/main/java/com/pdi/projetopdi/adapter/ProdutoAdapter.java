@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.ui.activity.EditarProduto;
 import com.pdi.projetopdi.ui.activity.ListaProdutosActivity;
 import com.pdi.projetopdi.ui.activity.NovoProduto;
 
@@ -38,16 +39,16 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
     //aqui preenche os dados do layout
     @Override
     public void onBindViewHolder(@NonNull ProdutoViewHolder holder, final int position) {
-        Produto produto = itens.get(position);
+        final Produto produto = itens.get(position);
         holder.descricao.setText(produto.getDescricao());
-        holder.preco.setText(String.valueOf(produto.getPreco()));
+        holder.preco.setText(String.format("%.2f",produto.getPreco()));
 
         holder.btEditar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context, NovoProduto.class);
-                //it.putExtra("produto",itens);  // verificar para passar somente o id mais fácil (pesquisar)
-                //context.startActivity(it);
+                Intent it = new Intent(context, EditarProduto.class);
+                it.putExtra("id",produto.getIdproduto());  // verificar para passar somente o id mais fácil (pesquisar)
+                context.startActivity(it);
             }
         });
     }

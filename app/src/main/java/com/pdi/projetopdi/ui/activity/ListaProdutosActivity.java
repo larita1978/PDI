@@ -47,7 +47,6 @@ public class ListaProdutosActivity extends AppCompatActivity {
         exibirBtNovoProduto();
 
 
-
     }
 
     @Override

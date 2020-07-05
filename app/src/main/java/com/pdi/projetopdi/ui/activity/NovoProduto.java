@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,15 +22,9 @@ public class NovoProduto extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_produto);
 
-        //Bundle extras = getIntent().getExtras();
-
-
-        //ArrayList<Produto> teste = extras.getStringArrayList();
-
          final EditText novoPrdDescricao = findViewById(R.id.novoPrdDescricao);
          final EditText novoPrdPreco = findViewById(R.id.novoPrdPreco);
          Button novoPrdBotao = findViewById(R.id.novoPrdBotao);
-
 
         final ProdutoDAO pr = new ProdutoDAO(this);
 
