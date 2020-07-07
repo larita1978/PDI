@@ -11,26 +11,17 @@ import com.pdi.projetopdi.modelo.Usuario;
 
 public class DadosHelper extends SQLiteOpenHelper {
 
-        SQLiteDatabase db;
-
         public DadosHelper(@Nullable Context context) {
             super(context, "DADOS", null, 1);
         }
 
-        public SQLiteDatabase getDb(){
-            return db;
-        }
-
         @Override
         public void onCreate(SQLiteDatabase db) {
-            this.db = db;
             //db.execSQL(UsuarioDao.getCriarTabelaUsuario());
             //UsuarioDao.setInserirUsuario(this,db,new Usuario(0, "Larissa","lari", "teste12"));
             ProdutoDAO pr = new ProdutoDAO(this);
             db.execSQL(pr.getCriarTabelaProduto());
             //pr.inserirPrimeirosDados();  // tentar colocar em uma tread ou ver se não tem um método q nfaça isso
-
-
         }
 
         @Override

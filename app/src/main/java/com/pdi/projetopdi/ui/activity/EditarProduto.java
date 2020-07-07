@@ -38,10 +38,10 @@ public class EditarProduto extends AppCompatActivity {
         salvarPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Float novoPrdPrecoD = Float.parseP(String.valueOf(produtoPreco.getText()));
-//                String novoPrdDescricaoD = produtoDescricao.getText().toString();
-                produtoDAO.updateProduto(prd);
-                Toast.makeText(EditarProduto.this,"Poduto cadastrado!", Toast.LENGTH_SHORT).show();
+                Double novoPrdPrecoD = Double.valueOf(produtoPreco.getText().toString());
+                String novoPrdDescricaoD = produtoDescricao.getText().toString();
+                produtoDAO.updateProduto(new Produto(Math.toIntExact(prd.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
+                Toast.makeText(EditarProduto.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

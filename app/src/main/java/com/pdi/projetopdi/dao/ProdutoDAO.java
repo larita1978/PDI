@@ -132,7 +132,7 @@ public class ProdutoDAO implements Closeable {
         data.put(DESCRICAO,produto.getDescricao());
         data.put(PRECO,produto.getPreco());
 //        data.put("Field3","male");
-        dao.getDb().update(PRODUTO, data, IDPRODUTO + produto.getIdproduto(),null);
+        dao.getReadableDatabase().update(PRODUTO, data, IDPRODUTO + "="+ produto.getIdproduto(),null);
 //        dao.getDb().execSQL(sql);
     }
 
