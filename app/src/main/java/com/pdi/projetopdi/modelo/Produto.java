@@ -1,11 +1,13 @@
 package com.pdi.projetopdi.modelo;
 
+import java.math.BigDecimal;
+
 public class Produto {
     private int idproduto;
     private String descricao;
-    private double preco;
+    private BigDecimal preco;
 
-    public Produto(int idproduto, String descricao, double preco) {
+    public Produto(int idproduto, String descricao, BigDecimal preco) {
         this.idproduto = idproduto;
         this.descricao = descricao;
         this.preco = preco;
@@ -15,7 +17,7 @@ public class Produto {
 
     }
 
-    public Produto(String descricao, double preco) {
+    public Produto(String descricao, BigDecimal preco) {
         this.descricao = descricao;
         this.preco = preco;
     }
@@ -36,11 +38,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public double getPreco() {
-        return preco;
+    public int getPreco() {
+        return preco.scaleByPowerOfTen(2).intValue();
     }
 
-    public void setPreco(double preco) {
-        this.preco = preco;
+    public void setPreco(int preco) {
+        this.preco = new BigDecimal(preco);
     }
 }

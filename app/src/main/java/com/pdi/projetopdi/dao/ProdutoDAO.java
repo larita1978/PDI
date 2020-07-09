@@ -13,6 +13,7 @@ import com.pdi.projetopdi.modelo.Produto;
 
 import java.io.Closeable;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class ProdutoDAO implements Closeable {
         sql.append("CREATE TABLE IF NOT EXISTS " + PRODUTO +" ( ");
         sql.append(IDPRODUTO + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ");
         sql.append(DESCRICAO + " VARCHAR(30) NOT NULL, ");
-        sql.append(PRECO + " FLOAT NOT NULL);");
+        sql.append(PRECO + " VARCHAR(10) NOT NULL);");
 
         return sql.toString();
     }
@@ -63,7 +64,7 @@ public class ProdutoDAO implements Closeable {
             Produto prod = new Produto();
             prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
-            prod.setPreco(c.getFloat(c.getColumnIndex(PRECO)));
+            prod.setPreco(c.getInt(c.getColumnIndex(PRECO)));
 
             produtos.add(prod);
         }
@@ -80,7 +81,7 @@ public class ProdutoDAO implements Closeable {
         while(c.moveToNext()){
             prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
-            prod.setPreco(c.getFloat(c.getColumnIndex(PRECO)));
+            prod.setPreco(c.getInt(c.getColumnIndex(PRECO)));
         }
         return prod;
     }
@@ -94,7 +95,7 @@ public class ProdutoDAO implements Closeable {
             Produto prod = new Produto();
             prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
-            prod.setPreco(c.getFloat(c.getColumnIndex(PRECO)));
+            prod.setPreco(c.getInt(c.getColumnIndex(PRECO)));
 
             produtosdesc.add(prod);
         }
@@ -106,11 +107,11 @@ public class ProdutoDAO implements Closeable {
         ArrayList<Produto> produtos = new ArrayList<Produto>();
         produtos = buscaProdutos();
         if(produtos.isEmpty()) {
-            setInserirProduto(new Produto("Blusa Azul", 69.9));
-            setInserirProduto(new Produto("Blusa Branca", 29.9));
-            setInserirProduto(new Produto("Blusa Amarela", 69.9));
-            setInserirProduto(new Produto("Calça Jeans", 70.50));
-            setInserirProduto(new Produto("Macacão", 150.58));
+//            setInserirProduto(new Produto("Blusa Azul", new BigDecimal("69.9")));
+//            setInserirProduto(new Produto("Blusa Branca", 29.9));
+//            setInserirProduto(new Produto("Blusa Amarela", 69.9));
+//            setInserirProduto(new Produto("Calça Jeans", 70.50));
+//            setInserirProduto(new Produto("Macacão", 150.58));
         }
     }
 

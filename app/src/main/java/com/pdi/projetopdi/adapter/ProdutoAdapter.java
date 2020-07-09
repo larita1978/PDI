@@ -41,7 +41,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
     public void onBindViewHolder(@NonNull ProdutoViewHolder holder, final int position) {
         final Produto produto = itens.get(position);
         holder.descricao.setText(produto.getDescricao());
-        holder.preco.setText(String.format("%.2f",produto.getPreco()));
+        holder.preco.setText(String.valueOf(produto.getPreco()));
 
         holder.btEditar.setOnClickListener(new View.OnClickListener(){
             @Override

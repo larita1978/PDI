@@ -13,6 +13,7 @@ import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class NovoProduto extends AppCompatActivity {
@@ -31,7 +32,7 @@ public class NovoProduto extends AppCompatActivity {
         novoPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double novoPrdPrecoD = Double.parseDouble(novoPrdPreco.getText().toString());
+                BigDecimal novoPrdPrecoD = new BigDecimal(novoPrdPreco.getText().toString());
                 String novoPrdDescricaoD = novoPrdDescricao.getText().toString();
                 pr.setInserirProduto(new Produto(novoPrdDescricaoD,novoPrdPrecoD));
                 Toast.makeText(NovoProduto.this,"Produto cadastrado!", Toast.LENGTH_SHORT).show();

@@ -13,6 +13,8 @@ import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 
+import java.math.BigDecimal;
+
 public class EditarProduto extends AppCompatActivity {
 
     @Override
@@ -33,12 +35,12 @@ public class EditarProduto extends AppCompatActivity {
         final Produto prd = produtoDAO.buscaProdutoPorID(idProduto);
 
         produtoDescricao.setText(prd.getDescricao());
-        produtoPreco.setText(String.format("%.2f",prd.getPreco()));
+        produtoPreco.setText(String.valueOf(prd.getPreco()));
 
         salvarPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Double novoPrdPrecoD = Double.valueOf(produtoPreco.getText().toString());
+                BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString()); // o problema esta aqui agora!!!
                 String novoPrdDescricaoD = produtoDescricao.getText().toString();
                 produtoDAO.updateProduto(new Produto(Math.toIntExact(prd.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
                 Toast.makeText(EditarProduto.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();
