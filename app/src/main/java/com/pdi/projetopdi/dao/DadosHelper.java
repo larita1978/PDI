@@ -17,8 +17,8 @@ public class DadosHelper extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            //db.execSQL(UsuarioDao.getCriarTabelaUsuario());
-            //UsuarioDao.setInserirUsuario(this,db,new Usuario(0, "Larissa","lari", "teste12"));
+            db.execSQL(UsuarioDAO.getCriarTabelaUsuario());
+            //UsuarioDAO.setInserirUsuario(this,db,new Usuario(0, "Larissa","lari", "teste12"));
             ProdutoDAO pr = new ProdutoDAO(this);
             db.execSQL(pr.getCriarTabelaProduto());
             //pr.inserirPrimeirosDados();  // tentar colocar em uma tread ou ver se não tem um método q nfaça isso

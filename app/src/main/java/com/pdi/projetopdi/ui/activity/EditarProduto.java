@@ -40,7 +40,7 @@ public class EditarProduto extends AppCompatActivity {
         salvarPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString()); // o problema esta aqui agora!!!
+                BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString()); 
                 String novoPrdDescricaoD = produtoDescricao.getText().toString();
                 produtoDAO.updateProduto(new Produto(Math.toIntExact(prd.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
                 Toast.makeText(EditarProduto.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();

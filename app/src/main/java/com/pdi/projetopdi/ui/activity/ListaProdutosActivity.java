@@ -9,12 +9,10 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.GridLayoutManager;
-import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.ProdutoAdapter;
-import com.pdi.projetopdi.dao.DadosHelper;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 
@@ -34,6 +32,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lista_produtos);
+        setTitle("Produtos");
 
         campoBuscar = findViewById(R.id.campoBuscar);
         btBuscar = findViewById(R.id.btBuscar);

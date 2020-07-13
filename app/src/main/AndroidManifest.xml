@@ -12,15 +12,15 @@
         <activity android:name=".ui.activity.EditarProduto"></activity>
         <activity android:name=".ui.activity.ListaPedidos" />
         <activity android:name=".ui.activity.NovoProduto" />
-        <activity android:name=".ui.activity.ListaProdutosActivity">
+        <activity android:name=".ui.activity.ListaProdutosActivity"/>
+        <activity android:name=".ui.activity.PrincipalActivity" />
+        <activity android:name=".ui.activity.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ui.activity.PrincipalActivity" />
-        <activity android:name=".ui.activity.LoginActivity" />
     </application>
 
 </manifest>

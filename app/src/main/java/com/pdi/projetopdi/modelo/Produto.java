@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.modelo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class Produto {
     private int idproduto;
@@ -38,11 +39,11 @@ public class Produto {
         this.descricao = descricao;
     }
 
-    public int getPreco() {
-        return preco.scaleByPowerOfTen(2).intValue();
+    public BigDecimal getPreco() {
+        return preco;//.scaleByPowerOfTen(2).intValue();
     }
 
-    public void setPreco(int preco) {
-        this.preco = new BigDecimal(preco);
+    public void setPreco(double preco) {
+        this.preco = new BigDecimal(preco).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));;
     }
 }
