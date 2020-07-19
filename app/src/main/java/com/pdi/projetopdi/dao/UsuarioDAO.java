@@ -38,12 +38,12 @@ public class UsuarioDAO {
 
     public void setInserirUsuario(Usuario usuario){
         ContentValues dados = new ContentValues();
-        dados.put("IDUSUARIO", usuario.getIdUsuario());
-        dados.put("NOME",usuario.getNome());
-        dados.put("LOGIN",usuario.getLogin());
-        dados.put("SENHA",usuario.getSenha());
+        dados.put(IDUSUARIO, usuario.getIdUsuario());
+        dados.put(NOME, usuario.getNome());
+        dados.put(LOGIN,usuario.getLogin());
+        dados.put(SENHA,usuario.getSenha());
 
-        dao.getWritableDatabase().insert("USUARIO",null,dados);
+        dao.getWritableDatabase().insert(USUARIO,null,dados);
         dao.close();
     }
 
@@ -52,11 +52,12 @@ public class UsuarioDAO {
         String sql = "SELECT * FROM USUARIO WHERE LOGIN = ?";
         Cursor c = dao.getReadableDatabase().rawQuery(sql, new String[]{login});
 
+        c.moveToFirst();
         while(c.moveToNext()){
-            user.setIdUsuario(c.getLong(c.getColumnIndex("IDUSUARIO")));
-            user.setNome(c.getString(c.getColumnIndex("NOME")));
-            user.setLogin(c.getString(c.getColumnIndex("LOGIN")));
-            user.setSenha(c.getString(c.getColumnIndex("SENHA")));
+            user.setIdUsuario(c.getLong(c.getColumnIndex(IDUSUARIO)));
+            user.setNome(c.getString(c.getColumnIndex(NOME)));
+            user.setLogin(c.getString(c.getColumnIndex(LOGIN)));
+            user.setSenha(c.getString(c.getColumnIndex(SENHA)));
         }
         c.close();
         return user;

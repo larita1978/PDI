@@ -41,56 +41,56 @@ public class ListaProdutosActivity extends AppCompatActivity {
 
         pr = new ProdutoDAO(this);
 
-        buscaritem();
-        exibirLista();
-        exibirBtNovoProduto();
-
-
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                buscaritem();
+                exibirTodosProdutos();
+                exibirBtNovoProduto();
+            }
+        });
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        exibirLista();
+        exibirTodosProdutos();
     }
 
     public void buscaritem(){
         btBuscar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String teste = campoBuscar.getText().toString();
-                itens = pr.buscaProdutoDescricao(teste);
+                String buscarProduto = campoBuscar.getText().toString();
+                itens = pr.buscaProdutoDescricao(buscarProduto);
 
                 if(itens.isEmpty()){
-                    Toast.makeText(ListaProdutosActivity.this, "Lista Vazia",Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ListaProdutosActivity.this, "Item não encontrado",Toast.LENGTH_SHORT).show();
                 }else{
-                        adapter = new ProdutoAdapter(ListaProdutosActivity.this, itens);
-                        GridLayoutManager layoutManager = new GridLayoutManager(ListaProdutosActivity.this,2);
-
-                        recycler.setLayoutManager(layoutManager);
-                        recycler.setAdapter(adapter);
-
+                        exibirLista(itens);
                 }
+
             }
         });
     }
 
-    public void exibirLista(){
+    public void exibirTodosProdutos(){
         pr.inserirPrimeirosDados();
         itens = pr.buscaProdutos();
+        exibirLista(itens);
+    }
 
-//        itens.add(new Produto(1,"Picolé",2.50));
-//        itens.add(new Produto(2,"Picolé 2",2.30));
-//        itens.add(new Produto(3,"Picolé 3",2.30));
+    public void exibirLista(ArrayList<Produto> produtos){
+        try{
+            if (!produtos.isEmpty()){
+                adapter = new ProdutoAdapter(ListaProdutosActivity.this, produtos);
+                GridLayoutManager layoutManager = new GridLayoutManager(this,2);
 
-
-        if (!itens.isEmpty()){
-
-            adapter = new ProdutoAdapter(ListaProdutosActivity.this, itens);
-            GridLayoutManager layoutManager = new GridLayoutManager(this,2);
-
-            recycler.setLayoutManager(layoutManager);
-            recycler.setAdapter(adapter);
+                recycler.setLayoutManager(layoutManager);
+                recycler.setAdapter(adapter);
+            }
+        }catch (Exception e){
+            Toast.makeText(ListaProdutosActivity.this, "Ocorreu um erro inesperado", Toast.LENGTH_SHORT).show();
         }
     }
 
