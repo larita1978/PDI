@@ -13,7 +13,10 @@ import android.widget.Toast;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.UsuarioDAO;
+import com.pdi.projetopdi.modelo.MD5;
 import com.pdi.projetopdi.modelo.Usuario;
+
+import java.security.NoSuchAlgorithmException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,7 +43,16 @@ public class LoginActivity extends AppCompatActivity {
 
         dbUser = new UsuarioDAO(this);
 
-        dbUser.setInserirUsuario(new Usuario("teste","teste","12"));
+//        try {
+//            dbUser.setInserirUsuario(new Usuario("teste","teste", "12"));
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
+        //        try {
+//            new MD5("12");
+//        } catch (NoSuchAlgorithmException e) {
+//            e.printStackTrace();
+//        }
 
         sPreferences = getSharedPreferences("firstRun",MODE_PRIVATE);
     }
@@ -48,15 +60,19 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
+        clicouBotao();
+    }
 
+    protected void onResume() {
+        super.onResume();
+        clicouBotao();
+    }
+
+    public void clicouBotao(){
         botaoEntrar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 validacaoDigitadoisNull();
-                //validacaoLogin();
-                //Toast.makeText(LoginActivity.this, "Acessou!",Toast.LENGTH_SHORT).show();
-                //startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
             }
         });
     }
@@ -78,16 +94,26 @@ public class LoginActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Usuario userBanco = dbUser.getUsuarioPorLogin(loginDigitado);
-                if(userBanco.equals(null)){
+                Usuario userBanco = null;
+                try {
+                    userBanco = dbUser.getUsuarioPorLogin(loginDigitado);
+                } catch (NoSuchAlgorithmException e) {
+                    e.printStackTrace();
+                }
+                if(userBanco.getLogin().isEmpty()){
                     Log.i("Acessou","Usuario ou senha incorretos");
                 }else{
-                    if(loginDigitado.equals(userBanco.getLogin()) && senhaDigitada.equals(userBanco.getSenha()) ) {
-                        Toast.makeText(LoginActivity.this,"Login ou senha corretos!", Toast.LENGTH_SHORT).show();
-                        startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
-                    }else{
-                        Toast.makeText(LoginActivity.this,"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();
+                    try {
+                        if(loginDigitado.equals(userBanco.getLogin()) && new MD5(senhaDigitada).getNovaSenha().equals(userBanco.getSenha()) ) {
+                            Toast.makeText(LoginActivity.this,"Login ou senha corretos!", Toast.LENGTH_SHORT).show();
+                            startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
+                        }else{
 
+                            Toast.makeText(LoginActivity.this,"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();
+
+                        }
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
                     }
                 }
             }

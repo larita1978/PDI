@@ -6,6 +6,7 @@ import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.io.Serializable;
+import java.security.NoSuchAlgorithmException;
 
 public class Usuario implements Serializable {
 
@@ -14,21 +15,21 @@ public class Usuario implements Serializable {
     private String login;
     private String senha;
 
-    public Usuario(long idUsuario, String nome, String login, String senha){
+    public Usuario(long idUsuario, String nome, String login, String senha) throws NoSuchAlgorithmException {
         this.idUsuario = idUsuario;
         this.nome = nome;
         this.login = login;
-        this.senha = senha;
+        this.senha = new MD5(senha).getNovaSenha();
     }
 
     public Usuario(){
 
     }
 
-    public Usuario(String nome, String login, String senha) {
+    public Usuario(String nome, String login, String senha) throws NoSuchAlgorithmException {
         this.nome = nome;
         this.login = login;
-        this.senha = senha;
+        this.senha = new MD5(senha).getNovaSenha();
     }
 
     public long getIdUsuario() {
@@ -55,7 +56,7 @@ public class Usuario implements Serializable {
         this.login = login;
     }
 
-    public String getSenha() {
+    public String getSenha(){
         return senha;
     }
 
