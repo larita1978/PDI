@@ -6,32 +6,42 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.activity.PrincipalActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#FDF7FB">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="170dp">
+        android:layout_marginBottom="0dp">
 
         <Button
-            android:id="@+id/btPedido"
+            android:id="@+id/btProduto"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Pedido"
+            android:layout_height="300dp"
+            android:text="Produto"
+            android:textColor="#B98389"
+            android:textSize="35dp"
+            android:textAlignment="viewStart"
+            android:paddingLeft="50dp"
+            android:paddingTop="100dp"
+            android:background="@drawable/botaoprincipalproduto"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="10dp">
+        android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/btProduto"
+            android:id="@+id/btPedido"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:text="Produto"/>
+            android:layout_height="match_parent"
+            android:background="@drawable/botaoprincipalbotaopedido"
+            android:text="Pedido"
+            android:textColor="#FDF7FB"
+            android:textSize="35dp"
+            android:textAlignment="viewEnd"
+            android:paddingRight="60dp"
+            android:layout_alignParentBottom="true"/>
     </LinearLayout>
 </LinearLayout>
