@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.modelo;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.Date;
 
 public class Pedido {
@@ -12,6 +13,8 @@ public class Pedido {
     private BigDecimal totalItens;
     private BigDecimal totalProdutos;
     private BigDecimal valorTotal;
+
+    public Pedido(){}
 
     public Pedido(int idPedido, int idUsuario, String cliente, String endereco, Date dataPedido, BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) {
         this.idPedido = idPedido;
@@ -68,23 +71,23 @@ public class Pedido {
         return totalItens;
     }
 
-    public void setTotalItens(BigDecimal totalItens) {
-        this.totalItens = totalItens;
+    public void setTotalItens(double totalItens) {
+        this.totalItens = new BigDecimal(totalItens).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
     }
 
     public BigDecimal getTotalProdutos() {
         return totalProdutos;
     }
 
-    public void setTotalProdutos(BigDecimal totalProdutos) {
-        this.totalProdutos = totalProdutos;
+    public void setTotalProdutos(double totalProdutos) {
+        this.totalProdutos = new BigDecimal(totalProdutos).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
     }
 
     public BigDecimal getValorTotal() {
         return valorTotal;
     }
 
-    public void setValorTotal(BigDecimal valorTotal) {
-        this.valorTotal = valorTotal;
+    public void setValorTotal(double valorTotal) {
+        this.valorTotal = new BigDecimal(valorTotal).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
     }
 }
