@@ -8,26 +8,28 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler"
-            android:layout_width="wrap_content"
+            android:id="@+id/recyclerPedidos"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             tools:listitem="@layout/pedidos"
-            android:layout_weight="0.5"/>
+            android:layout_weight="1"/>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
             <Button android:id="@+id/btNovoProduto"
-                android:background="@drawable/botaonovo"
+                android:background="@drawable/botoestelalistaproduto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Novo Produto" />
+                android:text="Novo Pedido" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

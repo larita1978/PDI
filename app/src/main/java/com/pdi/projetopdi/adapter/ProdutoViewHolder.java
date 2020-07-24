@@ -1,5 +1,6 @@
 package com.pdi.projetopdi.adapter;
 
+import android.app.ActionBar;
 import android.content.Intent;
 import android.view.View;
 import android.widget.Button;
@@ -16,6 +17,7 @@ import static androidx.core.content.ContextCompat.startActivity;
 
 public class ProdutoViewHolder extends RecyclerView.ViewHolder {
 
+    public ActionBar.Tab cliente;
     TextView descricao, preco;
     Button btEditar;
 

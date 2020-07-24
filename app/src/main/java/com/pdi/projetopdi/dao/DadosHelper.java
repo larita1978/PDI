@@ -21,6 +21,8 @@ public class DadosHelper extends SQLiteOpenHelper {
             //UsuarioDAO.setInserirUsuario(this,db,new Usuario(0, "Larissa","lari", "teste12"));
             ProdutoDAO pr = new ProdutoDAO(this);
             db.execSQL(pr.getCriarTabelaProduto());
+            PedidoDAO ped = new PedidoDAO(this);
+            db.execSQL(ped.getCriarTabelaPedido());
             //pr.inserirPrimeirosDados();  // tentar colocar em uma tread ou ver se não tem um método q nfaça isso
         }
 
