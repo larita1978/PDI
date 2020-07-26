@@ -34,7 +34,7 @@ public class PrincipalActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Toast.makeText(PrincipalActivity.this,"Clicou botão pedido",Toast.LENGTH_SHORT);
-                startActivity(new Intent(PrincipalActivity.this,ListaPedidos.class));
+                startActivity(new Intent(PrincipalActivity.this, ListaPedidosActivity.class));
             }
         });
     }

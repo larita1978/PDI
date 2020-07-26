@@ -25,7 +25,9 @@ public class UsuarioDAO {
         this.dao = dao;
     }
 
-    public static String getCriarTabelaUsuario(){
+    public UsuarioDAO(){}
+
+    public String criarTabelaUsuario(){
         StringBuilder sql = new StringBuilder();
 
         sql.append("CREATE TABLE IF NOT EXISTS " + USUARIO + " (");
@@ -36,7 +38,7 @@ public class UsuarioDAO {
        return sql.toString();
     }
 
-    public void setInserirUsuario(Usuario usuario) throws NoSuchAlgorithmException {
+    public void inserirUsuario(Usuario usuario) throws NoSuchAlgorithmException {
         ContentValues dados = new ContentValues();
         //dados.put(IDUSUARIO, usuario.getIdUsuario());
         dados.put(NOME, usuario.getNome());
@@ -47,7 +49,7 @@ public class UsuarioDAO {
         dao.close();
     }
 
-    public Usuario getUsuarioPorLogin(String login) throws NoSuchAlgorithmException {
+    public Usuario buscaUsuarioPorLogin(String login) throws NoSuchAlgorithmException {
         Usuario user = new Usuario();
         String sql = "SELECT * FROM USUARIO WHERE LOGIN = ?";
         Cursor c = dao.getReadableDatabase().rawQuery(sql, new String[]{login});
@@ -61,5 +63,9 @@ public class UsuarioDAO {
         }
         c.close();
         return user;
+    }
+
+    public void inserirPrimeiroUsuario() throws NoSuchAlgorithmException {
+        inserirUsuario(new Usuario("teste","teste", "12"));
     }
 }

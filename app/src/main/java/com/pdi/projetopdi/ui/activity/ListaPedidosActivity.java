@@ -1,8 +1,9 @@
 package com.pdi.projetopdi.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.widget.LinearLayout;
-import android.widget.TextView;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -10,17 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.PedidoAdapter;
-import com.pdi.projetopdi.adapter.ProdutoAdapter;
 import com.pdi.projetopdi.dao.PedidoDAO;
 import com.pdi.projetopdi.modelo.Pedido;
 
 import java.text.ParseException;
 import java.util.ArrayList;
 
-public class ListaPedidos extends AppCompatActivity {
+public class ListaPedidosActivity extends AppCompatActivity {
 
     private PedidoAdapter adapter;
     private ArrayList<Pedido> pedidos;
+
+    private Button btNovoPedido;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,22 +30,33 @@ public class ListaPedidos extends AppCompatActivity {
         setTitle("Pedidos");
         setContentView(R.layout.activity_lista_pedidos);
 
-//        TextView cliente = findViewById(R.id.pedidoCliente);
-//        TextView valorTotal = findViewById(R.id.pedidoValorTotal);
         RecyclerView recycler = findViewById(R.id.recyclerPedidos);
+        btNovoPedido = findViewById(R.id.btNovoPedido);
 
-        PedidoDAO dao = new PedidoDAO(ListaPedidos.this);
+        PedidoDAO pedidoDAO = new PedidoDAO(ListaPedidosActivity.this);
         try {
-            dao.inserirPrimeirosDados();
+            pedidoDAO.inserirPrimeirosDadosPedido();
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        pedidos = dao.buscaPedidos();
+        pedidos = pedidoDAO.buscaPedidos();
 
-        adapter = new PedidoAdapter(ListaPedidos.this, pedidos);
+        adapter = new PedidoAdapter(ListaPedidosActivity.this, pedidos);
         LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
 
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
+
+        acaoBotaoNovoPedido();
+
+    }
+
+    public void acaoBotaoNovoPedido(){
+        btNovoPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(ListaPedidosActivity.this,NovoPedidoActivity.class));
+            }
+        });
     }
 }

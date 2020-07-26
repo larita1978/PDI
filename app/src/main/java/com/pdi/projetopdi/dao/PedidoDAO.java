@@ -35,7 +35,9 @@ public class PedidoDAO {
         this.dao = dao;
     }
 
-    public String getCriarTabelaPedido(){
+    public PedidoDAO(){}
+
+    public String criarTabelaPedido(){
         StringBuilder sql = new StringBuilder();
 
         sql.append("CREATE TABLE IF NOT EXISTS " + PEDIDO +" ( ");
@@ -110,7 +112,7 @@ public class PedidoDAO {
         }
 
 
-        public void inserirPrimeirosDados() throws ParseException {
+        public void inserirPrimeirosDadosPedido() throws ParseException {
             ArrayList<Pedido> pedidos;
             pedidos = buscaPedidos();
             if(pedidos.isEmpty()) {

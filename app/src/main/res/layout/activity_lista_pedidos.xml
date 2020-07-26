@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.ListaPedidos">
+    tools:context=".ui.activity.ListaPedidosActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -25,10 +25,11 @@
             android:layout_height="wrap_content"
             android:gravity="center_horizontal">
 
-            <Button android:id="@+id/btNovoProduto"
+            <Button android:id="@+id/btNovoPedido"
                 android:background="@drawable/botoestelalistaproduto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColor="#fff"
                 android:text="Novo Pedido" />
         </LinearLayout>
     </LinearLayout>

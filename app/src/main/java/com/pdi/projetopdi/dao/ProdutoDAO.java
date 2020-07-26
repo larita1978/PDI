@@ -28,7 +28,9 @@ public class ProdutoDAO implements Closeable {
         this.dao = dao;
     }
 
-    public String getCriarTabelaProduto(){
+    public ProdutoDAO(){}
+
+    public String criarTabelaProduto(){
         StringBuilder sql = new StringBuilder();
 
         sql.append("CREATE TABLE IF NOT EXISTS " + PRODUTO +" ( ");
@@ -39,7 +41,7 @@ public class ProdutoDAO implements Closeable {
         return sql.toString();
     }
 
-    public void setInserirProduto(Produto produto){
+    public void inserirProduto(Produto produto){
 
         ContentValues dados = new ContentValues();
         //dados.put(IDPRODUTO, produto.getIdproduto());
@@ -98,15 +100,15 @@ public class ProdutoDAO implements Closeable {
         return produtosdesc;
     }
 
-    public void inserirPrimeirosDados(){
+    public void inserirPrimeirosDadosProduto(){
         ArrayList<Produto> produtos;
         produtos = buscaProdutos();
         if(produtos.isEmpty()) {
-            setInserirProduto(new Produto("Blusa Azul", new BigDecimal("69.9")));
-            setInserirProduto(new Produto("Blusa Branca", new BigDecimal("29.9")));
-            setInserirProduto(new Produto("Blusa Amarela", new BigDecimal("69.9")));
-            setInserirProduto(new Produto("Calça Jeans", new BigDecimal("70.50")));
-            setInserirProduto(new Produto("Macacão", new BigDecimal("150.58")));
+            inserirProduto(new Produto("Blusa Azul", new BigDecimal("69.9")));
+            inserirProduto(new Produto("Blusa Branca", new BigDecimal("29.9")));
+            inserirProduto(new Produto("Blusa Amarela", new BigDecimal("69.9")));
+            inserirProduto(new Produto("Calça Jeans", new BigDecimal("70.50")));
+            inserirProduto(new Produto("Macacão", new BigDecimal("150.58")));
         }
     }
 

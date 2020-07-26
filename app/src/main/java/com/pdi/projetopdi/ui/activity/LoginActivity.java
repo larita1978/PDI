@@ -12,11 +12,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.pdi.projetopdi.R;
+import com.pdi.projetopdi.dao.PedidoDAO;
+import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.dao.UsuarioDAO;
+import com.pdi.projetopdi.logic.PrimeiraExecucao;
 import com.pdi.projetopdi.modelo.MD5;
 import com.pdi.projetopdi.modelo.Usuario;
 
 import java.security.NoSuchAlgorithmException;
+import java.text.ParseException;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -27,7 +31,7 @@ public class LoginActivity extends AppCompatActivity {
     private String senhaDigitada;
     private UsuarioDAO dbUser;
 
-    SharedPreferences sPreferences = null;
+    SharedPreferences primeiraExec = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +58,9 @@ public class LoginActivity extends AppCompatActivity {
 //            e.printStackTrace();
 //        }
 
-        sPreferences = getSharedPreferences("firstRun",MODE_PRIVATE);
+        primeiraExec = getSharedPreferences("firstRun",MODE_PRIVATE);
+
+        verificarExecucao();
     }
 
     @Override
@@ -66,6 +72,29 @@ public class LoginActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         clicouBotao();
+    }
+
+    public void verificarExecucao(){
+        new  Thread(new Runnable() {
+            @Override
+            public void run() {
+                Log.i("Acessou","Acessou o onResume");
+                if(primeiraExec.getBoolean("firtsRun", true)) {
+                    try {
+
+//                        PrimeiraExecucao pe = new PrimeiraExecucao(this);
+                        InserirPrimeirosDados();
+                    } catch (NoSuchAlgorithmException e) {
+                        e.printStackTrace();
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
+                    primeiraExec.edit().putBoolean("firstRun", false).apply();
+                }else{
+                    Log.i("Deu ruim", "Não deu certo inserir dados no banco só na primeira execuçao!");
+                }
+            }
+        }).start();
     }
 
     public void clicouBotao(){
@@ -96,7 +125,7 @@ public class LoginActivity extends AppCompatActivity {
             public void run() {
                 Usuario userBanco = null;
                 try {
-                    userBanco = dbUser.getUsuarioPorLogin(loginDigitado);
+                    userBanco = dbUser.buscaUsuarioPorLogin(loginDigitado);
                 } catch (NoSuchAlgorithmException e) {
                     e.printStackTrace();
                 }
@@ -121,6 +150,17 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    public void InserirPrimeirosDados() throws NoSuchAlgorithmException, ParseException {
+
+        UsuarioDAO user = new UsuarioDAO(this);
+        user.inserirPrimeiroUsuario();
+
+        ProdutoDAO pr = new ProdutoDAO(this);
+        pr.inserirPrimeirosDadosProduto();
+
+        PedidoDAO ped = new PedidoDAO(this);
+        ped.inserirPrimeirosDadosPedido();
+    }
 //    @Override
 //    protected void onResume() {
 //        super.onResume();

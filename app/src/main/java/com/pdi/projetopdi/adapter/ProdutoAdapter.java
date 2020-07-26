@@ -11,13 +11,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.modelo.Produto;
-import com.pdi.projetopdi.ui.activity.EditarProduto;
-import com.pdi.projetopdi.ui.activity.ListaProdutosActivity;
-import com.pdi.projetopdi.ui.activity.NovoProduto;
+import com.pdi.projetopdi.ui.activity.EditarProdutoActivity;
 
 import java.util.ArrayList;
-
-import static androidx.core.content.ContextCompat.startActivity;
 
 public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
 
@@ -46,7 +42,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
         holder.btEditar.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(context, EditarProduto.class);
+                Intent it = new Intent(context, EditarProdutoActivity.class);
                 it.putExtra("id",produto.getIdproduto());  // verificar para passar somente o id mais fácil (pesquisar)
                 context.startActivity(it);
             }

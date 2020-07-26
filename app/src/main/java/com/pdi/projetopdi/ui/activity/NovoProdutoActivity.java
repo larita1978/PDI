@@ -1,7 +1,6 @@
 package com.pdi.projetopdi.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,9 +13,8 @@ import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
-public class NovoProduto extends AppCompatActivity {
+public class NovoProdutoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +32,8 @@ public class NovoProduto extends AppCompatActivity {
             public void onClick(View v) {
                 BigDecimal novoPrdPrecoD = new BigDecimal(novoPrdPreco.getText().toString());
                 String novoPrdDescricaoD = novoPrdDescricao.getText().toString();
-                pr.setInserirProduto(new Produto(novoPrdDescricaoD,novoPrdPrecoD));
-                Toast.makeText(NovoProduto.this,"Produto cadastrado!", Toast.LENGTH_SHORT).show();
+                pr.inserirProduto(new Produto(novoPrdDescricaoD,novoPrdPrecoD));
+                Toast.makeText(NovoProdutoActivity.this,"Produto cadastrado!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

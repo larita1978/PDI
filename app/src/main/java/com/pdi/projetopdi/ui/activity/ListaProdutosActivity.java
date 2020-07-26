@@ -75,7 +75,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
     }
 
     public void exibirTodosProdutos(){
-        pr.inserirPrimeirosDados();
+        pr.inserirPrimeirosDadosProduto();
         itens = pr.buscaProdutos();
         exibirLista(itens);
     }
@@ -98,7 +98,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
         btNovoProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListaProdutosActivity.this, NovoProduto.class));
+                startActivity(new Intent(ListaProdutosActivity.this, NovoProdutoActivity.class));
             }
         });
     }

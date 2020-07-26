@@ -17,13 +17,14 @@ public class DadosHelper extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            db.execSQL(UsuarioDAO.getCriarTabelaUsuario());
-            //UsuarioDAO.setInserirUsuario(this,db,new Usuario(0, "Larissa","lari", "teste12"));
+            UsuarioDAO user = new UsuarioDAO(this);
+            db.execSQL(user.criarTabelaUsuario());
             ProdutoDAO pr = new ProdutoDAO(this);
-            db.execSQL(pr.getCriarTabelaProduto());
+            db.execSQL(pr.criarTabelaProduto());
             PedidoDAO ped = new PedidoDAO(this);
-            db.execSQL(ped.getCriarTabelaPedido());
-            //pr.inserirPrimeirosDados();  // tentar colocar em uma tread ou ver se não tem um método q nfaça isso
+            db.execSQL(ped.criarTabelaPedido());
+            PedidoItemDAO pedItem = new PedidoItemDAO(this);
+            db.execSQL(pedItem.criarTabelaPedidoItem());
         }
 
         @Override

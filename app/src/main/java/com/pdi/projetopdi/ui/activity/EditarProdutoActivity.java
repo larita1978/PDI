@@ -15,7 +15,7 @@ import com.pdi.projetopdi.modelo.Produto;
 
 import java.math.BigDecimal;
 
-public class EditarProduto extends AppCompatActivity {
+public class EditarProdutoActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +43,7 @@ public class EditarProduto extends AppCompatActivity {
                 BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString()); 
                 String novoPrdDescricaoD = produtoDescricao.getText().toString();
                 produtoDAO.updateProduto(new Produto(Math.toIntExact(prd.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
-                Toast.makeText(EditarProduto.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(EditarProdutoActivity.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();
                 finish();
             }
         });

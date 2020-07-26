@@ -14,21 +14,24 @@
             android:layout_height="match_parent"
             android:orientation="horizontal"
             android:background="@drawable/bordaslistapedidos"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="10dp"
+            android:paddingTop="10dp">
 
             <TextView
                 android:id="@+id/pedidoCliente"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:textSize="20dp"/>
+                android:textSize="18dp"
+                android:paddingLeft="10dp"/>
 
             <TextView
                 android:id="@+id/pedidoValorTotal"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:textSize="20dp"/>
+                android:textSize="16dp"
+                android:textAlignment="center"/>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 
