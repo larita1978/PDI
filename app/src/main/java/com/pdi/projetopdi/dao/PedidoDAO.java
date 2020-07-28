@@ -35,7 +35,6 @@ public class PedidoDAO {
         this.dao = dao;
     }
 
-    public PedidoDAO(){}
 
     public String criarTabelaPedido(){
         StringBuilder sql = new StringBuilder();

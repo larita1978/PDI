@@ -7,41 +7,47 @@
     android:orientation="vertical"
     tools:context=".ui.activity.LoginActivity">
 
-
-    <EditText
-        android:id="@+id/usuarioLogin"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="60dp"
-        android:layout_marginTop="200dp"
-        android:layout_marginEnd="60dp"
-        android:hint="Login" />
+        android:layout_height="match_parent"
+        android:layout_weight="1.2">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@mipmap/ic_logo"/>
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="50dp">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_weight="0.9">
+        <EditText
+            android:id="@+id/usuarioLogin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="60dp"
+            android:layout_marginEnd="60dp"
+            android:hint="Login" />
 
         <EditText
             android:id="@+id/usuarioSenha"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
             android:hint="Senha"
             android:inputType="textPassword"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp">
-
         <Button
             android:id="@+id/botaoAcessar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginRight="75dp"
             android:layout_marginLeft="75dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/colorBtNovoProduto"
+            android:textColor="#fff"
             android:text="Entrar" />
     </LinearLayout>
 </LinearLayout>
