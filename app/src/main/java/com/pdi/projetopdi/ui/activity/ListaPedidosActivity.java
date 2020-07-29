@@ -21,6 +21,8 @@ public class ListaPedidosActivity extends AppCompatActivity {
 
     private PedidoAdapter adapter;
     private ArrayList<Pedido> pedidos;
+    private  PedidoDAO pedidoDAO;
+    private RecyclerView recycler;
 
     private Button btNovoPedido;
 
@@ -30,15 +32,18 @@ public class ListaPedidosActivity extends AppCompatActivity {
         setTitle("Pedidos");
         setContentView(R.layout.activity_lista_pedidos);
 
-        RecyclerView recycler = findViewById(R.id.recyclerPedidos);
+        recycler = findViewById(R.id.recyclerPedidos);
         btNovoPedido = findViewById(R.id.btNovoPedido);
 
-        PedidoDAO pedidoDAO = new PedidoDAO(ListaPedidosActivity.this);
-        try {
-            pedidoDAO.inserirPrimeirosDadosPedido();
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
+        pedidoDAO = new PedidoDAO(ListaPedidosActivity.this);
+
+
+        exibirPedidos();
+        acaoBotaoNovoPedido();
+
+    }
+
+    public void exibirPedidos(){
         pedidos = pedidoDAO.buscaPedidos();
 
         adapter = new PedidoAdapter(ListaPedidosActivity.this, pedidos);
@@ -46,9 +51,6 @@ public class ListaPedidosActivity extends AppCompatActivity {
 
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
-
-        acaoBotaoNovoPedido();
-
     }
 
     public void acaoBotaoNovoPedido(){

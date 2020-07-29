@@ -1,11 +1,14 @@
 package com.pdi.projetopdi.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
@@ -38,14 +41,15 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoViewHolder> {
             holder.cliente.setText(pedido.getCliente());
             holder.valor.setText("R$ "+String.valueOf(pedido.getValorTotal()));
 
-//            holder.btEditar.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
+            holder.cardPedido.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Log.i("Acessou","pós validação");
 //                    Intent it = new Intent(context, EditarProdutoActivity.class);
-//                    it.putExtra("id", produto.getIdproduto());  // verificar para passar somente o id mais fácil (pesquisar)
+//                    it.putExtra("id", produto.getIdproduto());
 //                    context.startActivity(it);
-//                }
-//            });
+                }
+            });
         }
 
         @Override
