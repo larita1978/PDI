@@ -44,7 +44,7 @@ public class PedidoDAO {
         sql.append(IDUSUARIO + " INTEGER NOT NULL, ");
         sql.append(CLIENTE + " VARCHAR(200) NOT NULL, ");
         sql.append(ENDERECO + " VARCHAR(200) NOT NULL, ");
-        //sql.append(DATAPEDIDO + " DATE NOT NULL, ");
+        sql.append(DATAPEDIDO + " VARCHAR(20) NOT NULL, ");
         sql.append(TOTALITENS + " NUMERIC(18,6) NOT NULL, ");
         sql.append(TOTALPRODUTOS + " NUMERIC(18,6) NOT NULL, ");
         sql.append(VALORTOTAL + " NUMERIC(18,6) NOT NULL);");
@@ -59,7 +59,7 @@ public class PedidoDAO {
         dados.put(IDUSUARIO,pedido.getIdUsuario());
         dados.put(CLIENTE,pedido.getCliente());
         dados.put(ENDERECO,pedido.getEndereco());
-//        dados.put(DATAPEDIDO,pedido.getDataPedido());
+        dados.put(DATAPEDIDO,String.valueOf(pedido.getDataPedido()));
         dados.put(TOTALITENS,pedido.getTotalItens().scaleByPowerOfTen(2).doubleValue());
         dados.put(TOTALPRODUTOS,pedido.getTotalProdutos().scaleByPowerOfTen(2).doubleValue());
         dados.put(VALORTOTAL,pedido.getValorTotal().scaleByPowerOfTen(2).doubleValue());

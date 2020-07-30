@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.ui.activity;
 
 import android.os.Bundle;
+import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -24,6 +25,8 @@ public class NovoPedidoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_pedido);
 
+        TextView dataPedido = findViewById(R.id.dataPedido);
+
         List<Fragment> list = new ArrayList<>();
         list.add(new PageFragmentCabecalho());
         list.add(new PageFragmentCarrinho());
@@ -33,5 +36,8 @@ public class NovoPedidoActivity extends AppCompatActivity {
         adapter = new ViewPagerPedidoAdapter(getSupportFragmentManager(),list);
 
         pager.setAdapter(adapter);
+
+
+        dataPedido.setText("20/07/2018");
     }
 }

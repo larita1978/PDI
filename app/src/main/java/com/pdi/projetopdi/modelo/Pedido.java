@@ -11,7 +11,7 @@ public class Pedido {
     private int idUsuario;
     private String cliente;
     private String endereco;
-    private String dataPedido;
+    private Date dataPedido;
     private BigDecimal totalItens;
     private BigDecimal totalProdutos;
     private BigDecimal valorTotal;
@@ -20,12 +20,12 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(int idPedido, int idUsuario, String cliente, String endereco, BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idPedido, int idUsuario, String cliente, String endereco, Date dataPedido ,BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;
-//        this.dataPedido = sdf.parse(String.valueOf(dataPedido));
+        this.dataPedido = sdf.parse(String.valueOf(dataPedido));
         this.totalItens = totalItens;
         this.totalProdutos = totalProdutos;
         this.valorTotal = valorTotal;
@@ -73,13 +73,13 @@ public class Pedido {
         this.endereco = endereco;
     }
 
-//    public String getDataPedido() {
-//        return dataPedido;
-//    }
-//
-//    public void setDataPedido(String dataPedido) {
-//        this.dataPedido = dataPedido;
-//    }
+    public Date getDataPedido() {
+        return dataPedido;
+    }
+
+    public void setDataPedido(Date dataPedido) {
+        this.dataPedido = dataPedido;
+    }
 
     public BigDecimal getTotalItens() {
         return totalItens;
