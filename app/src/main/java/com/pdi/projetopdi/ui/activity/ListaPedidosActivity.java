@@ -36,7 +36,11 @@ public class ListaPedidosActivity extends AppCompatActivity {
         btNovoPedido = findViewById(R.id.btNovoPedido);
 
         pedidoDAO = new PedidoDAO(ListaPedidosActivity.this);
-
+        try {
+            pedidoDAO.inserirPrimeirosDadosPedido();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
 
         exibirPedidos();
         acaoBotaoNovoPedido();

@@ -38,6 +38,5 @@ public class NovoPedidoActivity extends AppCompatActivity {
         pager.setAdapter(adapter);
 
 
-        dataPedido.setText("20/07/2018");
     }
 }

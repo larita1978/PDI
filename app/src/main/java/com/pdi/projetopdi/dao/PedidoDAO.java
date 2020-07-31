@@ -11,8 +11,10 @@ import com.pdi.projetopdi.modelo.Usuario;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 public class PedidoDAO {
 
@@ -52,7 +54,7 @@ public class PedidoDAO {
         return sql.toString();
     }
 
-    public void inserirPedido(Pedido pedido){
+    public void inserirPedido(Pedido pedido) throws ParseException {
 
         ContentValues dados = new ContentValues();
 //        dados.put(IDPEDIDO, pedido.getIdPedido());
@@ -79,7 +81,7 @@ public class PedidoDAO {
             ped.setIdUsuario(c.getInt(c.getColumnIndex(IDUSUARIO)));
             ped.setCliente(c.getString(c.getColumnIndex(CLIENTE)));
             ped.setEndereco(c.getString(c.getColumnIndex(ENDERECO)));
-//            ped.setDataPedido(c.getString(c.getColumnIndex(DATAPEDIDO)));
+            ped.setDataPedido(c.getString(c.getColumnIndex(DATAPEDIDO)));
             ped.setTotalItens(c.getDouble(c.getColumnIndex(TOTALITENS)));
             ped.setTotalProdutos(c.getDouble(c.getColumnIndex(TOTALPRODUTOS)));
             ped.setValorTotal(c.getDouble(c.getColumnIndex(VALORTOTAL)));
@@ -102,7 +104,7 @@ public class PedidoDAO {
                 ped.setIdUsuario(c.getInt(c.getColumnIndex(IDUSUARIO)));
                 ped.setCliente(c.getString(c.getColumnIndex(CLIENTE)));
                 ped.setEndereco(c.getString(c.getColumnIndex(ENDERECO)));
-                //ped.setDataPedido(c.getType(c.getColumnIndex(DATAPEDIDO)));
+//                ped.setDataPedido(c.getString(c.getColumnIndex(DATAPEDIDO)));
                 ped.setTotalItens(c.getDouble(c.getColumnIndex(TOTALITENS)));
                 ped.setTotalProdutos(c.getDouble(c.getColumnIndex(TOTALPRODUTOS)));
                 ped.setValorTotal(c.getDouble(c.getColumnIndex(VALORTOTAL)));
@@ -114,11 +116,13 @@ public class PedidoDAO {
         public void inserirPrimeirosDadosPedido() throws ParseException {
             ArrayList<Pedido> pedidos;
             pedidos = buscaPedidos();
-            if(pedidos.isEmpty()) {
-                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
+//            if(!pedidos.isEmpty()) {
+                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
 
-            }
+//            }
         }
 
 //        @SuppressLint("Recycle")

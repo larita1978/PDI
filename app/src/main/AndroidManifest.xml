@@ -11,18 +11,18 @@
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.NovoPedidoActivity"/>
         <activity android:name=".ui.activity.EditarProdutoActivity" />
-        <activity android:name=".ui.activity.ListaPedidosActivity"/>
-
-        <activity android:name=".ui.activity.NovoProdutoActivity" />
-        <activity android:name=".ui.activity.ListaProdutosActivity" />
-        <activity android:name=".ui.activity.PrincipalActivity" />
-        <activity android:name=".ui.activity.LoginActivity">
+        <activity android:name=".ui.activity.ListaPedidosActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <activity android:name=".ui.activity.NovoProdutoActivity" />
+        <activity android:name=".ui.activity.ListaProdutosActivity" />
+        <activity android:name=".ui.activity.PrincipalActivity" />
+        <activity android:name=".ui.activity.LoginActivity"/>
     </application>
 
 </manifest>

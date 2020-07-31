@@ -5,37 +5,38 @@ import java.math.RoundingMode;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Pedido {
     private int idPedido;
     private int idUsuario;
     private String cliente;
     private String endereco;
-    private Date dataPedido;
+    private String dataPedido;
     private BigDecimal totalItens;
     private BigDecimal totalProdutos;
     private BigDecimal valorTotal;
 
-    private SimpleDateFormat sdf;
+    private SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss", Locale.US);
 
     public Pedido(){}
 
-    public Pedido(int idPedido, int idUsuario, String cliente, String endereco, Date dataPedido ,BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idPedido, int idUsuario, String cliente, String endereco ,BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;
-        this.dataPedido = sdf.parse(String.valueOf(dataPedido));
+        this.dataPedido = dataPedido;
         this.totalItens = totalItens;
         this.totalProdutos = totalProdutos;
         this.valorTotal = valorTotal;
     }
 
-    public Pedido(int idUsuario, String cliente, String endereco, BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idUsuario, String cliente, String endereco,String dataPedido, BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;
-//        this.dataPedido = sdf.parse(String.valueOf(dataPedido));
+        this.dataPedido = dataPedido;
         this.totalItens = totalItens;
         this.totalProdutos = totalProdutos;
         this.valorTotal = valorTotal;
@@ -73,11 +74,11 @@ public class Pedido {
         this.endereco = endereco;
     }
 
-    public Date getDataPedido() {
-        return dataPedido;
+    public Date getDataPedido() throws ParseException {
+        return sdf.parse(dataPedido);
     }
 
-    public void setDataPedido(Date dataPedido) {
+    public void setDataPedido(String dataPedido) {
         this.dataPedido = dataPedido;
     }
 
