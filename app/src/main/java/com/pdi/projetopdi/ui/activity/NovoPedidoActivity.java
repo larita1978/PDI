@@ -20,6 +20,8 @@ public class NovoPedidoActivity extends AppCompatActivity {
 
     private ViewPager pager;
     private PagerAdapter adapter;
+    private List<Fragment> listFragment;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,16 +29,20 @@ public class NovoPedidoActivity extends AppCompatActivity {
 
         TextView dataPedido = findViewById(R.id.dataPedido);
 
-        List<Fragment> list = new ArrayList<>();
-        list.add(new PageFragmentCabecalho());
-        list.add(new PageFragmentCarrinho());
+        exibirFragments();
+
+//        dataPedido.setText(Date);
+
+    }
+
+    public void exibirFragments(){
+        listFragment = new ArrayList<>();
+        listFragment.add(new PageFragmentCabecalho());
+        listFragment.add(new PageFragmentCarrinho());
 
 
         pager = findViewById(R.id.idViewPagerPedido);
-        adapter = new ViewPagerPedidoAdapter(getSupportFragmentManager(),list);
-
+        adapter = new ViewPagerPedidoAdapter(getSupportFragmentManager(),listFragment);
         pager.setAdapter(adapter);
-
-
     }
 }

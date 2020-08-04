@@ -38,6 +38,8 @@
         <Button android:id="@+id/salvarPrdBotao"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/botoes_acoes_principais"
+            android:textColor="#fff"
             android:text="Salvar"
             android:layout_weight="0.1"/>
     </LinearLayout>

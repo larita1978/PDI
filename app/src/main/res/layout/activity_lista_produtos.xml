@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Buscar"
-            android:background="@drawable/botoestelalistaproduto"
+            android:background="@drawable/botoes_acoes_principais"
             android:layout_weight="0"/>
     </LinearLayout>
 
@@ -42,7 +42,7 @@
             android:gravity="center_horizontal">
 
             <Button android:id="@+id/btNovoProduto"
-                android:background="@drawable/botoestelalistaproduto"
+                android:background="@drawable/botoes_acoes_principais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="Novo Produto" />

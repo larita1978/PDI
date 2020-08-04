@@ -118,11 +118,11 @@ public class PedidoDAO {
             pedidos = buscaPedidos();
             SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
             Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
-//            if(!pedidos.isEmpty()) {
+            if(pedidos.isEmpty()) {
                 inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
                 inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
 
-//            }
+            }
         }
 
 //        @SuppressLint("Recycle")
