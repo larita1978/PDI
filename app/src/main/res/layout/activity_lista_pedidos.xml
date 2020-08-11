@@ -17,7 +17,7 @@
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            tools:listitem="@layout/pedidos"
+            tools:listitem="@layout/adapter_lista_pedidos"
             android:layout_weight="1"/>
 
         <LinearLayout

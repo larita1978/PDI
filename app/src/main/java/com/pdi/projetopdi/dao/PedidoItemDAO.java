@@ -61,7 +61,7 @@ public class PedidoItemDAO {
 //        }
 //
 //        public ArrayList<Pedido> buscaPedidos(){
-//            ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
+//            ArrayList<Pedido> adapter_lista_pedidos = new ArrayList<Pedido>();
 //            String sql = "SELECT * FROM " + PEDIDO + ";";
 //            Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
 //
@@ -76,10 +76,10 @@ public class PedidoItemDAO {
 //                ped.setTotalProdutos(c.getDouble(c.getColumnIndex(TOTALPRODUTOS)));
 //                ped.setValorTotal(c.getDouble(c.getColumnIndex(VALORTOTAL)));
 //
-//                pedidos.add(ped);
+//                adapter_lista_pedidos.add(ped);
 //            }
 //            c.close();
-//            return pedidos;
+//            return adapter_lista_pedidos;
 //        }
 //
 //        public Pedido buscaPedidoPorID(int idpedido){
@@ -104,9 +104,9 @@ public class PedidoItemDAO {
 //
 //
 //        public void inserirPrimeirosDados() throws ParseException {
-//            ArrayList<Pedido> pedidos;
-//            pedidos = buscaPedidos();
-//            if(pedidos.isEmpty()) {
+//            ArrayList<Pedido> adapter_lista_pedidos;
+//            adapter_lista_pedidos = buscaPedidos();
+//            if(adapter_lista_pedidos.isEmpty()) {
 //                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
 //                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
 //
