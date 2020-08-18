@@ -11,11 +11,11 @@ import androidx.fragment.app.Fragment;
 
 import com.pdi.projetopdi.R;
 
-public class PageFragmentCarrinho extends Fragment {
+public class PageFragmentsPedidoResumo extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.page_itens, container, false);
+        ViewGroup rootView = (ViewGroup)inflater.inflate(R.layout.page_resumo, container, false);
         return rootView;
     }
 }
