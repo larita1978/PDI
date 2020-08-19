@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_margin="20dp"
+    android:background="@drawable/bordaslistapedidos"
+    android:paddingTop="50dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Digite o produto"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Preço:"
+            android:textSize="20sp"/>
+        <TextView android:id="@+id/idPrecoProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Quantidade:"
+            android:textSize="20sp"/>
+        <EditText android:id="@+id/idQuantidade"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20sp"
+            android:background="@drawable/bordaslistapedidos"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Preço Venda:"
+            android:textSize="20sp"/>
+        <EditText android:id="@+id/idPrecoVenda"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20sp"
+            android:background="@drawable/bordaslistapedidos"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Desconto:"
+            android:textSize="20sp"/>
+        <EditText android:id="@+id/idDescontoProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20sp"
+            android:background="@drawable/bordaslistapedidos"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="15dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:text="Total:"
+            android:textSize="20sp"/>
+        <TextView android:id="@+id/idValorTotalProduto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.5"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_marginTop="30dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button android:id="@+id/novoPrdBotao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Adicionar Produto"
+            android:textColor="#fff"
+            android:background="@drawable/botoes_acoes_principais"
+            android:layout_weight="0.1"/>
+    </LinearLayout>
+</LinearLayout>
