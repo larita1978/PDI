@@ -11,6 +11,7 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
 import com.pdi.projetopdi.R;
@@ -26,19 +27,20 @@ public class PageFragmentPedidoCarrinho extends Fragment {
         btAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                createAndShowDialog();
+                DialogFragment dialog = DialogEditarProdutoPedido.newInstance();
+                dialog.show(getFragmentManager(),"tag");
             }
         });
         return rootView;
     }
 
-    public void createAndShowDialog() {
-        Dialog dialog = new Dialog();
-        dialog.setContentView(R.layout.dialog_add_editar_produto_pedido);
-
-        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-        dialog.getWindow().setAttributes(layoutParams);
-        dialog.show();
-    }
+//    public void createAndShowDialog() {
+//        Dialog dialog = new Dialog();
+//        dialog.setContentView(R.layout.dialog_add_editar_produto_pedido);
+//
+//        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
+//        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//        dialog.getWindow().setAttributes(layoutParams);
+//        dialog.show();
+//    }
 }
