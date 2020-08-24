@@ -16,12 +16,21 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="15dp">
-            <MultiAutoCompleteTextView android:id="@+id/digitarProduto"
+            android:layout_margin="15dp"
+            android:orientation="horizontal">
+            <EditText android:id="@+id/digitarProduto"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="Digite o produto"
-                android:completionThreshold="1"/>
+                android:completionThreshold="1"
+                android:layout_weight="0.5"/>
+            <Button android:id="@+id/btBuscarDescricao"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Buscar"
+                android:textColor="#fff"
+                android:background="@drawable/botoes_acoes_principais"
+                android:layout_weight="0"/>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

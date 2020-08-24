@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.ui.activity;
 
 import android.os.Bundle;
+import android.widget.ArrayAdapter;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -9,9 +10,11 @@ import androidx.viewpager.widget.ViewPager;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.ViewPagerPedidoAdapter;
+import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.fragments.PageFragmentPedidoCabecalho;
 import com.pdi.projetopdi.fragments.PageFragmentPedidoCarrinho;
 import com.pdi.projetopdi.fragments.PageFragmentsPedidoResumo;
+import com.pdi.projetopdi.modelo.Produto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,9 @@ public class NovoPedidoActivity extends AppCompatActivity {
         setContentView(R.layout.activity_novo_pedido);
 
         exibirFragments();
+
+        ProdutoDAO prdDao = new ProdutoDAO();
+
 
 
 
@@ -49,5 +55,6 @@ public class NovoPedidoActivity extends AppCompatActivity {
         pager = findViewById(R.id.idViewPagerPedido);
         adapter = new ViewPagerPedidoAdapter(getSupportFragmentManager(),listFragment);
         pager.setAdapter(adapter);
+
     }
 }
