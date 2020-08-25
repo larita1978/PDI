@@ -100,6 +100,24 @@ public class ProdutoDAO implements Closeable {
         return produtosdesc;
     }
 
+    public Produto buscaProdutoDesc(String valor){
+        ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
+        String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
+        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+
+        Produto prod = new Produto();
+
+        while(c.moveToNext()){
+            prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
+            prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
+            prod.setPreco(c.getDouble(c.getColumnIndex(PRECO)));
+
+            produtosdesc.add(prod);
+        }
+        c.close();
+        return prod;
+    }
+
     public void inserirPrimeirosDadosProduto(){
         ArrayList<Produto> produtos;
         produtos = buscaProdutos();

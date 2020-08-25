@@ -28,9 +28,11 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     private EditText produtoDigitado;
     private Button buscarProdutoDescricao;
     private TextView preco;
-    private EditText quantidade;
+    private EditText quantidadeProduto;
     private  EditText precoVenda;
-    private ArrayList<Produto> prd ;
+    private  EditText descontoProduto;
+    private  EditText totalProduto;
+    private Produto prd ;
 
     static DialogEditarProdutoPedido newInstance(){
         return new DialogEditarProdutoPedido();
@@ -49,18 +51,26 @@ public class DialogEditarProdutoPedido extends DialogFragment {
 
         produtoDigitado = view.findViewById(R.id.digitarProduto);
         buscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
+        preco = view.findViewById(R.id.idPrecoProduto);
+        quantidadeProduto = view.findViewById(R.id.idQuantidade);
+        precoVenda = view.findViewById(R.id.idPrecoVenda);
+        descontoProduto = view.findViewById(R.id.idDescontoProduto);
+//        totalProduto =view.findViewById(R.id.idValorTotalProduto);
 
         final ProdutoDAO prdDao = new ProdutoDAO();
+        prdDao.inserirPrimeirosDadosProduto();
 
 
         buscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prd = prdDao.buscaProdutoDescricao(produtoDigitado.getText().toString());
+                prd = prdDao.buscaProdutoDesc(produtoDigitado.getText().toString());
+                produtoDigitado.setText(String.valueOf(prd.getDescricao()));
+                preco.setText(String.valueOf(prd.getPreco()));
             }
         });
 
-        prd.get(0).getPreco();
+
 
 
 
