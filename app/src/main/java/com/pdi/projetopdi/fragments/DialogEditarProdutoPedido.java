@@ -2,6 +2,7 @@ package com.pdi.projetopdi.fragments;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class DialogEditarProdutoPedido extends DialogFragment {
@@ -28,11 +30,16 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     private EditText produtoDigitado;
     private Button buscarProdutoDescricao;
     private TextView preco;
-    private EditText quantidadeProduto;
-    private  EditText precoVenda;
-    private  EditText descontoProduto;
+
+    private EditText quantidadeProdutoDigitado;
+    private  EditText precoVendaDigitado;
+    private  EditText descontoProdutoDigitado;
     private  EditText totalProduto;
     private Produto prd ;
+
+    private BigDecimal precoVendaBigDecimal;
+    private BigDecimal precoDescontoBigDecimal;
+    private BigDecimal precoBigDecimal;
 
     static DialogEditarProdutoPedido newInstance(){
         return new DialogEditarProdutoPedido();
@@ -52,13 +59,12 @@ public class DialogEditarProdutoPedido extends DialogFragment {
         produtoDigitado = view.findViewById(R.id.digitarProduto);
         buscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
         preco = view.findViewById(R.id.idPrecoProduto);
-        quantidadeProduto = view.findViewById(R.id.idQuantidade);
-        precoVenda = view.findViewById(R.id.idPrecoVenda);
-        descontoProduto = view.findViewById(R.id.idDescontoProduto);
+        quantidadeProdutoDigitado = view.findViewById(R.id.idQuantidade);
+        precoVendaDigitado = view.findViewById(R.id.idPrecoVenda);
+        descontoProdutoDigitado = view.findViewById(R.id.idDescontoProduto);
 //        totalProduto =view.findViewById(R.id.idValorTotalProduto);
 
-        final ProdutoDAO prdDao = new ProdutoDAO();
-        prdDao.inserirPrimeirosDadosProduto();
+        final ProdutoDAO prdDao = new ProdutoDAO(getActivity());
 
 
         buscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
@@ -67,14 +73,14 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 prd = prdDao.buscaProdutoDesc(produtoDigitado.getText().toString());
                 produtoDigitado.setText(String.valueOf(prd.getDescricao()));
                 preco.setText(String.valueOf(prd.getPreco()));
+//                totalProduto.setText(String.valueOf(prd.getPreco()));
             }
         });
 
-
-
-
-
-
+        if(precoVendaBigDecimal!=null) {
+            precoVendaBigDecimal = new BigDecimal(precoVendaDigitado.getText().toString());
+            totalProduto.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal)));
+        }
 
         return view;
     }
