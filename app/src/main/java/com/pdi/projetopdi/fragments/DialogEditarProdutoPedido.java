@@ -1,16 +1,13 @@
 package com.pdi.projetopdi.fragments;
 
 import android.app.Dialog;
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -20,22 +17,20 @@ import androidx.fragment.app.DialogFragment;
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
-import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 
 public class DialogEditarProdutoPedido extends DialogFragment {
 
-    private EditText produtoDigitado;
-    private Button buscarProdutoDescricao;
-    private TextView preco;
+    private EditText produtoDigitadoEditText;
+    private Button btBuscarProdutoDescricao;
+    private TextView precoOriginalBanco;
 
-    private EditText quantidadeProdutoDigitado;
-    private  EditText precoVendaDigitado;
-    private  EditText descontoProdutoDigitado;
-    private  EditText totalProduto;
-    private Produto prd ;
+    private EditText quantidadeProdutoDigitadoEditText;
+    private  EditText precoVendaDigitadoEditText;
+    private  EditText descontoProdutoDigitadoEditText;
+    private  TextView totalProdutoEditText;
+    private Produto produtoObj;
 
     private BigDecimal precoVendaBigDecimal;
     private BigDecimal precoDescontoBigDecimal;
@@ -56,31 +51,47 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_editar_produto_pedido, container, false);
 
-        produtoDigitado = view.findViewById(R.id.digitarProduto);
-        buscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
-        preco = view.findViewById(R.id.idPrecoProduto);
-        quantidadeProdutoDigitado = view.findViewById(R.id.idQuantidade);
-        precoVendaDigitado = view.findViewById(R.id.idPrecoVenda);
-        descontoProdutoDigitado = view.findViewById(R.id.idDescontoProduto);
-//        totalProduto =view.findViewById(R.id.idValorTotalProduto);
+        produtoDigitadoEditText = view.findViewById(R.id.digitarProduto);
+        btBuscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
+        precoOriginalBanco = view.findViewById(R.id.idPrecoProduto);
+        quantidadeProdutoDigitadoEditText = view.findViewById(R.id.idQuantidade);
+        precoVendaDigitadoEditText = view.findViewById(R.id.idPrecoVenda);
+        descontoProdutoDigitadoEditText = view.findViewById(R.id.idDescontoProduto);
+        totalProdutoEditText =view.findViewById(R.id.idValorTotalProduto);
 
         final ProdutoDAO prdDao = new ProdutoDAO(getActivity());
 
 
-        buscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
+        btBuscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                prd = prdDao.buscaProdutoDesc(produtoDigitado.getText().toString());
-                produtoDigitado.setText(String.valueOf(prd.getDescricao()));
-                preco.setText(String.valueOf(prd.getPreco()));
-//                totalProduto.setText(String.valueOf(prd.getPreco()));
+                produtoObj = prdDao.buscaProdutoDesc(produtoDigitadoEditText.getText().toString());
+                produtoDigitadoEditText.setText(String.valueOf(produtoObj.getDescricao()));
+                precoOriginalBanco.setText(String.valueOf(produtoObj.getPreco()));
+                totalProdutoEditText.setText(String.valueOf(produtoObj.getPreco()));
             }
         });
 
-        if(precoVendaBigDecimal!=null) {
-            precoVendaBigDecimal = new BigDecimal(precoVendaDigitado.getText().toString());
-            totalProduto.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal)));
-        }
+
+        View.OnFocusChangeListener focusListener = new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (!hasFocus) {
+
+//                    if(precoVendaBigDecimal!=null) {
+                        precoVendaBigDecimal = new BigDecimal(precoVendaDigitadoEditText.getText().toString());
+                        precoBigDecimal = new BigDecimal(precoOriginalBanco.getText().toString());
+                        totalProdutoEditText.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal)));
+                    Log.i("teste","fora no foco");
+
+
+                }
+
+            }
+        };
+
+        precoVendaDigitadoEditText.setOnFocusChangeListener(focusListener);
+
 
         return view;
     }
