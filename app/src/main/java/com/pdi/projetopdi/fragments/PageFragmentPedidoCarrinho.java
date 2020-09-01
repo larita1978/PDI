@@ -33,14 +33,4 @@ public class PageFragmentPedidoCarrinho extends Fragment {
         });
         return rootView;
     }
-
-//    public void createAndShowDialog() {
-//        Dialog dialog = new Dialog();
-//        dialog.setContentView(R.layout.dialog_add_editar_produto_pedido);
-//
-//        WindowManager.LayoutParams layoutParams = dialog.getWindow().getAttributes();
-//        dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-//        dialog.getWindow().setAttributes(layoutParams);
-//        dialog.show();
-//    }
 }

@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -19,6 +20,7 @@ import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class DialogEditarProdutoPedido extends DialogFragment {
 
@@ -29,12 +31,19 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     private EditText quantidadeProdutoDigitadoEditText;
     private  EditText precoVendaDigitadoEditText;
     private  EditText descontoProdutoDigitadoEditText;
-    private  TextView totalProdutoEditText;
+    private  TextView totalProdutoTextView;
     private Produto produtoObj;
+    private Button btAddProduto;
 
+    private BigDecimal quantidadeBigDecimal;
     private BigDecimal precoVendaBigDecimal;
-    private BigDecimal precoDescontoBigDecimal;
+    private BigDecimal descontoBigDecimal;
     private BigDecimal precoBigDecimal;
+    private BigDecimal totalProdutoBigDecimal;
+
+    private ProdutoDAO prdDao;
+
+    View.OnFocusChangeListener focusListener;
 
     static DialogEditarProdutoPedido newInstance(){
         return new DialogEditarProdutoPedido();
@@ -51,50 +60,103 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.dialog_add_editar_produto_pedido, container, false);
 
+        //Pegar valor dos campos po id
         produtoDigitadoEditText = view.findViewById(R.id.digitarProduto);
         btBuscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
         precoOriginalBanco = view.findViewById(R.id.idPrecoProduto);
         quantidadeProdutoDigitadoEditText = view.findViewById(R.id.idQuantidade);
         precoVendaDigitadoEditText = view.findViewById(R.id.idPrecoVenda);
         descontoProdutoDigitadoEditText = view.findViewById(R.id.idDescontoProduto);
-        totalProdutoEditText =view.findViewById(R.id.idValorTotalProduto);
-
-        final ProdutoDAO prdDao = new ProdutoDAO(getActivity());
-
-
-        btBuscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                produtoObj = prdDao.buscaProdutoDesc(produtoDigitadoEditText.getText().toString());
-                produtoDigitadoEditText.setText(String.valueOf(produtoObj.getDescricao()));
-                precoOriginalBanco.setText(String.valueOf(produtoObj.getPreco()));
-                totalProdutoEditText.setText(String.valueOf(produtoObj.getPreco()));
-            }
-        });
+        totalProdutoTextView =view.findViewById(R.id.idValorTotalProduto);
+        btAddProduto = view.findViewById(R.id.idBtAddNovoPrd);
 
 
-        View.OnFocusChangeListener focusListener = new View.OnFocusChangeListener() {
 
-            public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus) {
+        //conexao com banco
+        prdDao = new ProdutoDAO(getActivity());
 
-//                    if(precoVendaBigDecimal!=null) {
-                        precoVendaBigDecimal = new BigDecimal(precoVendaDigitadoEditText.getText().toString());
-                        precoBigDecimal = new BigDecimal(precoOriginalBanco.getText().toString());
-                        totalProdutoEditText.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal)));
-                    Log.i("teste","fora no foco");
+        clicouBotaoBuscarProduto();
+        onFocusEditText();
 
+        if(quantidadeProdutoDigitadoEditText.getText().toString().isEmpty()) {
+            quantidadeProdutoDigitadoEditText.setOnFocusChangeListener(focusListener);
+            precoVendaDigitadoEditText.setOnFocusChangeListener(focusListener);
+            descontoProdutoDigitadoEditText.setOnFocusChangeListener(focusListener);
+        }
 
-                }
+        clicouBotaoAddProduto();
 
-            }
-        };
-
-        precoVendaDigitadoEditText.setOnFocusChangeListener(focusListener);
 
 
         return view;
     }
 
+    private void onFocusEditText(){
+        focusListener = new View.OnFocusChangeListener() {
+
+            public void onFocusChange(View v, boolean hasFocus) {
+                try {
+
+                    //transformando os valores digitados em BigDecimal
+                    quantidadeBigDecimal = new BigDecimal(quantidadeProdutoDigitadoEditText.getText().toString());
+                    precoBigDecimal = new BigDecimal(precoOriginalBanco.getText().toString());
+                    precoVendaBigDecimal = new BigDecimal(precoOriginalBanco.getText().toString());
+                    descontoBigDecimal = new BigDecimal(descontoProdutoDigitadoEditText.getText().toString());
+                    precoVendaBigDecimal = new BigDecimal(precoVendaDigitadoEditText.getText().toString());
+                    totalProdutoBigDecimal = new BigDecimal(totalProdutoTextView.getText().toString());
+                } catch (NullPointerException e) {
+                    e.printStackTrace();
+                    Log.i("Continue", "Deu nullPointer :(");
+                } catch (NumberFormatException nF) {
+                    nF.printStackTrace();
+                }
+
+                if (!hasFocus) {
+
+                    if (precoBigDecimal != null && descontoBigDecimal != null)
+                        precoVendaDigitadoEditText.setText(String.valueOf(precoBigDecimal.subtract(descontoBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
+//                        precoVendaDigitadoEditText.setText(String.valueOf(precoBigDecimal.doubleValue() - descontoBigDecimal.doubleValue()));
+
+
+                    if (precoBigDecimal != null && precoVendaBigDecimal != null)
+                        descontoProdutoDigitadoEditText.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
+//                        descontoProdutoDigitadoEditText.setText(String.valueOf(precoBigDecimal.doubleValue() - precoVendaBigDecimal.doubleValue()));
+
+                    if (precoVendaBigDecimal != null && quantidadeBigDecimal != null)
+                        totalProdutoTextView.setText(String.valueOf(precoVendaBigDecimal.multiply(quantidadeBigDecimal)));
+
+                }
+            }
+        };
+    }
+
+    private void clicouBotaoBuscarProduto(){
+        btBuscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                produtoObj = prdDao.buscaProdutoDesc(produtoDigitadoEditText.getText().toString());
+                if(!(produtoObj == null)) {
+                    produtoDigitadoEditText.setText(String.valueOf(produtoObj.getDescricao()));
+                    precoOriginalBanco.setText(String.valueOf(produtoObj.getPreco()));
+                    totalProdutoTextView.setText(String.valueOf(produtoObj.getPreco()));
+                }else{
+                    Log.i("teste botao add", "entrou no if");
+                }
+            }
+        });
+    }
+
+    private void clicouBotaoAddProduto() {
+        btAddProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if( totalProdutoTextView.getText().toString().isEmpty() || totalProdutoBigDecimal.doubleValue() <= 0){
+                    Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
+                }else{
+                    Toast.makeText(getActivity(),"Produto Add", Toast.LENGTH_SHORT);
+                }
+            }
+        });
+    }
 
 }
