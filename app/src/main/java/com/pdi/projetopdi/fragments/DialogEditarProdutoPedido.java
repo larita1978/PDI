@@ -1,6 +1,7 @@
 package com.pdi.projetopdi.fragments;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.fragment.app.DialogFragment;
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -150,10 +152,13 @@ public class DialogEditarProdutoPedido extends DialogFragment {
         btAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( totalProdutoTextView.getText().toString().isEmpty() || totalProdutoBigDecimal.doubleValue() <= 0){
+                if( totalProdutoTextView.getText().toString().isEmpty() /*|| totalProdutoBigDecimal.doubleValue() <= 0*/){
                     Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
                 }else{
+                    Intent i = new Intent().putExtra("teste","oi");
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), NovoPedidoActivity.RESULT_OK, i);
                     Toast.makeText(getActivity(),"Produto Add", Toast.LENGTH_SHORT);
+                    dismiss();
                 }
             }
         });
