@@ -156,7 +156,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                     Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
                 }else{
                     Intent i = new Intent().putExtra("teste","oi");
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), NovoPedidoActivity.RESULT_OK, i);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), 2, i);
                     Toast.makeText(getActivity(),"Produto Add", Toast.LENGTH_SHORT);
                     dismiss();
                 }

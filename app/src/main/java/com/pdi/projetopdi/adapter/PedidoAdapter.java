@@ -27,7 +27,8 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoViewHolder> {
         @NonNull
         @Override
         public PedidoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View view = LayoutInflater.from(context).inflate(R.layout.adapter_lista_pedidos, parent, false);
+            View view = LayoutInflater.from(context)
+                    .inflate(R.layout.adapter_lista_pedidos, parent, false);
             PedidoViewHolder viewHolder = new PedidoViewHolder(view);
             return viewHolder;
         }
@@ -37,7 +38,7 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoViewHolder> {
         public void onBindViewHolder(@NonNull PedidoViewHolder holder, final int position) {
             final Pedido pedido = pedidos.get(position);
             holder.cliente.setText(pedido.getCliente());
-            holder.valor.setText("R$ "+String.valueOf(pedido.getValorTotal()));
+            holder.valor.setText("R$ "+pedido.getValorTotal());
 
             holder.cardPedido.setOnClickListener(new View.OnClickListener() {
                 @Override

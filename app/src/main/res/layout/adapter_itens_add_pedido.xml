@@ -19,8 +19,7 @@
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/descricaoProduto"
+                <TextView android:id="@+id/descricaoProdutoAdapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -30,7 +29,8 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp" />
+                    android:layout_margin="10dp"
+                    android:background="@drawable/botao_remover_item"/>
             </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
@@ -40,14 +40,14 @@
 
 
                 <TextView
-                    android:id="@+id/precoVenda"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:inputType="numberDecimal"
                     android:text="Preço de Venda:"
                     android:layout_weight="0.5"/>
-                <TextView
+
+                <TextView android:id="@+id/precoVendaAdapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -63,13 +63,12 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/quantidade"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Quantidade:"
                     android:layout_weight="0.5"/>
-                <TextView
+                <TextView android:id="@+id/quantidadeAdapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -86,14 +85,13 @@
 
 
                 <TextView
-                    android:id="@+id/descontoProduto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-
                     android:text="Desconto:"
                     android:layout_weight="0.5"/>
-                <TextView
+
+                <TextView android:id="@+id/descontoProdutoAdapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
@@ -110,17 +108,16 @@
 
 
                 <TextView
-                    android:id="@+id/totalProduto"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
                     android:text="Valor total:"
                     android:layout_weight="0.5"/>
-                <TextView
+
+                <TextView android:id="@+id/valorTotalProdutoAdapter"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="10dp"
-
                     android:layout_weight="0.5"
                     android:text="R$ 0,00"/>
 
