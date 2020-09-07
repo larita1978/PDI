@@ -15,7 +15,7 @@
             android:id="@+id/recyclerProdutosCabecalho"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/adapter_itens_add_pedido"
+            tools:listitem="@layout/adapter_itens_do_pedido"
             android:layout_weight="0.5"/>
     </LinearLayout>
     <LinearLayout
