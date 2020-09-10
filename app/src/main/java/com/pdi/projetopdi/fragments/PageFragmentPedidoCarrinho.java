@@ -18,8 +18,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.PedidoItensAdapter;
-import com.pdi.projetopdi.modelo.Pedido;
 import com.pdi.projetopdi.modelo.PedidoItem;
+import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -31,16 +31,25 @@ public class PageFragmentPedidoCarrinho extends Fragment {
     private ArrayList<PedidoItem> pedidoItemList;
     private PedidoItem pedidoItem;
 
+    EnviaDados callback;
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == getActivity().RESULT_OK && requestCode == 1) {
-            Bundle bundle = data.getExtras();
-            String teste = bundle.getString("teste");
-            Log.i("teste", teste);
-        }
+    public void setEnviaDados(EnviaDados callback){
+        this.callback = callback;
     }
+
+    public interface EnviaDados{
+        public void dados(ArrayList<PedidoItem> teste);
+    }
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (resultCode == getActivity().RESULT_OK && requestCode == 1) {
+//            Bundle bundle = data.getExtras();
+//            String teste = bundle.getString("teste");
+//            Log.i("teste", teste);
+//        }
+//    }
 
     @Nullable
     @Override
@@ -61,6 +70,11 @@ public class PageFragmentPedidoCarrinho extends Fragment {
                 dialog.show(getFragmentManager(),"tag");
             }
         });
+
+        callback.dados(pedidoItemList);
+//        Intent intent = new Intent(getActivity(), NovoPedidoActivity.class);
+//        intent.putExtra("dados",pedidoItemList);
+//        getActivity().startActivity(intent);
         return rootView;
     }
 

@@ -1,8 +1,9 @@
 package com.pdi.projetopdi.ui.activity;
 
 import android.os.Bundle;
-import android.widget.ArrayAdapter;
+import android.util.Log;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager.widget.PagerAdapter;
@@ -14,12 +15,12 @@ import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.fragments.PageFragmentPedidoCabecalho;
 import com.pdi.projetopdi.fragments.PageFragmentPedidoCarrinho;
 import com.pdi.projetopdi.fragments.PageFragmentsPedidoResumo;
-import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.modelo.PedidoItem;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class NovoPedidoActivity extends AppCompatActivity {
+public class NovoPedidoActivity extends AppCompatActivity implements PageFragmentPedidoCarrinho.EnviaDados/*PageFragmentPedidoCabecalho.PassarDados*/ {
 
     private ViewPager pager;
     private PagerAdapter adapter;
@@ -33,8 +34,6 @@ public class NovoPedidoActivity extends AppCompatActivity {
         exibirFragments();
 
         ProdutoDAO prdDao = new ProdutoDAO();
-
-
 
 
 //        try {
@@ -56,5 +55,22 @@ public class NovoPedidoActivity extends AppCompatActivity {
         adapter = new ViewPagerPedidoAdapter(getSupportFragmentManager(),listFragment);
         pager.setAdapter(adapter);
 
+    }
+
+
+
+    @Override
+    public void onAttachFragment(@NonNull Fragment fragment) {
+        super.onAttachFragment(fragment);
+
+        PageFragmentPedidoCarrinho pageCarrinho = (PageFragmentPedidoCarrinho) getSupportFragmentManager().findFragmentById(R.id.idViewPagerPedido);
+        pageCarrinho.setEnviaDados(this);
+    }
+
+    @Override
+    public void dados(ArrayList<PedidoItem> teste) {
+        for(PedidoItem pedido : teste){
+            Log.i("Passar dados",String.valueOf(pedido.getQuantidade()));
+        }
     }
 }

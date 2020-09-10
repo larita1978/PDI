@@ -1,5 +1,7 @@
 package com.pdi.projetopdi.fragments;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,14 +14,20 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.dao.PedidoDAO;
 import com.pdi.projetopdi.modelo.Pedido;
+import com.pdi.projetopdi.modelo.PedidoItem;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 
-public class PageFragmentPedidoCabecalho extends Fragment {
+public class PageFragmentPedidoCabecalho extends Fragment{
+
+    PassarDados callback;
+
+    public interface PassarDados {
+        public void enviarLista(PedidoItem pditem);
+    }
+
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -42,9 +50,13 @@ public class PageFragmentPedidoCabecalho extends Fragment {
 //        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         dataPedido.setText(data2);
 //        nomeCliente.setText("LArissa");
+
+
         return rootView;
     }
 
-
-
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+    }
 }

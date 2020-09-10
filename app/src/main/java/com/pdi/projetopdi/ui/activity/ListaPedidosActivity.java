@@ -61,7 +61,7 @@ public class ListaPedidosActivity extends AppCompatActivity {
         btNovoPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(ListaPedidosActivity.this,NovoPedidoActivity.class));
+                startActivity(new Intent(ListaPedidosActivity.this,NovoPedidoTeste.class));
             }
         });
     }

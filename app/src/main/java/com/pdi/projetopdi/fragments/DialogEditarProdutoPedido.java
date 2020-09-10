@@ -19,7 +19,6 @@ import androidx.fragment.app.DialogFragment;
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.Produto;
-import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

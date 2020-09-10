@@ -32,7 +32,7 @@ public class PedidoItensAdapter extends RecyclerView.Adapter<PedidoItensViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull PedidoItensViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull final PedidoItensViewHolder holder, final int position) {
         final PedidoItem pedidoItem = pedidosItens.get(position);
         holder.precoVenda.setText("R$" + pedidoItem.getPrecoVenda());
         holder.quantidade.setText(String.valueOf(pedidoItem.getQuantidade()));
@@ -42,11 +42,17 @@ public class PedidoItensAdapter extends RecyclerView.Adapter<PedidoItensViewHold
         holder.btRemoveProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pedidosItens.remove(pedidoItem);
-
-
+               removerItemDaLista(holder,position);
             }
         });
+    }
+
+    private void removerItemDaLista(PedidoItensViewHolder holder,int posicao){
+        int novaPosition = holder.getAdapterPosition();
+        pedidosItens.remove(novaPosition);
+        notifyItemRemoved(novaPosition);
+        notifyItemRangeChanged(novaPosition,pedidosItens.size());
+
     }
 
     @Override
