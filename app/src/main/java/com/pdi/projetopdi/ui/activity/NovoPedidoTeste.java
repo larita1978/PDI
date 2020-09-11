@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -31,6 +32,10 @@ public class NovoPedidoTeste extends AppCompatActivity {
     private ArrayList<PedidoItem> pedidoItemList;
     private PedidoItem pedidoItem;
 
+    Button btExibirCarrinho;
+    LinearLayout linearteste;
+    Boolean show;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,8 @@ public class NovoPedidoTeste extends AppCompatActivity {
         long date1 = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:ss");
 
+        btExibirCarrinho = findViewById(R.id.btExibirCarrinho);
+        linearteste = findViewById(R.id.idLinearTeste);
 
         TextView dataPedido = findViewById(R.id.dataPedido);
         EditText nomeCliente = findViewById(R.id.idNomeCliente);
@@ -62,19 +69,32 @@ public class NovoPedidoTeste extends AppCompatActivity {
             pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
             exibirProdutos();
-            btAddProduto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-//                    DialogFragment dialog = DialogEditarProdutoPedido.newInstance();
-//                    dialog.show(getFragmentManager(),"tag");
-                }
-            });
+//            btAddProduto.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+////                    DialogFragment dialog = DialogEditarProdutoPedido.newInstance();
+////                    dialog.show(getFragmentManager(),"tag");
+//                }
+//            });
 
 
 //        Intent intent = new Intent(getActivity(), NovoPedidoActivity.class);
 //        intent.putExtra("dados",pedidoItemList);
 //        getActivity().startActivity(intent);
 
+        show = true;
+        btExibirCarrinho.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(show){
+                    linearteste.setVisibility(View.INVISIBLE);
+                    show =false;
+                }else{
+                    linearteste.setVisibility(View.VISIBLE);
+                    show =true;
+                }
+            }
+        });
 
     }
     public void exibirProdutos(){

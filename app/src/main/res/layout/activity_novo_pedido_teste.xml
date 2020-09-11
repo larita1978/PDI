@@ -19,6 +19,7 @@
                 android:layout_height="wrap_content"
                 android:text="Cabeçalho"
                 android:textSize="25sp"
+                android:fontFamily=""
                 />
         </LinearLayout>
         <LinearLayout
@@ -74,8 +75,20 @@
         </LinearLayout>
     </LinearLayout>
 
-
     <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <Button android:id="@+id/btExibirCarrinho"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Carrinho"
+            android:textColor="#2B2727"
+            android:background="#fff"
+            android:layout_weight="0.1"/>
+    </LinearLayout>
+    <!--<LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -87,8 +100,8 @@
             android:textColor="#fff"
             android:background="@drawable/botoes_acoes_principais"
             android:layout_weight="0.1"/>
-    </LinearLayout>
-    <LinearLayout
+    </LinearLayout>-->
+    <LinearLayout android:id="@+id/idLinearTeste"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
@@ -104,83 +117,88 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/bordaslistapedidos"
-        android:orientation="vertical"
-        android:layout_margin="10dp"
-        android:layout_weight="0.5"
-        android:paddingLeft="30dp">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/bordaslistapedidos"
+            android:orientation="vertical"
+            android:layout_margin="10dp"
+            android:layout_weight="0.5"
+            android:paddingLeft="30dp">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="60dp">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Produtos"
-                android:textSize="22sp"
-                android:layout_weight="0.5" />
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="R$15.00"
-                android:textSize="22sp"
-                android:layout_weight="0.5"/>
-        </LinearLayout>
+                android:orientation="horizontal"
+                android:layout_marginTop="60dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total Produtos"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5" />
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$15.00"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5"/>
+            </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="40dp">
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Total Itens"
-                android:textSize="22sp"
-                android:layout_weight="0.5"/>
-            <TextView
+                android:orientation="horizontal"
+                android:layout_marginTop="40dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Total Itens"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$15.00"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5"/>
+            </LinearLayout>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="R$15.00"
-                android:textSize="22sp"
-                android:layout_weight="0.5"/>
+                android:orientation="horizontal"
+                android:layout_marginTop="45dp">
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="Valor total"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5"/>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="R$15.00"
+                    android:textSize="22sp"
+                    android:layout_weight="0.5"/>
+            </LinearLayout>
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="45dp">
-            <TextView
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_marginTop="50dp"
+            android:layout_weight="0.5">
+            <Button
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Valor total"
-                android:textSize="22sp"
-                android:layout_weight="0.5"/>
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="R$15.00"
-                android:textSize="22sp"
-                android:layout_weight="0.5"/>
+                android:text="Finalizar"
+                android:textColor="#FFF"
+                android:layout_marginRight="10dp"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorBtNovoProduto"
+                android:textSize="20sp" />
         </LinearLayout>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:layout_marginTop="50dp"
-        android:layout_weight="0.5">
-        <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Finalizar"
-            android:textColor="#FFF"
-            android:layout_marginRight="10dp"
-            android:layout_marginLeft="10dp"
-            android:background="@color/colorBtNovoProduto"
-            android:textSize="20sp" />
     </LinearLayout>
 </LinearLayout>
