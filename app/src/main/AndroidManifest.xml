@@ -10,7 +10,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".ui.activity.NovoPedidoTeste"></activity>
-        <activity android:name=".ui.activity.NovoPedidoActivity" />
         <activity android:name=".ui.activity.EditarProdutoActivity" />
         <activity android:name=".ui.activity.ListaPedidosActivity">
             <intent-filter>

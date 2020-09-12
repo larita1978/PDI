@@ -12,7 +12,6 @@ import com.pdi.projetopdi.R;
 
 public class ProdutoViewHolder extends RecyclerView.ViewHolder {
 
-    public ActionBar.Tab cliente;
     TextView descricao, preco;
     Button btEditar;
 
