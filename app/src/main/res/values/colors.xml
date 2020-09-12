@@ -7,4 +7,6 @@
     <color name="colorBtListas">#FFFFFF</color>
     <color name="colorbackgroud">#fafafa</color>
     <color name="corFundoMaisClara">#FDF7FB</color>
+    <color name="corFontTitulo">#464444</color>
+    <color name="corFontTexto">#6C6767</color>
 </resources>

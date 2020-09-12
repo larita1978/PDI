@@ -19,7 +19,3 @@
         android:color="@android:color/background_light"
         />
 </shape>
-
-<!--    android:scaleGravity="clip_horizontal|fill_horizontal"-->
-<!--    android:scaleHeight="10%"-->
-<!--    android:scaleWidth="100%">-->

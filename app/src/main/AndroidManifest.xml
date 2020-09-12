@@ -23,6 +23,10 @@
         <activity android:name=".ui.activity.ListaProdutosActivity" />
         <activity android:name=".ui.activity.PrincipalActivity" />
         <activity android:name=".ui.activity.LoginActivity"></activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

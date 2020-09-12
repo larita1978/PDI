@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.PedidoItensAdapter;
+import com.pdi.projetopdi.dao.PedidoDAO;
 import com.pdi.projetopdi.fragments.DialogEditarProdutoPedido;
 import com.pdi.projetopdi.modelo.Pedido;
 import com.pdi.projetopdi.modelo.PedidoItem;
@@ -32,9 +33,18 @@ public class NovoPedidoTeste extends AppCompatActivity {
     private ArrayList<PedidoItem> pedidoItemList;
     private PedidoItem pedidoItem;
 
-    Button btExibirCarrinho;
-    LinearLayout linearteste;
-    Boolean show;
+    private TextView dataPedido;
+    private EditText nomeCliente;
+    private EditText enderecoCliente;
+
+    private TextView valorTotalProdutos;
+    private TextView valorTotalItens;
+    private TextView valorTotal;
+
+    private Button btAddProduto;
+    private Button btExibirCarrinho;
+    private LinearLayout linearteste;
+    private Boolean show;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,35 +57,44 @@ public class NovoPedidoTeste extends AppCompatActivity {
         btExibirCarrinho = findViewById(R.id.btExibirCarrinho);
         linearteste = findViewById(R.id.idLinearTeste);
 
-        TextView dataPedido = findViewById(R.id.dataPedido);
-        EditText nomeCliente = findViewById(R.id.idNomeCliente);
-        EditText enderecoCliente = findViewById(R.id.idEnderecoCliente);
+        dataPedido = findViewById(R.id.dataPedido);
+        nomeCliente = findViewById(R.id.idNomeCliente);
+        enderecoCliente = findViewById(R.id.idEnderecoCliente);
 
-//        PedidoDAO pedidodao = new PedidoDAO(this);
+
+        btAddProduto = findViewById(R.id.btAddProduto);
+        recycler = findViewById(R.id.recyclerProdutosCabecalho);
+
+
+        valorTotalProdutos = findViewById(R.id.idTextResumoTotalProdutos);
+        valorTotalItens = findViewById(R.id.idTextResumoTotalItens);
+        valorTotal = findViewById(R.id.idTextResumoValorTotal);
+
+        PedidoDAO pedidodao = new PedidoDAO(this);
         Pedido pedido = new Pedido();
 
-//        pedido.setCliente(nomeCliente.getText().toString());
-//        pedido.setEndereco(enderecoCliente.getText().toString());
+        pedido.setCliente(nomeCliente.getText().toString());
+        pedido.setEndereco(enderecoCliente.getText().toString());
         String data2 = sdf.format(date1);
 //        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         dataPedido.setText(data2);
 //        nomeCliente.setText("LArissa");
 
 
-            Button btAddProduto = findViewById(R.id.btAddProduto);
-            recycler = findViewById(R.id.recyclerProdutosCabecalho);
 
-            pedidoItemList = new ArrayList<PedidoItem>();
-            pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
-            exibirProdutos();
-//            btAddProduto.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View v) {
-////                    DialogFragment dialog = DialogEditarProdutoPedido.newInstance();
-////                    dialog.show(getFragmentManager(),"tag");
-//                }
-//            });
+        pedidoItemList = new ArrayList<>();
+        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+
+        exibirProdutos();
+            btAddProduto.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new DialogEditarProdutoPedido().show(getSupportFragmentManager(),"teste");
+                }
+            });
 
 
 //        Intent intent = new Intent(getActivity(), NovoPedidoActivity.class);

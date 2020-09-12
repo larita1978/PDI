@@ -1,3 +1,12 @@
 <resources>
-    <string name="app_name">ProjetoPDI</string>
+    <string name="app_name">App Vendas</string>
+    <string name="tituloCabecalho">Cabeçalho</string>
+    <string name="textCliente">Cliente</string>
+    <string name="textEndereço">Endereço</string>
+    <string name="text">Cliente</string>
+    <string name="tituloCarrinho">Carrinho</string>
+    <string name="tituloResumo">Resumo</string>
+    <string name="textTotalProdutos">Total de produtos</string>
+    <string name="textTotalItens">Total de itens</string>
+    <string name="textValorTotal">Valor total</string>
 </resources>

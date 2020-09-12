@@ -13,4 +13,30 @@
         <item name="windowNoTitle">true</item>
 
     </style>
+
+    <style name="FontTitulo" >
+        <item name="android:textColor">@color/corFontTitulo</item>
+        <item name="android:fontFamily">@font/rhodium_libre</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="TextoCabecalho">
+        <item name="android:textColor">@color/corFontTexto</item>
+        <item name="android:fontFamily">@font/marmelad</item>
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="TextoResumo">
+        <item name="android:textColor">@color/corFontTexto</item>
+        <item name="android:fontFamily">@font/marmelad</item>
+        <item name="android:textSize">18sp</item>
+        <item name="android:textAlignment">center</item>
+    </style>
+
+    <style name="BotaoGravar">
+        <item name="android:textColor">@color/colorbackgroud</item>
+        <item name="android:fontFamily">@font/rhodium_libre</item>
+        <item name="android:textSize">18sp</item>
+    </style>
 </resources>

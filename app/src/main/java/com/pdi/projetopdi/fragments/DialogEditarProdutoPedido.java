@@ -46,7 +46,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
 
     View.OnFocusChangeListener focusListener;
 
-    static DialogEditarProdutoPedido newInstance(){
+    public static DialogEditarProdutoPedido newInstance(){
         return new DialogEditarProdutoPedido();
     }
     @NonNull
