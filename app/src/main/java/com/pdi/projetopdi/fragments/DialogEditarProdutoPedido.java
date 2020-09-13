@@ -3,6 +3,7 @@ package com.pdi.projetopdi.fragments;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,7 +19,9 @@ import androidx.fragment.app.DialogFragment;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
+import com.pdi.projetopdi.modelo.PedidoItem;
 import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.ui.activity.NovoPedidoTeste;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -33,7 +36,6 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     private  EditText precoVendaDigitadoEditText;
     private  EditText descontoProdutoDigitadoEditText;
     private  TextView totalProdutoTextView;
-    private Produto produtoObj;
     private Button btAddProduto;
 
     private BigDecimal quantidadeBigDecimal;
@@ -43,6 +45,8 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     private BigDecimal totalProdutoBigDecimal;
 
     private ProdutoDAO prdDao;
+    private Produto produtoObj;
+    private PedidoItem pedidoItem;
 
     View.OnFocusChangeListener focusListener;
 
@@ -112,7 +116,6 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                     nF.printStackTrace();
                 }
 
-                if (!hasFocus) {
 
                     if (precoBigDecimal != null && descontoBigDecimal != null)
                         precoVendaDigitadoEditText.setText(String.valueOf(precoBigDecimal.subtract(descontoBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
@@ -126,9 +129,15 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                     if (precoVendaBigDecimal != null && quantidadeBigDecimal != null)
                         totalProdutoTextView.setText(String.valueOf(precoVendaBigDecimal.multiply(quantidadeBigDecimal)));
 
-                }
+
             }
         };
+    }
+
+    public void calcularValores(){
+        precoVendaDigitadoEditText.setText(String.valueOf(precoBigDecimal.subtract(descontoBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
+        descontoProdutoDigitadoEditText.setText(String.valueOf(precoBigDecimal.subtract(precoVendaBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
+        totalProdutoTextView.setText(String.valueOf(precoVendaBigDecimal.multiply(quantidadeBigDecimal)));
     }
 
     private void clicouBotaoBuscarProduto(){
@@ -154,10 +163,12 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 if( totalProdutoTextView.getText().toString().isEmpty() /*|| totalProdutoBigDecimal.doubleValue() <= 0*/){
                     Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
                 }else{
+                    pedidoItem = new PedidoItem(produtoObj.getIdproduto(),quantidadeBigDecimal.intValue(),precoBigDecimal,precoVendaBigDecimal,descontoBigDecimal);
                     Intent i = new Intent().putExtra("teste","oi");
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), 2, i);
-                    Toast.makeText(getActivity(),"Produto Add", Toast.LENGTH_SHORT);
-                    dismiss();
+                    Intent it = new Intent(getContext(), NovoPedidoTeste.class);
+                    it.putExtra("obj", pedidoItem);  // verificar para passar somente o id mais fácil (pesquisar)
+                    getActivity().startActivity(it);
+//                    dismiss();
                 }
             }
         });

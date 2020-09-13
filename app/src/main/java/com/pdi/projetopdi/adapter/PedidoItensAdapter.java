@@ -43,6 +43,7 @@ public class PedidoItensAdapter extends RecyclerView.Adapter<PedidoItensViewHold
             @Override
             public void onClick(View v) {
                removerItemDaLista(holder,position);
+               notifyItemRemoved(position);
             }
         });
     }

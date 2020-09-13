@@ -1,8 +1,11 @@
 package com.pdi.projetopdi.modelo;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.math.BigDecimal;
 
-public class PedidoItem {
+public class PedidoItem implements Parcelable {
     private long idPedidoItem;
     private long idProduto;
     private long idPedido;
@@ -18,6 +21,38 @@ public class PedidoItem {
         this.precoVenda = precoVenda;
         this.valorDesconto = valorDesconto;
     }
+
+    protected PedidoItem(Parcel in) {
+        idPedidoItem = in.readLong();
+        idProduto = in.readLong();
+        idPedido = in.readLong();
+        quantidade = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeLong(idPedidoItem);
+        dest.writeLong(idProduto);
+        dest.writeLong(idPedido);
+        dest.writeInt(quantidade);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<PedidoItem> CREATOR = new Creator<PedidoItem>() {
+        @Override
+        public PedidoItem createFromParcel(Parcel in) {
+            return new PedidoItem(in);
+        }
+
+        @Override
+        public PedidoItem[] newArray(int size) {
+            return new PedidoItem[size];
+        }
+    };
 
     public long getIdPedidoItem() {
         return idPedidoItem;

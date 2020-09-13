@@ -51,6 +51,8 @@ public class NovoPedidoTeste extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_pedido_teste);
 
+        show = true;
+
         long date1 = System.currentTimeMillis();
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:ss");
 
@@ -89,19 +91,35 @@ public class NovoPedidoTeste extends AppCompatActivity {
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
         exibirProdutos();
-            btAddProduto.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    new DialogEditarProdutoPedido().show(getSupportFragmentManager(),"teste");
-                }
-            });
+        clicouBotaoAddProduto();
+        exibirProdutosCarrinho();
 
 
-//        Intent intent = new Intent(getActivity(), NovoPedidoActivity.class);
-//        intent.putExtra("dados",pedidoItemList);
-//        getActivity().startActivity(intent);
+        int totalQuantidade = 0;
+        int totalItens =0;
 
-        show = true;
+        BigDecimal valorTotalPedido = BigDecimal.ZERO;
+
+        for(PedidoItem ped : pedidoItemList){
+            totalQuantidade++;
+            totalItens += ped.getQuantidade();
+            valorTotalPedido = valorTotalPedido.add(ped.getPrecoVenda().multiply(new BigDecimal(ped.getQuantidade())));
+        }
+
+        valorTotalProdutos.setText(String.valueOf(totalQuantidade));
+        valorTotalItens.setText(String.valueOf(totalItens));
+        valorTotal.setText(String.valueOf(valorTotalPedido));
+
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        exibirProdutos();
+    }
+
+    public void exibirProdutosCarrinho(){
         btExibirCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,7 +132,6 @@ public class NovoPedidoTeste extends AppCompatActivity {
                 }
             }
         });
-
     }
     public void exibirProdutos(){
         adapter = new PedidoItensAdapter(this, pedidoItemList);
@@ -123,4 +140,20 @@ public class NovoPedidoTeste extends AppCompatActivity {
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
     }
+
+    public void clicouBotaoAddProduto(){
+        btAddProduto.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new DialogEditarProdutoPedido().show(getSupportFragmentManager(),"teste");
+
+                if(getIntent().equals(null)){
+                    pedidoItemList.add((PedidoItem) getIntent().getSerializableExtra("obj"));
+                    exibirProdutos();
+                }
+
+            }
+        });
+    }
+
 }
