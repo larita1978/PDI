@@ -21,7 +21,8 @@ public class Pedido {
 
     public Pedido(){}
 
-    public Pedido(int idPedido, int idUsuario, String cliente, String endereco ,BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idPedido, int idUsuario, String cliente, String endereco ,BigDecimal totalItens,
+                  BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.cliente = cliente;
@@ -32,7 +33,8 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
-    public Pedido(int idUsuario, String cliente, String endereco,String dataPedido, BigDecimal totalItens, BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idUsuario, String cliente, String endereco,String dataPedido, BigDecimal totalItens,
+                  BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;

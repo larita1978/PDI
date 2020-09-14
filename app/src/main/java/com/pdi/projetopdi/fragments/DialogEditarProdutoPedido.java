@@ -3,7 +3,6 @@ package com.pdi.projetopdi.fragments;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,7 @@ import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.PedidoItem;
 import com.pdi.projetopdi.modelo.Produto;
-import com.pdi.projetopdi.ui.activity.NovoPedidoTeste;
+import com.pdi.projetopdi.ui.activity.NovoPedido;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -165,9 +164,12 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 }else{
                     pedidoItem = new PedidoItem(produtoObj.getIdproduto(),quantidadeBigDecimal.intValue(),precoBigDecimal,precoVendaBigDecimal,descontoBigDecimal);
                     Intent i = new Intent().putExtra("teste","oi");
-                    Intent it = new Intent(getContext(), NovoPedidoTeste.class);
-                    it.putExtra("obj", pedidoItem);  // verificar para passar somente o id mais fácil (pesquisar)
-                    getActivity().startActivity(it);
+                    Intent it = new Intent(getContext(), NovoPedido.class);
+                    it.putExtra("obj", pedidoItem);
+                    it.putExtra("flag", true);// verificar para passar somente o id mais fácil (pesquisar)
+                    getContext().startActivity(it);
+//                    getActivity().finish();
+
 //                    dismiss();
                 }
             }

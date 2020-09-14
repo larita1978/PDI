@@ -49,10 +49,26 @@ public class UsuarioDAO {
         dao.close();
     }
 
-    public Usuario buscaUsuarioPorLogin(String login) throws NoSuchAlgorithmException {
+    public Usuario buscaUsuarioPorLogin(String login) {
         Usuario user = new Usuario();
         String sql = "SELECT * FROM USUARIO WHERE LOGIN = ?";
         Cursor c = dao.getReadableDatabase().rawQuery(sql, new String[]{login});
+
+//        c.moveToFirst();
+        while(c.moveToNext()){
+            user.setIdUsuario(c.getLong(c.getColumnIndex(IDUSUARIO)));
+            user.setNome(c.getString(c.getColumnIndex(NOME)));
+            user.setLogin(c.getString(c.getColumnIndex(LOGIN)));
+            user.setSenha(c.getString(c.getColumnIndex(SENHA)));
+        }
+        c.close();
+        return user;
+    }
+
+    public Usuario buscaUsuarios() {
+        Usuario user = new Usuario();
+        String sql = "SELECT * FROM USUARIO LIMIT 1";
+        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
 
 //        c.moveToFirst();
         while(c.moveToNext()){

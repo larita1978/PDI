@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -32,7 +33,8 @@ public class LoginActivity extends AppCompatActivity {
     private String senhaDigitada;
     private UsuarioDAO dbUser;
 
-    SharedPreferences primeiraExec = null;
+    SharedPreferences.Editor editor;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,7 +46,11 @@ public class LoginActivity extends AppCompatActivity {
         campoSenhaUser = findViewById(R.id.usuarioSenha);
         botaoEntrar = findViewById(R.id.botaoAcessar);
         dbUser = new UsuarioDAO(this);
-        primeiraExec = getSharedPreferences("firstRun",MODE_PRIVATE);
+
+        SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
+        editor = preferences.edit();
+
+
 
         verificarExecucao();
     }
@@ -65,19 +71,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Log.i("Acessou","Acessou o onResume");
-                if(primeiraExec.getBoolean("firtsRun", true)) {
+                Usuario teste = dbUser.buscaUsuarios();
+                if(teste.getLogin() == null) {
                     try {
-
-//                        PrimeiraExecucao pe = new PrimeiraExecucao(this);
-                        InserirPrimeirosDados();
+                        inserirPrimeirosDados();
                     } catch (NoSuchAlgorithmException e) {
                         e.printStackTrace();
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
-                    primeiraExec.edit().putBoolean("firstRun", false).apply();
+                    editor.putBoolean("firstRun", false).commit();
                 }else{
-                    Log.i("Deu ruim", "Não deu certo inserir dados no banco só na primeira execuçao!");
+                    Log.i("Deu ruim", "Já exixte dados de user!");
                 }
             }
         }).start();
@@ -112,16 +117,12 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Usuario userBanco = null;
-                try {
-                    userBanco = dbUser.buscaUsuarioPorLogin(loginDigitado);
+                userBanco = dbUser.buscaUsuarioPorLogin(loginDigitado);
 
-                    if(userBanco.equals(null)){
-                        Toast.makeText(LoginActivity.this,"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();
-                    }else{
-                        validarLoginDigitadoComLoginBanco(userBanco);
-                    }
-                } catch (NoSuchAlgorithmException e) {
-                    e.printStackTrace();
+                if(userBanco.equals(null)){
+                    Toast.makeText(LoginActivity.this,"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();
+                }else{
+                    validarLoginDigitadoComLoginBanco(userBanco);
                 }
             }
         });
@@ -131,6 +132,10 @@ public class LoginActivity extends AppCompatActivity {
     public void validarLoginDigitadoComLoginBanco(Usuario userBanco){
         try {
             if(loginDigitado.equals(userBanco.getLogin()) && new MD5(senhaDigitada).getNovaSenha().equals(userBanco.getSenha()) ) {
+//                settings.getString(PREFS_NAME, userBanco.getIdUsuario());
+                int teste = (int) userBanco.getIdUsuario();
+                editor.putInt("login", teste );
+                editor.commit();
                 startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
             }else{
                 Toast.makeText(LoginActivity.this,"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();
@@ -141,7 +146,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     // método para inserir alguns dados iniciais nas tabelas na primeira execução da aplicação
-    public void InserirPrimeirosDados() throws NoSuchAlgorithmException, ParseException {
+    public void inserirPrimeirosDados() throws NoSuchAlgorithmException, ParseException {
 
         UsuarioDAO user = new UsuarioDAO(this);
         user.inserirPrimeiroUsuario();

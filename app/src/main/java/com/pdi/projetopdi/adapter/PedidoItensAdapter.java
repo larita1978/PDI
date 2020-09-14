@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.modelo.PedidoItem;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 public class PedidoItensAdapter extends RecyclerView.Adapter<PedidoItensViewHolder> {
@@ -56,8 +57,15 @@ public class PedidoItensAdapter extends RecyclerView.Adapter<PedidoItensViewHold
 
     }
 
+    public void add(PedidoItem itemNovo,int posicao) {
+        pedidosItens.add(itemNovo);
+        notifyItemInserted(posicao);
+    }
+
+
     @Override
     public int getItemCount() {
         return pedidosItens.size();
     }
+
 }

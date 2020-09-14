@@ -1,17 +1,18 @@
 package com.pdi.projetopdi.ui.activity;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.DialogFragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -23,10 +24,12 @@ import com.pdi.projetopdi.modelo.Pedido;
 import com.pdi.projetopdi.modelo.PedidoItem;
 
 import java.math.BigDecimal;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 
-public class NovoPedidoTeste extends AppCompatActivity {
+public class NovoPedido extends FragmentActivity {
 
     private PedidoItensAdapter adapter;
     private RecyclerView recycler;
@@ -41,25 +44,44 @@ public class NovoPedidoTeste extends AppCompatActivity {
     private TextView valorTotalItens;
     private TextView valorTotal;
 
+    private Button btGravarPedido;
+
     private Button btAddProduto;
     private Button btExibirCarrinho;
     private LinearLayout linearteste;
     private Boolean show;
 
+    private String data2;
+
+    private BigDecimal totalQuantidade;
+    private BigDecimal totalItens;
+    private BigDecimal valorTotalPedido;
+
+    private SharedPreferences idUsuarioLogado;
+    private int idUsuarioLogadoLong;
+
+    private Pedido novoPedido;
+    private PedidoDAO pedidoDAO;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_novo_pedido_teste);
+        setContentView(R.layout.activity_novo_pedido);
+
+        idUsuarioLogado = PreferenceManager.getDefaultSharedPreferences(this);
+        idUsuarioLogadoLong = idUsuarioLogado.getInt("login",0);
+        Log.i("idLogin", String.valueOf(idUsuarioLogadoLong));
 
         show = true;
 
         long date1 = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
 
         btExibirCarrinho = findViewById(R.id.btExibirCarrinho);
         linearteste = findViewById(R.id.idLinearTeste);
 
         dataPedido = findViewById(R.id.dataPedido);
+
         nomeCliente = findViewById(R.id.idNomeCliente);
         enderecoCliente = findViewById(R.id.idEnderecoCliente);
 
@@ -72,17 +94,19 @@ public class NovoPedidoTeste extends AppCompatActivity {
         valorTotalItens = findViewById(R.id.idTextResumoTotalItens);
         valorTotal = findViewById(R.id.idTextResumoValorTotal);
 
-        PedidoDAO pedidodao = new PedidoDAO(this);
-        Pedido pedido = new Pedido();
+        btGravarPedido = findViewById(R.id.btGravarPedido);
 
-        pedido.setCliente(nomeCliente.getText().toString());
-        pedido.setEndereco(enderecoCliente.getText().toString());
-        String data2 = sdf.format(date1);
+        pedidoDAO = new PedidoDAO(this);
+        novoPedido = new Pedido();
+
+        totalQuantidade = BigDecimal.ZERO;
+        totalItens =BigDecimal.ZERO;
+        valorTotalPedido = BigDecimal.ZERO;
+
+        data2 = sdf.format(date1);
 //        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         dataPedido.setText(data2);
 //        nomeCliente.setText("LArissa");
-
-
 
 
         pedidoItemList = new ArrayList<>();
@@ -94,30 +118,54 @@ public class NovoPedidoTeste extends AppCompatActivity {
         clicouBotaoAddProduto();
         exibirProdutosCarrinho();
 
+        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+        exibirProdutos();
 
-        int totalQuantidade = 0;
-        int totalItens =0;
+        calculoValoresResumo();
 
-        BigDecimal valorTotalPedido = BigDecimal.ZERO;
 
-        for(PedidoItem ped : pedidoItemList){
-            totalQuantidade++;
-            totalItens += ped.getQuantidade();
-            valorTotalPedido = valorTotalPedido.add(ped.getPrecoVenda().multiply(new BigDecimal(ped.getQuantidade())));
+        btGravarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("teste criar obj", "Clicou botão grava ");
+
+                try {
+                    criarObjPedido();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void criarObjPedido() throws ParseException {
+        Log.i("teste criar obj", "Abriu metodo criar obj");
+        String nomeClienteString = String.valueOf(nomeCliente.getText());
+        String enderecoString = String.valueOf(enderecoCliente.getText());
+        if(idUsuarioLogado.equals(0) || nomeClienteString.isEmpty() || enderecoString.isEmpty()
+                || totalItens.equals(BigDecimal.ZERO) || totalQuantidade.equals(BigDecimal.ZERO) || valorTotalPedido.equals(BigDecimal.ZERO))
+        {
+            Toast.makeText(this, "Todos os campos precisam ser preenchidos@", Toast.LENGTH_SHORT).show();
+
+        }else{
+            Pedido novoPedido = new Pedido(idUsuarioLogadoLong, nomeClienteString,
+                    enderecoString, data2, totalItens, totalQuantidade, valorTotalPedido);
+
+            pedidoDAO.inserirPedido(novoPedido);
+            startActivity(new Intent(NovoPedido.this, ListaPedidosActivity.class));
         }
-
-        valorTotalProdutos.setText(String.valueOf(totalQuantidade));
-        valorTotalItens.setText(String.valueOf(totalItens));
-        valorTotal.setText(String.valueOf(valorTotalPedido));
 
 
     }
+
 
     @Override
     protected void onResume() {
         super.onResume();
-        exibirProdutos();
     }
+
+
 
     public void exibirProdutosCarrinho(){
         btExibirCarrinho.setOnClickListener(new View.OnClickListener() {
@@ -147,13 +195,27 @@ public class NovoPedidoTeste extends AppCompatActivity {
             public void onClick(View v) {
                 new DialogEditarProdutoPedido().show(getSupportFragmentManager(),"teste");
 
-                if(getIntent().equals(null)){
-                    pedidoItemList.add((PedidoItem) getIntent().getSerializableExtra("obj"));
-                    exibirProdutos();
-                }
+//                if(getIntent().getSerializableExtra("flag").equals(true)){
+//                    pedidoItemList.add((PedidoItem) getIntent().getSerializableExtra("obj"));
+//                    exibirProdutos();
+//                }
 
             }
         });
     }
+    private void calculoValoresResumo() {
+        for(PedidoItem ped : pedidoItemList){
+            totalQuantidade = totalQuantidade.add(BigDecimal.valueOf(1));
+            totalItens = totalItens.add(BigDecimal.valueOf(ped.getQuantidade()));
+            valorTotalPedido = valorTotalPedido.add(ped.getPrecoVenda().multiply(new BigDecimal(String.valueOf(ped.getQuantidade()))));
+        }
+        exibirValoresResumo();
 
+    }
+
+    private void exibirValoresResumo() {
+        valorTotalProdutos.setText(String.valueOf(totalQuantidade));
+        valorTotalItens.setText(String.valueOf(totalItens));
+        valorTotal.setText(String.valueOf(valorTotalPedido));
+    }
 }
