@@ -144,7 +144,8 @@ public class NovoPedido extends FragmentActivity {
         String nomeClienteString = String.valueOf(nomeCliente.getText());
         String enderecoString = String.valueOf(enderecoCliente.getText());
         if(idUsuarioLogado.equals(0) || nomeClienteString.isEmpty() || enderecoString.isEmpty()
-                || totalItens.equals(BigDecimal.ZERO) || totalQuantidade.equals(BigDecimal.ZERO) || valorTotalPedido.equals(BigDecimal.ZERO))
+                || totalItens.equals(BigDecimal.ZERO) || totalQuantidade.equals(BigDecimal.ZERO)
+                || valorTotalPedido.equals(BigDecimal.ZERO)) // comparar valores com bigDecimal usar o compareto
         {
             Toast.makeText(this, "Todos os campos precisam ser preenchidos@", Toast.LENGTH_SHORT).show();
 
@@ -163,6 +164,7 @@ public class NovoPedido extends FragmentActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
     }
 
 

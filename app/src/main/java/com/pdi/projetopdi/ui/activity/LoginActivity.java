@@ -82,7 +82,7 @@ public class LoginActivity extends AppCompatActivity {
                     }
                     editor.putBoolean("firstRun", false).commit();
                 }else{
-                    Log.i("Deu ruim", "Já exixte dados de user!");
+                    Log.i("tudo certo", "Já existe dados de user!");
                 }
             }
         }).start();
@@ -103,7 +103,7 @@ public class LoginActivity extends AppCompatActivity {
         loginDigitado = campoLoginUser.getText().toString();
         senhaDigitada = campoSenhaUser.getText().toString();
 
-        if(campoLoginUser.getText().length()==0 || campoSenhaUser.getText().length()==0){
+        if(loginDigitado.length()==0 || campoSenhaUser.getText().length()==0){ //considera espaços, colocar um trim para garantir que não ha espaços em branco
             Log.i("teste","Entrou na validação de valor igual a null e login =" + loginDigitado +" senha = " + senhaDigitada);
             Toast.makeText(LoginActivity.this,"Login ou senha vazios!", Toast.LENGTH_SHORT).show();
         }else {
@@ -132,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
     public void validarLoginDigitadoComLoginBanco(Usuario userBanco){
         try {
             if(loginDigitado.equals(userBanco.getLogin()) && new MD5(senhaDigitada).getNovaSenha().equals(userBanco.getSenha()) ) {
-//                settings.getString(PREFS_NAME, userBanco.getIdUsuario());
                 int teste = (int) userBanco.getIdUsuario();
                 editor.putInt("login", teste );
                 editor.commit();
