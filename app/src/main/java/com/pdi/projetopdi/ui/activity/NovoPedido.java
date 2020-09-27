@@ -33,7 +33,7 @@ public class NovoPedido extends FragmentActivity {
 
     private PedidoItensAdapter adapter;
     private RecyclerView recycler;
-    private ArrayList<PedidoItem> pedidoItemList;
+    public ArrayList<PedidoItem> pedidoItemList;
     private PedidoItem pedidoItem;
 
     private TextView dataPedido;
@@ -104,38 +104,24 @@ public class NovoPedido extends FragmentActivity {
         valorTotalPedido = BigDecimal.ZERO;
 
         data2 = sdf.format(date1);
-//        String currentDateTimeString = DateFormat.getDateInstance().format(new Date());
         dataPedido.setText(data2);
-//        nomeCliente.setText("LArissa");
-
 
         pedidoItemList = new ArrayList<>();
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
+
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
         exibirProdutos();
         clicouBotaoAddProduto();
         exibirProdutosCarrinho();
-
-        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
-        exibirProdutos();
-
         calculoValoresResumo();
-
-
-        btGravarPedido.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Log.i("teste criar obj", "Clicou botão grava ");
-
-                try {
-                    criarObjPedido();
-                } catch (ParseException e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+        clicouBotaoGravarPedido();
 
     }
 
@@ -161,12 +147,6 @@ public class NovoPedido extends FragmentActivity {
     }
 
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
-
 
 
     public void exibirProdutosCarrinho(){
@@ -174,7 +154,7 @@ public class NovoPedido extends FragmentActivity {
             @Override
             public void onClick(View v) {
                 if(show){
-                    linearteste.setVisibility(View.INVISIBLE);
+                    linearteste.setVisibility(View.GONE);
                     show =false;
                 }else{
                     linearteste.setVisibility(View.VISIBLE);
@@ -219,5 +199,19 @@ public class NovoPedido extends FragmentActivity {
         valorTotalProdutos.setText(String.valueOf(totalQuantidade));
         valorTotalItens.setText(String.valueOf(totalItens));
         valorTotal.setText(String.valueOf(valorTotalPedido));
+    }
+    private void clicouBotaoGravarPedido(){
+        btGravarPedido.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("teste criar obj", "Clicou botão grava ");
+
+                try {
+                    criarObjPedido();
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 }

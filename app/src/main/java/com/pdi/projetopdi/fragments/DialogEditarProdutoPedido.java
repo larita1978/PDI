@@ -21,6 +21,7 @@ import com.pdi.projetopdi.dao.ProdutoDAO;
 import com.pdi.projetopdi.modelo.PedidoItem;
 import com.pdi.projetopdi.modelo.Produto;
 import com.pdi.projetopdi.ui.activity.NovoPedido;
+import com.pdi.projetopdi.ui.activity.NovoProdutoActivity;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -162,15 +163,10 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 if( totalProdutoTextView.getText().toString().isEmpty() /*|| totalProdutoBigDecimal.doubleValue() <= 0*/){
                     Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
                 }else{
-                    pedidoItem = new PedidoItem(produtoObj.getIdproduto(),quantidadeBigDecimal.intValue(),precoBigDecimal,precoVendaBigDecimal,descontoBigDecimal);
-                    Intent i = new Intent().putExtra("teste","oi");
-                    Intent it = new Intent(getContext(), NovoPedido.class);
-                    it.putExtra("obj", pedidoItem);
-                    it.putExtra("flag", true);// verificar para passar somente o id mais fácil (pesquisar)
-                    getContext().startActivity(it);
-//                    getActivity().finish();
 
-//                    dismiss();
+                    pedidoItem = new PedidoItem(produtoObj.getIdproduto(),quantidadeBigDecimal.intValue(),precoBigDecimal,precoVendaBigDecimal,descontoBigDecimal);
+                    ((NovoPedido)getActivity()).pedidoItemList.add(pedidoItem);
+                    dismiss();
                 }
             }
         });
