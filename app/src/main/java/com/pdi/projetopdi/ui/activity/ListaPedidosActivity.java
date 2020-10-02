@@ -44,6 +44,7 @@ public class ListaPedidosActivity extends AppCompatActivity {
 
         exibirPedidos();
         acaoBotaoNovoPedido();
+        editarPedido();
 
     }
 
@@ -55,6 +56,10 @@ public class ListaPedidosActivity extends AppCompatActivity {
 
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
+    }
+
+    public void editarPedido(){
+
     }
 
     public void acaoBotaoNovoPedido(){
