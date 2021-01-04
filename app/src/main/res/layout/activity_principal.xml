@@ -19,7 +19,7 @@
             android:layout_width="match_parent"
             android:layout_height="300dp"
             android:text="Produto"
-            android:textColor="#B98389"
+            android:textColor="#F48707"
             android:textSize="35dp"
             android:textAlignment="viewStart"
             android:paddingLeft="50dp"

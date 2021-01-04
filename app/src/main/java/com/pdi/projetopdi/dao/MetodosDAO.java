@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public interface MetodosDAO {
     String criarTabela();
-    void inserirProduto(Object obj);
+    void inserir(Object T);
     ArrayList<Object> buscarTudo();
 
 }
