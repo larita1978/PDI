@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#648FB1</color>
     <color name="colorAccent">#009688</color>
     <color name="colorBtNovoProduto">#648FB1</color>
-    <color name="colorBtListas">#FFFFFF</color>
+    <color name="corBrancaParaTexto">#FFFFFF</color>
     <color name="colorbackgroud">#fafafa</color>
     <color name="corFundoMaisClara">#FDF7FB</color>
     <color name="corFontTitulo">#464444</color>

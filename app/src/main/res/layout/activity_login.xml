@@ -7,15 +7,15 @@
     android:orientation="vertical"
     tools:context=".ui.activity.LoginActivity">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="1.2">
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@mipmap/ic_logo"/>
-    </LinearLayout>
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:layout_weight="1.2">-->
+<!--        <ImageView-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src=""/>-->
+<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -47,7 +47,18 @@
             android:layout_marginLeft="75dp"
             android:layout_marginTop="50dp"
             android:background="@color/colorBtNovoProduto"
-            android:textColor="#fff"
+            android:textColor="@color/corBrancaParaTexto"
             android:text="Entrar" />
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="150dp"
+            android:layout_marginBottom="-15dp"
+            android:src="@drawable/vetor_mulher_carrinho2" />
     </LinearLayout>
 </LinearLayout>
