@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.modelo;
+package com.pdi.projetopdi.model;
 
 import android.os.Parcel;
 import android.os.Parcelable;

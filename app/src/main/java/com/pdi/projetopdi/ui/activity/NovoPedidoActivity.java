@@ -1,6 +1,5 @@
 package com.pdi.projetopdi.ui.activity;
 
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -10,26 +9,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import androidx.fragment.app.FragmentActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.PedidoItensAdapter;
-import com.pdi.projetopdi.dao.PedidoDAO;
+import com.pdi.projetopdi.model.FormatDate;
+import com.pdi.projetopdi.repository.PedidoRepository;
 import com.pdi.projetopdi.fragments.DialogEditarProdutoPedido;
-import com.pdi.projetopdi.modelo.Pedido;
-import com.pdi.projetopdi.modelo.PedidoItem;
+import com.pdi.projetopdi.model.Pedido;
+import com.pdi.projetopdi.model.PedidoItem;
+import com.pdi.projetopdi.ui.logic.NovoPedidoLogic;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Locale;
 
-public class NovoPedido extends FragmentActivity {
+public class NovoPedidoActivity extends AppCompatActivity {
 
     private PedidoItensAdapter adapter;
     private RecyclerView recycler;
@@ -61,21 +59,37 @@ public class NovoPedido extends FragmentActivity {
     private int idUsuarioLogadoLong;
 
     private Pedido novoPedido;
-    private PedidoDAO pedidoDAO;
+    private PedidoRepository pedidoRepository;
+
+    private NovoPedidoLogic pedidoViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_pedido);
 
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        //aqui pega o id do user logado
         idUsuarioLogado = PreferenceManager.getDefaultSharedPreferences(this);
         idUsuarioLogadoLong = idUsuarioLogado.getInt("login",0);
         Log.i("idLogin", String.valueOf(idUsuarioLogadoLong));
 
+        //variavel controle se irá aparecer os produtos ou não
         show = true;
 
-        long date1 = System.currentTimeMillis();
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+        Long idPedido = (Long) getIntent().getSerializableExtra("id");
+
+        if(!(idPedido==null)){
+            Log.i("oi", "veio id");
+//            totalQuantidade =;
+//            totalItens =BigDecimal.ZERO;
+//            valorTotalPedido = BigDecimal.ZERO;
+        }
 
         btExibirCarrinho = findViewById(R.id.btExibirCarrinho);
         linearteste = findViewById(R.id.idLinearTeste);
@@ -85,33 +99,46 @@ public class NovoPedido extends FragmentActivity {
         nomeCliente = findViewById(R.id.idNomeCliente);
         enderecoCliente = findViewById(R.id.idEnderecoCliente);
 
-
         btAddProduto = findViewById(R.id.btAddProduto);
         recycler = findViewById(R.id.recyclerProdutosCabecalho);
 
-
+        //campos resumo
         valorTotalProdutos = findViewById(R.id.idTextResumoTotalProdutos);
         valorTotalItens = findViewById(R.id.idTextResumoTotalItens);
         valorTotal = findViewById(R.id.idTextResumoValorTotal);
 
         btGravarPedido = findViewById(R.id.btGravarPedido);
 
-        pedidoDAO = new PedidoDAO(this);
-        novoPedido = new Pedido();
 
+        //campos do resumo
         totalQuantidade = BigDecimal.ZERO;
         totalItens =BigDecimal.ZERO;
         valorTotalPedido = BigDecimal.ZERO;
 
-        data2 = sdf.format(date1);
-        dataPedido.setText(data2);
+        pedidoViewModel= new NovoPedidoLogic(this);
 
+        try {
+            exibeData();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+
+        pedidoRepository = PedidoRepository.getInstance(this);
+        novoPedido = new Pedido();
         pedidoItemList = new ArrayList<>();
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
         pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
+    }
 
+    private void exibeData() throws ParseException {
+        //declaração de datas
+        long date1 = System.currentTimeMillis();
+            FormatDate format = new FormatDate();
+            format.setDataLong(date1);
+            data2 = format.getDataLong() ;
+            dataPedido.setText(data2);
     }
 
     @Override
@@ -120,34 +147,8 @@ public class NovoPedido extends FragmentActivity {
         exibirProdutos();
         clicouBotaoAddProduto();
         exibirProdutosCarrinho();
-        calculoValoresResumo();
         clicouBotaoGravarPedido();
-
     }
-
-    private void criarObjPedido() throws ParseException {
-        Log.i("teste criar obj", "Abriu metodo criar obj");
-        String nomeClienteString = String.valueOf(nomeCliente.getText());
-        String enderecoString = String.valueOf(enderecoCliente.getText());
-        if(idUsuarioLogado.equals(0) || nomeClienteString.isEmpty() || enderecoString.isEmpty()
-                || totalItens.equals(BigDecimal.ZERO) || totalQuantidade.equals(BigDecimal.ZERO)
-                || valorTotalPedido.equals(BigDecimal.ZERO)) // comparar valores com bigDecimal usar o compareto
-        {
-            Toast.makeText(this, "Todos os campos precisam ser preenchidos@", Toast.LENGTH_SHORT).show();
-
-        }else{
-            Pedido novoPedido = new Pedido(idUsuarioLogadoLong, nomeClienteString,
-                    enderecoString, data2, totalItens, totalQuantidade, valorTotalPedido);
-
-            pedidoDAO.inserirPedido(novoPedido);
-            startActivity(new Intent(NovoPedido.this, ListaPedidosActivity.class));
-        }
-
-
-    }
-
-
-
 
     public void exibirProdutosCarrinho(){
         btExibirCarrinho.setOnClickListener(new View.OnClickListener() {
@@ -175,7 +176,7 @@ public class NovoPedido extends FragmentActivity {
         btAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogEditarProdutoPedido().show(getSupportFragmentManager(),"teste");
+                new DialogEditarProdutoPedido(pedidoItem).show(getSupportFragmentManager(),"teste");
 
 //                if(getIntent().getSerializableExtra("flag").equals(true)){
 //                    pedidoItemList.add((PedidoItem) getIntent().getSerializableExtra("obj"));
@@ -185,17 +186,9 @@ public class NovoPedido extends FragmentActivity {
             }
         });
     }
-    private void calculoValoresResumo() {
-        for(PedidoItem ped : pedidoItemList){
-            totalQuantidade = totalQuantidade.add(BigDecimal.valueOf(1));
-            totalItens = totalItens.add(BigDecimal.valueOf(ped.getQuantidade()));
-            valorTotalPedido = valorTotalPedido.add(ped.getPrecoVenda().multiply(new BigDecimal(String.valueOf(ped.getQuantidade()))));
-        }
-        exibirValoresResumo();
 
-    }
 
-    private void exibirValoresResumo() {
+    public void exibirValoresResumo(BigDecimal totalQuantidade,BigDecimal totalItens, BigDecimal valorTotalPedido) {
         valorTotalProdutos.setText(String.valueOf(totalQuantidade));
         valorTotalItens.setText(String.valueOf(totalItens));
         valorTotal.setText(String.valueOf(valorTotalPedido));
@@ -207,11 +200,16 @@ public class NovoPedido extends FragmentActivity {
                 Log.i("teste criar obj", "Clicou botão grava ");
 
                 try {
-                    criarObjPedido();
+                    String nomeClienteString = String.valueOf(nomeCliente.getText());
+                    String enderecoString = String.valueOf(enderecoCliente.getText());
+                    pedidoViewModel.validaCamposPreenchidos(idUsuarioLogadoLong,
+                            nomeClienteString,enderecoString,data2);
+
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
             }
         });
     }
+
 }

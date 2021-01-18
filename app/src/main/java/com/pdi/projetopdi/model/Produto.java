@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.modelo;
+package com.pdi.projetopdi.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

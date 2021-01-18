@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.modelo;
+package com.pdi.projetopdi.model;
 
 import java.io.Serializable;
 import java.security.NoSuchAlgorithmException;

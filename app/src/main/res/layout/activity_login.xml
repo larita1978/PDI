@@ -7,28 +7,30 @@
     android:orientation="vertical"
     tools:context=".ui.activity.LoginActivity">
 
-<!--    <LinearLayout-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:layout_weight="1.2">-->
-<!--        <ImageView-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="match_parent"-->
-<!--            android:src=""/>-->
-<!--    </LinearLayout>-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5">
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+<!--            android:src=""-->
+
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_weight="0.9">
+        android:layout_weight="0.5">
         <EditText
             android:id="@+id/usuarioLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:hint="Login" />
+            android:hint="@string/textoLogin" />
 
         <EditText
             android:id="@+id/usuarioSenha"
@@ -37,7 +39,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginStart="60dp"
             android:layout_marginEnd="60dp"
-            android:hint="Senha"
+            android:hint="@string/textoSenha"
             android:inputType="textPassword"/>
         <Button
             android:id="@+id/botaoAcessar"
@@ -48,17 +50,16 @@
             android:layout_marginTop="50dp"
             android:background="@color/colorBtNovoProduto"
             android:textColor="@color/corBrancaParaTexto"
-            android:text="Entrar" />
+            android:text="@string/textoEntrar" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_weight="0">
 
         <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="150dp"
-            android:layout_marginBottom="-15dp"
-            android:src="@drawable/vetor_mulher_carrinho2" />
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_mulher_carrinho_maior" />
     </LinearLayout>
 </LinearLayout>

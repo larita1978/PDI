@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.activity.NovoPedido"
+    tools:context=".ui.activity.NovoPedidoActivity"
     android:fillViewport="true">
 
     <LinearLayout
@@ -39,7 +39,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/textCliente"/>
+                        android:text="@string/textoCliente"/>
                     <EditText
                         android:id="@+id/idNomeCliente"
                         android:layout_width="match_parent"
@@ -53,7 +53,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="@string/textEndereço"/>
+                        android:text="@string/textoEndereço"/>
                     <EditText
                         android:id="@+id/idEnderecoCliente"
                         android:layout_width="match_parent"
@@ -161,13 +161,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/textTotalProdutos"
+                        android:text="@string/textoTotalProdutos"
                         android:layout_weight="0.5" />
 
                     <TextView android:id="@+id/idTextResumoTotalProdutos"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="R$15.00"
+                        android:text="R$0.00"
                         android:layout_weight="0.5"/>
                 </LinearLayout>
 
@@ -179,13 +179,13 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/textTotalItens"
+                        android:text="@string/textoTotalItens"
                         android:layout_weight="0.5"/>
 
                     <TextView android:id="@+id/idTextResumoTotalItens"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="R$15.00"
+                        android:text="R$0.00"
                         android:layout_weight="0.5"/>
                 </LinearLayout>
                 <LinearLayout
@@ -196,12 +196,12 @@
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/textValorTotal"
+                        android:text="@string/textoValorTotal"
                         android:layout_weight="0.5"/>
                     <TextView  android:id="@+id/idTextResumoValorTotal"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="R$15.00"
+                        android:text="R$0.00"
                         android:layout_weight="0.5"/>
                 </LinearLayout>
             </LinearLayout>

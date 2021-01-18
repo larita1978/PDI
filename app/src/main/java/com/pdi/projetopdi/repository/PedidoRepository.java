@@ -1,13 +1,11 @@
-package com.pdi.projetopdi.dao;
+package com.pdi.projetopdi.repository;
 
-import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.pdi.projetopdi.modelo.Pedido;
-import com.pdi.projetopdi.modelo.Produto;
-import com.pdi.projetopdi.modelo.Usuario;
+import com.pdi.projetopdi.model.FormatDate;
+import com.pdi.projetopdi.model.Pedido;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -16,7 +14,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
-public class PedidoDAO {
+public class PedidoRepository {
 
     private static final String PEDIDO = "pedido";
     private static final String IDPEDIDO = "idPedido";
@@ -27,14 +25,23 @@ public class PedidoDAO {
     private static final String TOTALITENS = "totalItens";
     private static final String TOTALPRODUTOS = "totalProdutos";
     private static final String VALORTOTAL = "valorTotal";
-    private DadosHelper dao;
+    private DadosHelper db;
 
-    public PedidoDAO(Context context) {
-        this.dao = new DadosHelper(context);
+    private static PedidoRepository INSTANCE;
+
+    private PedidoRepository(Context context) {
+        this.db = new DadosHelper(context);
     }
 
-    public PedidoDAO(DadosHelper dao) {
-        this.dao = dao;
+    public static PedidoRepository getInstance(Context context ){
+        if(INSTANCE == null){
+            INSTANCE = new PedidoRepository(context);
+        }
+        return INSTANCE;
+    }
+
+    public PedidoRepository(DadosHelper db) {
+        this.db = db;
     }
 
 
@@ -66,14 +73,14 @@ public class PedidoDAO {
         dados.put(TOTALPRODUTOS,pedido.getTotalProdutos().scaleByPowerOfTen(2).doubleValue());
         dados.put(VALORTOTAL,pedido.getValorTotal().scaleByPowerOfTen(2).doubleValue());
 
-        dao.getWritableDatabase().insert(PEDIDO,null,dados);
-        dao.close();
+        db.getWritableDatabase().insert(PEDIDO,null,dados);
+        db.close();
     }
 
     public ArrayList<Pedido> buscaPedidos(){
         ArrayList<Pedido> pedidos = new ArrayList<Pedido>();
         String sql = "SELECT * FROM " + PEDIDO + ";";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         while(c.moveToNext()){
             Pedido ped = new Pedido();
@@ -95,7 +102,7 @@ public class PedidoDAO {
         public Pedido buscaPedidoPorID(int idpedido){
             String sql = "SELECT * FROM " + PEDIDO + " WHERE " + IDPEDIDO + " = " + idpedido +";";
 
-            Cursor c = dao.getReadableDatabase().rawQuery(sql,null);
+            Cursor c = db.getReadableDatabase().rawQuery(sql,null);
 
             Pedido ped = new Pedido();
 
@@ -116,11 +123,15 @@ public class PedidoDAO {
         public void inserirPrimeirosDadosPedido() throws ParseException {
             ArrayList<Pedido> pedidos;
             pedidos = buscaPedidos();
-            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
-            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
+//            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+//            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
+            long date1 = System.currentTimeMillis();
+            FormatDate format = new FormatDate();
+            format.setDataLong(date1);
+            String data2 = format.getDataLong() ;
             if(pedidos.isEmpty()) {
-                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-                inserirPedido(new Pedido(0,"Casa da Moda", "Rua Brasilia","22/07/2020 12:00:00",new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+                inserirPedido(new Pedido(1,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+                inserirPedido(new Pedido(2,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
 
             }
         }

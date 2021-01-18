@@ -1,11 +1,9 @@
-package com.pdi.projetopdi.modelo;
+package com.pdi.projetopdi.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
 public class Pedido {
     private int idPedido;
@@ -17,24 +15,21 @@ public class Pedido {
     private BigDecimal totalProdutos;
     private BigDecimal valorTotal;
 
-    private SimpleDateFormat sdf = new SimpleDateFormat ("dd/MM/yyyy HH:mm:ss", Locale.US);
-
     public Pedido(){}
 
-    public Pedido(int idPedido, int idUsuario, String cliente, String endereco ,BigDecimal totalItens,
-                  BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idPedido, int idUsuario,String cliente,String endereco,BigDecimal totalItens,
+                  BigDecimal totalProdutos, BigDecimal valorTotal) {
         this.idPedido = idPedido;
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;
-        this.dataPedido = dataPedido;
         this.totalItens = totalItens;
         this.totalProdutos = totalProdutos;
         this.valorTotal = valorTotal;
     }
 
-    public Pedido(int idUsuario, String cliente, String endereco,String dataPedido, BigDecimal totalItens,
-                  BigDecimal totalProdutos, BigDecimal valorTotal) throws ParseException {
+    public Pedido(int idUsuario, String cliente, String endereco,String dataPedido,
+                  BigDecimal totalItens,BigDecimal totalProdutos, BigDecimal valorTotal) {
         this.idUsuario = idUsuario;
         this.cliente = cliente;
         this.endereco = endereco;
@@ -76,8 +71,8 @@ public class Pedido {
         this.endereco = endereco;
     }
 
-    public Date getDataPedido() throws ParseException {
-        return sdf.parse(dataPedido);
+    public String getDataPedido() throws ParseException {
+        return new FormatDate(dataPedido).getData();
     }
 
     public void setDataPedido(String dataPedido) {
@@ -89,7 +84,8 @@ public class Pedido {
     }
 
     public void setTotalItens(double totalItens) {
-        this.totalItens = new BigDecimal(totalItens).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
+        this.totalItens = new BigDecimal(totalItens).setScale(2, RoundingMode.HALF_EVEN)
+                .divide(new BigDecimal(100));
     }
 
     public BigDecimal getTotalProdutos() {
@@ -97,7 +93,8 @@ public class Pedido {
     }
 
     public void setTotalProdutos(double totalProdutos) {
-        this.totalProdutos = new BigDecimal(totalProdutos).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
+        this.totalProdutos = new BigDecimal(totalProdutos).setScale(2, RoundingMode.HALF_EVEN)
+                .divide(new BigDecimal(100));
     }
 
     public BigDecimal getValorTotal() {
@@ -105,6 +102,7 @@ public class Pedido {
     }
 
     public void setValorTotal(double valorTotal) {
-        this.valorTotal = new BigDecimal(valorTotal).setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100));
+        this.valorTotal = new BigDecimal(valorTotal).setScale(2, RoundingMode.HALF_EVEN)
+                .divide(new BigDecimal(100));
     }
 }

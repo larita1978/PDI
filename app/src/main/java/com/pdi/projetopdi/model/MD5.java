@@ -1,6 +1,4 @@
-package com.pdi.projetopdi.modelo;
-
-import android.util.Log;
+package com.pdi.projetopdi.model;
 
 import java.math.BigInteger;
 import java.security.MessageDigest;

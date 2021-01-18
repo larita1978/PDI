@@ -1,34 +1,42 @@
-package com.pdi.projetopdi.dao;
+package com.pdi.projetopdi.repository;
 
 import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.model.Produto;
 
 import java.io.Closeable;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-public class ProdutoDAO implements Closeable {
+public class ProdutoRepository implements Closeable {
 
     private static final String PRODUTO = "Produto";
     private static final String IDPRODUTO = "idProduto";
     private static final String DESCRICAO = "descricao";
     private static final String PRECO = "preco";
-    private DadosHelper dao;
+    private DadosHelper db;
 
-    public ProdutoDAO(Context context) {
-        this.dao = new DadosHelper(context);
+    private static ProdutoRepository INSTANCE;
+
+    public ProdutoRepository(Context context) { // mudar para private
+        this.db = new DadosHelper(context);
     }
 
-    public ProdutoDAO(DadosHelper dao) {
-        this.dao = dao;
+    public static ProdutoRepository getInstance(Context context ){
+        if(INSTANCE == null){
+            INSTANCE = new ProdutoRepository(context);
+        }
+        return INSTANCE;
+    }
+    public ProdutoRepository(DadosHelper dao) {
+        this.db = dao;
     }
 
-    public ProdutoDAO(){}
+    public ProdutoRepository(){}
 
     public String criarTabelaProduto(){
         StringBuilder sql = new StringBuilder();
@@ -48,14 +56,14 @@ public class ProdutoDAO implements Closeable {
         dados.put(DESCRICAO,produto.getDescricao());
         dados.put(PRECO,produto.getPreco().scaleByPowerOfTen(2).doubleValue());
 
-        dao.getWritableDatabase().insert(PRODUTO,null,dados);
-        dao.close();
+        db.getWritableDatabase().insert(PRODUTO,null,dados);
+        db.close();
     }
 
     public ArrayList<Produto> buscaProdutos(){
         ArrayList<Produto> produtos = new ArrayList<Produto>();
         String sql = "SELECT * FROM " + PRODUTO + ";";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         while(c.moveToNext()){
             Produto prod = new Produto();
@@ -71,7 +79,7 @@ public class ProdutoDAO implements Closeable {
 
     public Produto buscaProdutoPorID(Long idProduto){
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + IDPRODUTO + " = " + idProduto;
-        Cursor c = dao.getReadableDatabase().rawQuery(sql,null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql,null);
 
         Produto prod = new Produto();
 
@@ -86,7 +94,7 @@ public class ProdutoDAO implements Closeable {
     public ArrayList<Produto> buscaProdutoDescricao(String valor){
         ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         while(c.moveToNext()){
             Produto prod = new Produto();
@@ -101,9 +109,9 @@ public class ProdutoDAO implements Closeable {
     }
 
     public Produto buscaProdutoDesc(String valor){
-        ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
+//        ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
         Produto prod = new Produto();
 
@@ -112,7 +120,7 @@ public class ProdutoDAO implements Closeable {
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
             prod.setPreco(c.getDouble(c.getColumnIndex(PRECO)));
 
-            produtosdesc.add(prod);
+//            produtosdesc.add(prod);
         }
         c.close();
         return prod;
@@ -135,11 +143,11 @@ public class ProdutoDAO implements Closeable {
         ContentValues data=new ContentValues();
         data.put(DESCRICAO,produto.getDescricao());
         data.put(PRECO,produto.getPreco().scaleByPowerOfTen(2).doubleValue());
-        dao.getReadableDatabase().update(PRODUTO, data, IDPRODUTO + "="+ produto.getIdproduto(),null);
+        db.getReadableDatabase().update(PRODUTO, data, IDPRODUTO + "="+ produto.getIdproduto(),null);
     }
 
     @Override
     public void close() throws IOException {
-        dao.close();
+        db.close();
     }
 }

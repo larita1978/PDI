@@ -11,9 +11,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.modelo.Pedido;
-import com.pdi.projetopdi.ui.activity.EditarProdutoActivity;
-import com.pdi.projetopdi.ui.activity.NovoPedido;
+import com.pdi.projetopdi.model.Pedido;
+import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 
 import java.util.ArrayList;
 
@@ -47,10 +46,9 @@ public class PedidoAdapter extends RecyclerView.Adapter<PedidoViewHolder> {
                 @Override
                 public void onClick(View v) {
                     Log.i("Acessou","pós validação");
-//                    Intent it = new Intent(context, EditarProdutoActivity.class);
-//                    it.putExtra("id", produto.getIdproduto());
-//                    context.startActivity(it);
-                    context.startActivity(new Intent(context, NovoPedido.class));
+                    Intent it = new Intent(context, NovoPedidoActivity.class);
+                    it.putExtra("id", pedido.getIdPedido());
+                    context.startActivity(it);
                 }
             });
         }

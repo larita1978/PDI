@@ -9,8 +9,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.dao.ProdutoDAO;
-import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.repository.ProdutoRepository;
+import com.pdi.projetopdi.model.Produto;
 
 import java.math.BigDecimal;
 
@@ -25,7 +25,7 @@ public class NovoProdutoActivity extends AppCompatActivity {
          final EditText novoPrdPreco = findViewById(R.id.novoPrdPreco);
          Button novoPrdBotao = findViewById(R.id.novoPrdBotao);
 
-        final ProdutoDAO pr = new ProdutoDAO(this);
+        final ProdutoRepository pr = new ProdutoRepository(this);
 
         novoPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override

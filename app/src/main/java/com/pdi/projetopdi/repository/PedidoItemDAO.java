@@ -1,14 +1,6 @@
-package com.pdi.projetopdi.dao;
+package com.pdi.projetopdi.repository;
 
-import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
-
-import com.pdi.projetopdi.modelo.Pedido;
-
-import java.math.BigDecimal;
-import java.text.ParseException;
-import java.util.ArrayList;
 
 public class PedidoItemDAO {
         private static final String PEDIDOITEM = "pedidoitem";

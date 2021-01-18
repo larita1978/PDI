@@ -10,8 +10,8 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.dao.ProdutoDAO;
-import com.pdi.projetopdi.modelo.Produto;
+import com.pdi.projetopdi.repository.ProdutoRepository;
+import com.pdi.projetopdi.model.Produto;
 
 import java.math.BigDecimal;
 
@@ -31,7 +31,7 @@ public class EditarProdutoActivity extends AppCompatActivity {
         final EditText produtoPreco = findViewById(R.id.produtoPreco);
         Button salvarPrdBotao = findViewById(R.id.salvarPrdBotao);
 
-        final ProdutoDAO produtoDAO = new ProdutoDAO(this);
+        final ProdutoRepository produtoDAO = new ProdutoRepository(this);
         final Produto prd = produtoDAO.buscaProdutoPorID(idProduto);
 
         produtoDescricao.setText(prd.getDescricao());
@@ -40,7 +40,7 @@ public class EditarProdutoActivity extends AppCompatActivity {
         salvarPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString()); 
+                BigDecimal novoPrdPrecoD = new BigDecimal(produtoPreco.getText().toString());
                 String novoPrdDescricaoD = produtoDescricao.getText().toString();
                 produtoDAO.updateProduto(new Produto(Math.toIntExact(prd.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
                 Toast.makeText(EditarProdutoActivity.this,"Poduto alterado!", Toast.LENGTH_SHORT).show();

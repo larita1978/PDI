@@ -1,13 +1,10 @@
-package com.pdi.projetopdi.dao;
+package com.pdi.projetopdi.repository;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteException;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
-
-import com.pdi.projetopdi.modelo.Usuario;
 
 public class DadosHelper extends SQLiteOpenHelper {
 
@@ -17,11 +14,11 @@ public class DadosHelper extends SQLiteOpenHelper {
 
         @Override
         public void onCreate(SQLiteDatabase db) {
-            UsuarioDAO user = new UsuarioDAO(this);
+            UsuarioRepository user = new UsuarioRepository(this);
             db.execSQL(user.criarTabelaUsuario());
-            ProdutoDAO pr = new ProdutoDAO(this);
+            ProdutoRepository pr = new ProdutoRepository(this);
             db.execSQL(pr.criarTabelaProduto());
-            PedidoDAO ped = new PedidoDAO(this);
+            PedidoRepository ped = new PedidoRepository(this);
             db.execSQL(ped.criarTabelaPedido());
             PedidoItemDAO pedItem = new PedidoItemDAO(this);
             db.execSQL(pedItem.criarTabelaPedidoItem());

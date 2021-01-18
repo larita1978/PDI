@@ -1,31 +1,38 @@
-package com.pdi.projetopdi.dao;
+package com.pdi.projetopdi.repository;
 
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 
-import com.pdi.projetopdi.modelo.Usuario;
+import com.pdi.projetopdi.model.Usuario;
 
 import java.security.NoSuchAlgorithmException;
 
-public class UsuarioDAO {
+public class UsuarioRepository {
 
     private static final String USUARIO = "usuario";
     private static final String IDUSUARIO = "idUsuario";
     private static final String NOME = "nome";
     private static final String LOGIN = "login";
     private static final String SENHA = "senha";
-    private DadosHelper dao;
+    private DadosHelper db;
 
-    public UsuarioDAO(Context context) {
-        this.dao = new DadosHelper(context);
+    private static UsuarioRepository INSTANCE;
+
+    private UsuarioRepository(Context context) {
+        this.db = new DadosHelper(context);
     }
 
-    public UsuarioDAO(DadosHelper dao) {
-        this.dao = dao;
+    public static UsuarioRepository getInstance(Context context ){
+        if(INSTANCE == null){
+            INSTANCE = new UsuarioRepository(context);
+        }
+        return INSTANCE;
     }
 
-    public UsuarioDAO(){}
+    public UsuarioRepository(DadosHelper db){
+        this.db = db;
+    }
 
     public String criarTabelaUsuario(){
         StringBuilder sql = new StringBuilder();
@@ -45,16 +52,16 @@ public class UsuarioDAO {
         dados.put(LOGIN,usuario.getLogin());
         dados.put(SENHA,usuario.getSenha());
 
-        dao.getWritableDatabase().insert(USUARIO,null,dados);
-        dao.close();
+        db.getWritableDatabase().insert(USUARIO,null,dados);
+        db.close();
     }
 
     public Usuario buscaUsuarioPorLogin(String login) {
         Usuario user = new Usuario();
         String sql = "SELECT * FROM USUARIO WHERE LOGIN = ?";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, new String[]{login});
+        Cursor c = db.getReadableDatabase().rawQuery(sql, new String[]{login});
 
-//        c.moveToFirst();
+        c.moveToFirst();
         while(c.moveToNext()){
             user.setIdUsuario(c.getLong(c.getColumnIndex(IDUSUARIO)));
             user.setNome(c.getString(c.getColumnIndex(NOME)));
@@ -65,10 +72,10 @@ public class UsuarioDAO {
         return user;
     }
 
-    public Usuario buscaUsuarios() {
+    public Usuario buscaUsuario() {
         Usuario user = new Usuario();
         String sql = "SELECT * FROM USUARIO LIMIT 1";
-        Cursor c = dao.getReadableDatabase().rawQuery(sql, null);
+        Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
 //        c.moveToFirst();
         while(c.moveToNext()){

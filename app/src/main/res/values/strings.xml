@@ -1,12 +1,30 @@
 <resources>
     <string name="app_name">App Vendas</string>
+
+    <!-- Strings tela login -->
+    <string name="textoLogin">Login</string>
+    <string name="textoSenha">Senha</string>
+    <string name="textoEntrar">Entrar</string>
+
+    <!-- Strings tela Principal -->
+
+
+    <!-- Strings tela Lista Produtos -->
+
+    <!-- Strings tela novo Produto -->
+
+    <!-- Strings tela Lista Pedidos -->
+
+    <!-- Strings tela Novo Pedido -->
+    <string name="textoCliente">Cliente</string>
+    <string name="textoEndereço">Endereço</string>
     <string name="tituloCabecalho">Cabeçalho</string>
-    <string name="textCliente">Cliente</string>
-    <string name="textEndereço">Endereço</string>
-    <string name="text">Cliente</string>
     <string name="tituloCarrinho">Carrinho</string>
     <string name="tituloResumo">Resumo</string>
-    <string name="textTotalProdutos">Total de produtos</string>
-    <string name="textTotalItens">Total de itens</string>
-    <string name="textValorTotal">Valor total</string>
+    <string name="textoTotalProdutos">Total de produtos</string>
+    <string name="textoTotalItens">Total de itens</string>
+    <string name="textoValorTotal">Valor total</string>
+
+
+
 </resources>
