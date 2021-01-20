@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.adapter.viewHolder;
+package com.pdi.projetopdi.adapter;
 
 import android.view.View;
 import android.widget.Button;

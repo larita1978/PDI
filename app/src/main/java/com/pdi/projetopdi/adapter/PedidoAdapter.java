@@ -11,7 +11,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.adapter.viewHolder.PedidoViewHolder;
 import com.pdi.projetopdi.model.Pedido;
 import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
 

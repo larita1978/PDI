@@ -12,14 +12,13 @@
         </activity>
         <activity android:name=".ui.activity.EditarProdutoActivity" />
         <activity android:name=".ui.activity.ListaPedidosActivity">
+        </activity>
+        <activity android:name=".ui.activity.ListaProdutosActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ui.activity.NovoProdutoActivity" />
-        <activity android:name=".ui.activity.ListaProdutosActivity" >
         </activity>
         <activity android:name=".ui.activity.PrincipalActivity" />
         <activity android:name=".ui.activity.LoginActivity">

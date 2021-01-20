@@ -10,24 +10,21 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.repository.UsuarioRepository;
-import com.pdi.projetopdi.logic.LoginViewModel;
-import com.pdi.projetopdi.logic.factory.LoginViewModelFactory;
+import com.pdi.projetopdi.logic.LoginLogic;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private EditText campoLoginUsuario;
-    private EditText campoSenhaUsuario;
-    private Button botaoEntrar;
+    private EditText loginUsuarioEditText;
+    private EditText senhaUsuarioEditText;
+    private Button entrarButton;
     private String loginDigitado;
     private String senhaDigitada;
 
     SharedPreferences.Editor editor;
 
-    private LoginViewModel loginViewModel;
+    private LoginLogic loginLogic;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,13 +37,11 @@ public class LoginActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
 
-        UsuarioRepository repository =UsuarioRepository.getInstance(this);
-        LoginViewModelFactory factory = new LoginViewModelFactory(repository);
-        this.loginViewModel = new ViewModelProvider(this, factory).get(LoginViewModel.class);
+        this.loginLogic = new LoginLogic(this);
 
-        this.campoLoginUsuario = findViewById(R.id.usuarioLogin);
-        this.campoSenhaUsuario = findViewById(R.id.usuarioSenha);
-        this.botaoEntrar = findViewById(R.id.botaoAcessar);
+        this.loginUsuarioEditText = findViewById(R.id.usuarioLogin);
+        this.senhaUsuarioEditText = findViewById(R.id.usuarioSenha);
+        this.entrarButton = findViewById(R.id.botaoAcessar);
 
 
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
@@ -60,15 +55,15 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void clicouBotao() {
-        this.botaoEntrar.setOnClickListener(new View.OnClickListener() {
+        this.entrarButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        loginDigitado = campoLoginUsuario.getText().toString().trim();
-                        senhaDigitada = campoSenhaUsuario.getText().toString().trim();
-                        if(loginViewModel.validacaoLogin(loginDigitado, senhaDigitada)){
+                        loginDigitado = loginUsuarioEditText.getText().toString().trim();
+                        senhaDigitada = senhaUsuarioEditText.getText().toString().trim();
+                        if(loginLogic.validacaoLogin(loginDigitado, senhaDigitada)){
                             startActivity(new Intent(LoginActivity.this, PrincipalActivity.class));
                         }else{
                             Toast.makeText(getApplication(),"Login ou senha incorretos!", Toast.LENGTH_SHORT).show();

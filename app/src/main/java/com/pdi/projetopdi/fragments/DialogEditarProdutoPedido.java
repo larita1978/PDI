@@ -2,7 +2,6 @@ package com.pdi.projetopdi.fragments;
 
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +15,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.repository.ProdutoRepository;
 import com.pdi.projetopdi.model.PedidoItem;
 import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
@@ -53,6 +51,9 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     public DialogEditarProdutoPedido(PedidoItem item) {
         this.itemRecebidoEditar = item;
     }
+
+    public DialogEditarProdutoPedido(){}
+
 
     @NonNull
     @Override
@@ -204,7 +205,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 } else {
                     try{
                     itemRecebidoEditar = dialogLogic.salvarProduto(quantidadeBigDecimal);
-                    ((NovoPedidoActivity) getActivity()).pedidoItemList.add(itemRecebidoEditar);
+                    ((NovoPedidoActivity) getActivity()).listaPedidoItens.add(itemRecebidoEditar);
 
                     }catch (NullPointerException nullPointer){
                         nullPointer.printStackTrace();

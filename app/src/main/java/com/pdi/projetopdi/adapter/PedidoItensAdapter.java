@@ -11,7 +11,6 @@ import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.adapter.viewHolder.PedidoItensViewHolder;
 import com.pdi.projetopdi.fragments.DialogEditarProdutoPedido;
 import com.pdi.projetopdi.logic.NovoPedidoLogic;
 import com.pdi.projetopdi.model.PedidoItem;

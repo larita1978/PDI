@@ -10,7 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.adapter.viewHolder.ProdutoViewHolder;
 import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.ui.activity.EditarProdutoActivity;
 

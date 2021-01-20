@@ -1,26 +1,28 @@
 package com.pdi.projetopdi.logic;
 
-import android.app.Application;
+import android.content.Context;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
-
+import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.repository.ProdutoRepository;
 
-public class ListaProdutosLogic extends AndroidViewModel {
+import java.util.ArrayList;
 
-    private ProdutoRepository pRepository;
+public class ListaProdutosLogic  {
 
-    public ListaProdutosLogic(@NonNull Application application) {
-        super(application);
+    private ProdutoRepository produtoRepository;
+
+    public ListaProdutosLogic(Context context){
+        produtoRepository =  produtoRepository.getInstance(context);
     }
 
-//    public ListaProdutosLogic(){
-//        super();
-//        pRepository = new pRepository.getInstance();
-//    }
+    public ArrayList<Produto> buscarProdutoDigtado(String descricaoProduto){
+        ArrayList<Produto> listaProdutos = produtoRepository.buscaProdutoDescricao(descricaoProduto);
+        return listaProdutos;
+    }
 
-    public void getList(){
-//        List<Produto> =
+
+    public ArrayList<Produto> buscaProdutos() {
+        ArrayList<Produto> listaProdutos = produtoRepository.buscaProdutos();
+        return listaProdutos;
     }
 }

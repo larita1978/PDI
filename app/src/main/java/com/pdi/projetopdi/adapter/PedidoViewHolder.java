@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.adapter.viewHolder;
+package com.pdi.projetopdi.adapter;
 
 import android.view.View;
 import android.widget.TextView;
@@ -11,8 +11,8 @@ import com.pdi.projetopdi.R;
 
 public class PedidoViewHolder extends RecyclerView.ViewHolder {
 
-    TextView cliente, valor;
-    CardView cardPedido;
+    protected TextView cliente, valor;
+    protected  CardView cardPedido;
 
     public PedidoViewHolder(@NonNull View itemView) {
         super(itemView);
