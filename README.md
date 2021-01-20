@@ -1,4 +1,4 @@
 # ProjetoPDI
 
-**Login cadastrado: ** teste </b>
-**Senha cadastrada: ** 12
+Login cadastrado:  teste   
+Senha cadastrada:  12
