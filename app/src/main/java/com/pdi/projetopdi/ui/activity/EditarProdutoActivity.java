@@ -25,13 +25,12 @@ public class EditarProdutoActivity extends AppCompatActivity {
         Long idProduto = (Long) getIntent().getSerializableExtra("id");
 
         Log.i("teste", String.valueOf(idProduto));
-        //ArrayList<Produto> teste = extras.getStringArrayList();
 
         final EditText produtoDescricao = findViewById(R.id.produtoDescricao);
         final EditText produtoPreco = findViewById(R.id.produtoPreco);
         Button salvarPrdBotao = findViewById(R.id.salvarPrdBotao);
 
-        final ProdutoRepository produtoDAO = new ProdutoRepository(this);
+        final ProdutoRepository produtoDAO = ProdutoRepository.getInstance(this);
         final Produto prd = produtoDAO.buscaProdutoPorID(idProduto);
 
         produtoDescricao.setText(prd.getDescricao());

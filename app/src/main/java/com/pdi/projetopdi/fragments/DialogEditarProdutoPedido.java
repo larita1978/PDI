@@ -20,42 +20,40 @@ import com.pdi.projetopdi.repository.ProdutoRepository;
 import com.pdi.projetopdi.model.PedidoItem;
 import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
-import com.pdi.projetopdi.ui.logic.DialogEditarProdutoPedidoLogic;
+import com.pdi.projetopdi.logic.DialogEditarProdutoPedidoLogic;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.math.RoundingMode;
 
 public class DialogEditarProdutoPedido extends DialogFragment {
 
     private EditText produtoDigitadoEditText;
-    private Button btBuscarProdutoDescricao;
-    private TextView precoOriginalBanco;
+    private Button buscarProdutoDescricaoButton;
+    private TextView precoOriginalBancoTextView;
 
     private EditText quantidadeProdutoDigitadoEditText;
-    private  EditText precoVendaDigitadoEditText;
-    private  EditText descontoProdutoDigitadoEditText;
-    private  TextView totalProdutoTextView;
-    private Button btAddProduto;
+    private EditText precoVendaDigitadoEditText;
+    private EditText descontoProdutoDigitadoEditText;
+    private TextView totalProdutoTextView;
+    private Button addProdutoButton;
 
+    private BigDecimal precoOriginalBigDecimal;
     private BigDecimal quantidadeBigDecimal;
     private BigDecimal precoVendaBigDecimal;
     private BigDecimal descontoBigDecimal;
-//    private BigDecimal precoBigDecimal;
     private BigDecimal totalProdutoBigDecimal;
 
-    private ProdutoRepository prdDao;
-    private Produto produtoObj;
-    private PedidoItem pedidoItem;
 
-    private DialogEditarProdutoPedidoLogic viewModel;
+    private Produto produtoNovo;
+    private PedidoItem itemRecebidoEditar;
 
-    public DialogEditarProdutoPedido(PedidoItem item){
-        this.pedidoItem = item;
+    private DialogEditarProdutoPedidoLogic dialogLogic;
+
+    public DialogEditarProdutoPedido(PedidoItem item) {
+        this.itemRecebidoEditar = item;
     }
 
-    public static DialogEditarProdutoPedido newInstance(PedidoItem item){
-        return new DialogEditarProdutoPedido(item);
-    }
     @NonNull
     @Override
     public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -67,17 +65,19 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_add_editar_produto_pedido, container, false);
+
+        View view = inflater.inflate(R.layout.dialog_add_editar_produto_pedido,
+                container, false);
 
         //Pegar valor dos campos po id
         produtoDigitadoEditText = view.findViewById(R.id.digitarProduto);
-        btBuscarProdutoDescricao = view.findViewById(R.id.btBuscarDescricao);
-        precoOriginalBanco = view.findViewById(R.id.idPrecoProduto);
+        buscarProdutoDescricaoButton = view.findViewById(R.id.btBuscarDescricao);
+        precoOriginalBancoTextView = view.findViewById(R.id.idPrecoProduto);
         quantidadeProdutoDigitadoEditText = view.findViewById(R.id.idQuantidade);
         precoVendaDigitadoEditText = view.findViewById(R.id.idPrecoVenda);
         descontoProdutoDigitadoEditText = view.findViewById(R.id.idDescontoProduto);
-        totalProdutoTextView =view.findViewById(R.id.idValorTotalProduto);
-        btAddProduto = view.findViewById(R.id.idBtAddNovoPrd);
+        totalProdutoTextView = view.findViewById(R.id.idValorTotalProduto);
+        addProdutoButton = view.findViewById(R.id.idBtAddNovoPrd);
 
         return view;
     }
@@ -86,28 +86,51 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     public void onStart() {
         super.onStart();
 
-        if(pedidoItem==null){
+        dialogLogic = new DialogEditarProdutoPedidoLogic(getActivity());
 
+        if (itemRecebidoEditar != null) {
+            SetandoValoresQuandoEditaPeditoItem();
+        } else {
+
+            quantidadeBigDecimal = new BigDecimal(BigInteger.ZERO);
+            precoOriginalBigDecimal = new BigDecimal(BigInteger.ZERO);
+            precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
+            descontoBigDecimal = new BigDecimal(BigInteger.ZERO);
+            precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
+            totalProdutoBigDecimal = new BigDecimal(BigInteger.ZERO);
         }
 
-        //conexao com banco
-        prdDao = new ProdutoRepository(getActivity());
+        dialogLogic.setPrecoVendaBigDecimal(precoVendaBigDecimal);
+        dialogLogic.setDescontoBigDecimal(descontoBigDecimal);
+        apresentarValores();
 
-        viewModel = new DialogEditarProdutoPedidoLogic(getActivity());
-
-         clicouBotaoBuscarProduto();
-
-        quantidadeBigDecimal = new BigDecimal(BigInteger.ZERO);
-//        precoBigDecimal = new BigDecimal(BigInteger.ZERO);
-        precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
-        descontoBigDecimal = new BigDecimal(BigInteger.ZERO);
-        precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
-        totalProdutoBigDecimal = new BigDecimal(BigInteger.ZERO);
-
-        viewModel.setPrecoVendaBigDecimal(precoVendaBigDecimal);
-        viewModel.setDescontoBigDecimal(descontoBigDecimal);
+        clicouBotaoBuscarProduto();
         verificaFocoEditText();
         clicouBotaoAddProduto();
+    }
+
+    private void SetandoValoresQuandoEditaPeditoItem() {
+        dialogLogic.buscaProduto(itemRecebidoEditar.getIdProduto());
+        produtoNovo =dialogLogic.getProdutoNovo();
+
+        produtoDigitadoEditText.setText(produtoNovo.getDescricao());
+        quantidadeBigDecimal = new BigDecimal(itemRecebidoEditar.getQuantidade());
+        quantidadeProdutoDigitadoEditText.setText(String.valueOf(quantidadeBigDecimal));
+        precoVendaBigDecimal = itemRecebidoEditar.getPrecoVenda();
+        descontoBigDecimal = itemRecebidoEditar.getValorDesconto();
+
+        //setando valores recebidos
+        precoOriginalBancoTextView.setText(String.valueOf(itemRecebidoEditar.getPrecoOriginal()
+                .divide(new BigDecimal(100))));
+        totalProdutoBigDecimal = produtoNovo.getPreco().multiply(quantidadeBigDecimal)
+                .divide(new BigDecimal(100));
+
+        dialogLogic.setPrecoOriginalBigDecimal(itemRecebidoEditar.getPrecoOriginal());
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     private void verificaFocoEditText() {
@@ -115,7 +138,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
-                    viewModel.calcularValoresAlterandoQntd();
+                    dialogLogic.calcularValoresAlterandoQntd();
                     quantidadeBigDecimal = new BigDecimal(quantidadeProdutoDigitadoEditText.getText().toString());
                     apresentarValores();
                 }
@@ -127,7 +150,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (!hasFocus) {
                     precoVendaBigDecimal = new BigDecimal(precoVendaDigitadoEditText.getText().toString());
-                    viewModel.calcularValoresAlterandoPrecoVenda(precoVendaBigDecimal);
+                    dialogLogic.calcularValoresAlterandoPrecoVenda(precoVendaBigDecimal);
                     apresentarValores();
                 }
             }
@@ -136,47 +159,58 @@ public class DialogEditarProdutoPedido extends DialogFragment {
         descontoProdutoDigitadoEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                if (!hasFocus){
+                if (!hasFocus) {
                     descontoBigDecimal = new BigDecimal(descontoProdutoDigitadoEditText.getText().toString());
-                    viewModel.calcularValoresAlterandoDesc(descontoBigDecimal);
+                    dialogLogic.calcularValoresAlterandoDesc(descontoBigDecimal);
                     apresentarValores();
                 }
             }
         });
     }
 
-    public void apresentarValores(){
-        precoVendaDigitadoEditText.setText(String.valueOf(viewModel.getPrecoVendaBigDecimal()));
-        descontoProdutoDigitadoEditText.setText(String.valueOf(viewModel.getDescontoBigDecimal()));
-        totalProdutoTextView.setText(String.valueOf(viewModel.getPrecoVendaBigDecimal().multiply(quantidadeBigDecimal)));
+    public void apresentarValores() {
+        precoVendaDigitadoEditText.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
+        descontoProdutoDigitadoEditText.setText(String.valueOf(dialogLogic.getDescontoBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
+        totalProdutoTextView.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().multiply(quantidadeBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
     }
 
-    private void clicouBotaoBuscarProduto(){
-        btBuscarProdutoDescricao.setOnClickListener(new View.OnClickListener() {
+    private void clicouBotaoBuscarProduto() {
+        buscarProdutoDescricaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                produtoObj = viewModel.buscaProduto(produtoDigitadoEditText.getText().toString());
-                if(!(produtoObj == null)) {
-                    produtoDigitadoEditText.setText(String.valueOf(produtoObj.getDescricao()));
-                    precoOriginalBanco.setText(String.valueOf(produtoObj.getPreco()));
-//                    precoBigDecimal = produtoObj.getPreco();
-                    totalProdutoTextView.setText(String.valueOf(produtoObj.getPreco()));
-                }else{
-                    Log.i("teste botao add", "entrou no if");
+                dialogLogic.buscaProduto(produtoDigitadoEditText.getText().toString());
+                produtoNovo = dialogLogic.getProdutoNovo();
+                if (!(produtoNovo== null)) {
+                    produtoDigitadoEditText.setText(String.valueOf(produtoNovo.getDescricao()));
+                    precoOriginalBancoTextView.setText(String.valueOf(produtoNovo.getPreco()));
+                    totalProdutoTextView.setText(String.valueOf(produtoNovo.getPreco()));
+                } else {
+                    Toast.makeText(getContext(), "Produto não encontrado", Toast.LENGTH_SHORT).show();
                 }
             }
         });
     }
 
     private void clicouBotaoAddProduto() {
-        btAddProduto.setOnClickListener(new View.OnClickListener() {
+        addProdutoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if( totalProdutoTextView.getText().toString().isEmpty() /*|| totalProdutoBigDecimal.doubleValue() <= 0*/){
-                    Toast.makeText(getActivity(),"Valor total negativo! Não é possível efetuar adicionar o produto.", Toast.LENGTH_SHORT);
-                }else{
-                    pedidoItem =viewModel.salvarProduto(quantidadeBigDecimal);
-                    ((NovoPedidoActivity)getActivity()).pedidoItemList.add(pedidoItem);
+                if (totalProdutoTextView.getText().toString().isEmpty()
+                        || totalProdutoTextView.getText().toString() == "0") {
+
+                    Toast.makeText(getActivity(),
+                            "Valor incorreto! Não é possível adicionar o produto.",
+                            Toast.LENGTH_SHORT);
+                } else {
+                    try{
+                    itemRecebidoEditar = dialogLogic.salvarProduto(quantidadeBigDecimal);
+                    ((NovoPedidoActivity) getActivity()).pedidoItemList.add(itemRecebidoEditar);
+
+                    }catch (NullPointerException nullPointer){
+                        nullPointer.printStackTrace();
+                        Toast.makeText(getContext(), "Verifique as informações preenchidas!",
+                                Toast.LENGTH_SHORT).show();
+                    }
                     dismiss();
                 }
             }

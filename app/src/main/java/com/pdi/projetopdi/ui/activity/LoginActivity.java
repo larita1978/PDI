@@ -14,8 +14,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.repository.UsuarioRepository;
-import com.pdi.projetopdi.ui.logic.LoginViewModel;
-import com.pdi.projetopdi.ui.logic.factory.LoginViewModelFactory;
+import com.pdi.projetopdi.logic.LoginViewModel;
+import com.pdi.projetopdi.logic.factory.LoginViewModelFactory;
 
 public class LoginActivity extends AppCompatActivity {
 

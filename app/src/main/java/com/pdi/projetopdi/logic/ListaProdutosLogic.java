@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.ui.logic;
+package com.pdi.projetopdi.logic;
 
 import android.app.Application;
 

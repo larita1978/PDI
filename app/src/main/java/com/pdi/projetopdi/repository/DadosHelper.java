@@ -20,7 +20,7 @@ public class DadosHelper extends SQLiteOpenHelper {
             db.execSQL(pr.criarTabelaProduto());
             PedidoRepository ped = new PedidoRepository(this);
             db.execSQL(ped.criarTabelaPedido());
-            PedidoItemDAO pedItem = new PedidoItemDAO(this);
+            PedidoItemRepository pedItem = new PedidoItemRepository(this);
             db.execSQL(pedItem.criarTabelaPedidoItem());
         }
 

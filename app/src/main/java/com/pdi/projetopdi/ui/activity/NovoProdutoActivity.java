@@ -25,7 +25,7 @@ public class NovoProdutoActivity extends AppCompatActivity {
          final EditText novoPrdPreco = findViewById(R.id.novoPrdPreco);
          Button novoPrdBotao = findViewById(R.id.novoPrdBotao);
 
-        final ProdutoRepository pr = new ProdutoRepository(this);
+        final ProdutoRepository pr =  ProdutoRepository.getInstance(this);
 
         novoPrdBotao.setOnClickListener(new View.OnClickListener() {
             @Override

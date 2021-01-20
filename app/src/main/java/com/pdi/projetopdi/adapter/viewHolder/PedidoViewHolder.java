@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.adapter;
+package com.pdi.projetopdi.adapter.viewHolder;
 
 import android.view.View;
 import android.widget.TextView;

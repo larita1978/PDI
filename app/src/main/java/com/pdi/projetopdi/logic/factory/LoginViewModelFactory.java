@@ -1,11 +1,11 @@
-package com.pdi.projetopdi.ui.logic.factory;
+package com.pdi.projetopdi.logic.factory;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.pdi.projetopdi.repository.UsuarioRepository;
-import com.pdi.projetopdi.ui.logic.LoginViewModel;
+import com.pdi.projetopdi.logic.LoginViewModel;
 
 public class LoginViewModelFactory implements ViewModelProvider.Factory {
 

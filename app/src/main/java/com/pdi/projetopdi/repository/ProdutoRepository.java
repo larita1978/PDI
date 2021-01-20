@@ -22,7 +22,7 @@ public class ProdutoRepository implements Closeable {
 
     private static ProdutoRepository INSTANCE;
 
-    public ProdutoRepository(Context context) { // mudar para private
+    private ProdutoRepository(Context context) {
         this.db = new DadosHelper(context);
     }
 
@@ -35,8 +35,6 @@ public class ProdutoRepository implements Closeable {
     public ProdutoRepository(DadosHelper dao) {
         this.db = dao;
     }
-
-    public ProdutoRepository(){}
 
     public String criarTabelaProduto(){
         StringBuilder sql = new StringBuilder();
@@ -52,7 +50,6 @@ public class ProdutoRepository implements Closeable {
     public void inserirProduto(Produto produto){
 
         ContentValues dados = new ContentValues();
-        //dados.put(IDPRODUTO, produto.getIdproduto());
         dados.put(DESCRICAO,produto.getDescricao());
         dados.put(PRECO,produto.getPreco().scaleByPowerOfTen(2).doubleValue());
 
@@ -92,7 +89,7 @@ public class ProdutoRepository implements Closeable {
     }
 
     public ArrayList<Produto> buscaProdutoDescricao(String valor){
-        ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
+        ArrayList<Produto> ListaProdutos = new ArrayList<Produto>();
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
         Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
@@ -102,14 +99,13 @@ public class ProdutoRepository implements Closeable {
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
             prod.setPreco(c.getDouble(c.getColumnIndex(PRECO)));
 
-            produtosdesc.add(prod);
+            ListaProdutos.add(prod);
         }
         c.close();
-        return produtosdesc;
+        return ListaProdutos;
     }
 
     public Produto buscaProdutoDesc(String valor){
-//        ArrayList<Produto> produtosdesc = new ArrayList<Produto>();
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
         Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
@@ -119,8 +115,6 @@ public class ProdutoRepository implements Closeable {
             prod.setIdproduto(c.getInt(c.getColumnIndex(IDPRODUTO)));
             prod.setDescricao(c.getString(c.getColumnIndex(DESCRICAO)));
             prod.setPreco(c.getDouble(c.getColumnIndex(PRECO)));
-
-//            produtosdesc.add(prod);
         }
         c.close();
         return prod;

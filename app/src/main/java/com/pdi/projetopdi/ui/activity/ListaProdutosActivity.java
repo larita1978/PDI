@@ -5,14 +5,13 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.ProdutoAdapter;
 import com.pdi.projetopdi.repository.ProdutoRepository;
 import com.pdi.projetopdi.model.Produto;
-import com.pdi.projetopdi.ui.logic.ListaProdutosLogic;
+import com.pdi.projetopdi.logic.ListaProdutosLogic;
 
 import java.util.ArrayList;
 
@@ -39,7 +38,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
         recycler = findViewById(R.id.recycler);
         btNovoProduto = findViewById(R.id.btNovoProduto);
 
-        mp = new ViewModelProvider(this).get(ListaProdutosLogic.class);
+//        mp = new ViewModelProvider(this).get(ListaProdutosLogic.class);
 //        pr = new ProdutoRepository(this);
 
         runOnUiThread(new Runnable() {

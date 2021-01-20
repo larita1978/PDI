@@ -2,7 +2,6 @@ package com.pdi.projetopdi;
 
 import android.app.Application;
 
-import com.pdi.projetopdi.repository.PedidoRepository;
 import com.pdi.projetopdi.repository.ProdutoRepository;
 import com.pdi.projetopdi.repository.UsuarioRepository;
 
@@ -27,10 +26,8 @@ public class PdiApplication extends Application {
         UsuarioRepository user = UsuarioRepository.getInstance(this);
         user.inserirPrimeiroUsuario();
 
-        ProdutoRepository pr = new ProdutoRepository(this);
+        ProdutoRepository pr = ProdutoRepository.getInstance(this);
         pr.inserirPrimeirosDadosProduto();
 
-//        PedidoRepository ped = PedidoRepository.getInstance(this);
-//        ped.inserirPrimeirosDadosPedido();
     }
 }

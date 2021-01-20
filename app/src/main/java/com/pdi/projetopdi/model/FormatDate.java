@@ -30,7 +30,7 @@ public class FormatDate {
 
 
     public String getData() {
-        return sdf.format(data);
+        return String.valueOf(sdf.format(data));
     }
 
     public void setData(String data) {

@@ -72,7 +72,7 @@ public class Pedido {
     }
 
     public String getDataPedido() throws ParseException {
-        return new FormatDate(dataPedido).getData();
+        return dataPedido;
     }
 
     public void setDataPedido(String dataPedido) {

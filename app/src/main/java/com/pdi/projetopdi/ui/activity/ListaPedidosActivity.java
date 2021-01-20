@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
-import com.pdi.projetopdi.ui.logic.ListaPedidosLogic;
+import com.pdi.projetopdi.logic.ListaPedidosLogic;
 
 public class ListaPedidosActivity extends AppCompatActivity {
 
@@ -42,16 +42,6 @@ public class ListaPedidosActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
     }
-
-//    public void exibirPedidos(){
-//        pedidos = pedidoRepository.buscaPedidos();
-//
-//        adapter = new PedidoAdapter(ListaPedidosActivity.this, pedidos);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
-//
-//        recycler.setLayoutManager(layoutManager);
-//        recycler.setAdapter(adapter);
-//    }
 
     public void acaoBotaoNovoPedido(){
         btNovoPedido.setOnClickListener(new View.OnClickListener() {

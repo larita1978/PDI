@@ -1,5 +1,6 @@
 package com.pdi.projetopdi.ui.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -17,11 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.PedidoItensAdapter;
 import com.pdi.projetopdi.model.FormatDate;
-import com.pdi.projetopdi.repository.PedidoRepository;
 import com.pdi.projetopdi.fragments.DialogEditarProdutoPedido;
 import com.pdi.projetopdi.model.Pedido;
 import com.pdi.projetopdi.model.PedidoItem;
-import com.pdi.projetopdi.ui.logic.NovoPedidoLogic;
+import com.pdi.projetopdi.logic.NovoPedidoLogic;
 
 import java.math.BigDecimal;
 import java.text.ParseException;
@@ -38,8 +38,8 @@ public class NovoPedidoActivity extends AppCompatActivity {
     private EditText nomeCliente;
     private EditText enderecoCliente;
 
-    private TextView valorTotalProdutos;
-    private TextView valorTotalItens;
+    private TextView totalProdutos;
+    private TextView totalItens;
     private TextView valorTotal;
 
     private Button btGravarPedido;
@@ -51,15 +51,17 @@ public class NovoPedidoActivity extends AppCompatActivity {
 
     private String data2;
 
-    private BigDecimal totalQuantidade;
-    private BigDecimal totalItens;
-    private BigDecimal valorTotalPedido;
+    int idPedido;
+
+//    private BigDecimal totalQuantidade;
+//    private BigDecimal totalItens;
+//    private BigDecimal valorTotalPedido;
 
     private SharedPreferences idUsuarioLogado;
     private int idUsuarioLogadoLong;
 
-    private Pedido novoPedido;
-    private PedidoRepository pedidoRepository;
+    private Pedido pedido;
+//    private PedidoRepository pedidoRepository;
 
     private NovoPedidoLogic pedidoViewModel;
 
@@ -67,29 +69,7 @@ public class NovoPedidoActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_novo_pedido);
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        //aqui pega o id do user logado
-        idUsuarioLogado = PreferenceManager.getDefaultSharedPreferences(this);
-        idUsuarioLogadoLong = idUsuarioLogado.getInt("login",0);
-        Log.i("idLogin", String.valueOf(idUsuarioLogadoLong));
-
-        //variavel controle se irá aparecer os produtos ou não
-        show = true;
-
-        Long idPedido = (Long) getIntent().getSerializableExtra("id");
-
-        if(!(idPedido==null)){
-            Log.i("oi", "veio id");
-//            totalQuantidade =;
-//            totalItens =BigDecimal.ZERO;
-//            valorTotalPedido = BigDecimal.ZERO;
-        }
+        idPedido = 0;
 
         btExibirCarrinho = findViewById(R.id.btExibirCarrinho);
         linearteste = findViewById(R.id.idLinearTeste);
@@ -103,42 +83,73 @@ public class NovoPedidoActivity extends AppCompatActivity {
         recycler = findViewById(R.id.recyclerProdutosCabecalho);
 
         //campos resumo
-        valorTotalProdutos = findViewById(R.id.idTextResumoTotalProdutos);
-        valorTotalItens = findViewById(R.id.idTextResumoTotalItens);
+        totalProdutos = findViewById(R.id.idTextResumoTotalProdutos);
+        totalItens = findViewById(R.id.idTextResumoTotalItens);
         valorTotal = findViewById(R.id.idTextResumoValorTotal);
 
         btGravarPedido = findViewById(R.id.btGravarPedido);
 
 
-        //campos do resumo
-        totalQuantidade = BigDecimal.ZERO;
-        totalItens =BigDecimal.ZERO;
-        valorTotalPedido = BigDecimal.ZERO;
+    }
 
-        pedidoViewModel= new NovoPedidoLogic(this);
+    @Override
+    protected void onStart() {
+        super.onStart();
 
-        try {
-            exibeData();
-        } catch (ParseException e) {
-            e.printStackTrace();
+        //aqui pega o id do user logado
+        idUsuarioLogado = PreferenceManager.getDefaultSharedPreferences(this);
+        idUsuarioLogadoLong = idUsuarioLogado.getInt("login", 0);
+        Log.i("idLogin", String.valueOf(idUsuarioLogadoLong));
+
+        pedidoItemList = new ArrayList<>();
+        //variavel controle se irá aparecer os produtos ou não
+        show = true;
+
+        if (getIntent().getSerializableExtra("id") != null)
+            idPedido = (int) getIntent().getSerializableExtra("id");
+
+        pedidoViewModel = new NovoPedidoLogic(this);
+
+        if (!(idPedido == 0)) {
+            Log.i("oi", "veio id");
+            pedido = pedidoViewModel.buscaPedido(idPedido);
+            pedidoItemList = pedidoViewModel.buscaItens(idPedido);
+
+            try {
+                nomeCliente.setText(pedido.getCliente());
+                enderecoCliente.setText(pedido.getEndereco());
+                dataPedido.setText(pedido.getDataPedido());
+                totalProdutos.setText(String.valueOf(pedido.getTotalProdutos()));
+                totalItens.setText(String.valueOf(pedido.getTotalItens()));
+                valorTotal.setText(String.valueOf(pedido.getValorTotal()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+        }else{
+            try {
+                exibeData();
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
         }
 
-        pedidoRepository = PedidoRepository.getInstance(this);
-        novoPedido = new Pedido();
-        pedidoItemList = new ArrayList<>();
-        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
-        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
-        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+//        pedidoRepository = PedidoRepository.getInstance(this);
+        pedido = new Pedido();
+
+//        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+//        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
+//        pedidoItemList.add(new PedidoItem(5,5,new BigDecimal("69"),new BigDecimal("65"),new BigDecimal("4")));
 
     }
 
     private void exibeData() throws ParseException {
         //declaração de datas
         long date1 = System.currentTimeMillis();
-            FormatDate format = new FormatDate();
-            format.setDataLong(date1);
-            data2 = format.getDataLong() ;
-            dataPedido.setText(data2);
+        FormatDate format = new FormatDate();
+        format.setDataLong(date1);
+        data2 = format.getDataLong();
+        dataPedido.setText(data2);
     }
 
     @Override
@@ -150,33 +161,39 @@ public class NovoPedidoActivity extends AppCompatActivity {
         clicouBotaoGravarPedido();
     }
 
-    public void exibirProdutosCarrinho(){
+    public void exibirProdutosCarrinho() {
         btExibirCarrinho.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(show){
+                if (show) {
                     linearteste.setVisibility(View.GONE);
-                    show =false;
-                }else{
+                    show = false;
+                } else {
                     linearteste.setVisibility(View.VISIBLE);
-                    show =true;
+                    show = true;
                 }
             }
         });
     }
-    public void exibirProdutos(){
+
+    public void exibirProdutos() {
         adapter = new PedidoItensAdapter(this, pedidoItemList);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(this,LinearLayoutManager.VERTICAL, false);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
 
         recycler.setLayoutManager(layoutManager);
         recycler.setAdapter(adapter);
     }
 
-    public void clicouBotaoAddProduto(){
+    public void clicouBotaoAddProduto() {
         btAddProduto.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new DialogEditarProdutoPedido(pedidoItem).show(getSupportFragmentManager(),"teste");
+                runOnUiThread(new Runnable(){
+                    @Override
+                    public void run() {
+                        new DialogEditarProdutoPedido(pedidoItem).show(getSupportFragmentManager(), "Novo Pedido");
+                    }
+                });
 
 //                if(getIntent().getSerializableExtra("flag").equals(true)){
 //                    pedidoItemList.add((PedidoItem) getIntent().getSerializableExtra("obj"));
@@ -188,12 +205,13 @@ public class NovoPedidoActivity extends AppCompatActivity {
     }
 
 
-    public void exibirValoresResumo(BigDecimal totalQuantidade,BigDecimal totalItens, BigDecimal valorTotalPedido) {
-        valorTotalProdutos.setText(String.valueOf(totalQuantidade));
-        valorTotalItens.setText(String.valueOf(totalItens));
+    public void exibirValoresResumo(BigDecimal totalQuantidade, BigDecimal totalItens, BigDecimal valorTotalPedido) {
+        totalProdutos.setText(String.valueOf(totalQuantidade));
+        this.totalItens.setText(String.valueOf(totalItens));
         valorTotal.setText(String.valueOf(valorTotalPedido));
     }
-    private void clicouBotaoGravarPedido(){
+
+    private void clicouBotaoGravarPedido() {
         btGravarPedido.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -202,8 +220,13 @@ public class NovoPedidoActivity extends AppCompatActivity {
                 try {
                     String nomeClienteString = String.valueOf(nomeCliente.getText());
                     String enderecoString = String.valueOf(enderecoCliente.getText());
-                    pedidoViewModel.validaCamposPreenchidos(idUsuarioLogadoLong,
-                            nomeClienteString,enderecoString,data2);
+                    pedidoViewModel.validaCamposPreenchidos(1,
+                            nomeClienteString, enderecoString, data2,
+                            totalItens.getText().toString(),
+                            totalProdutos.getText().toString(),
+                            valorTotal.getText().toString(), pedidoItemList);
+                    startActivity(new Intent(NovoPedidoActivity.this, ListaPedidosActivity.class));
+
 
                 } catch (ParseException e) {
                     e.printStackTrace();

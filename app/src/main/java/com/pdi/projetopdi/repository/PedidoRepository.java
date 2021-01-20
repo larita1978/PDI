@@ -1,5 +1,6 @@
 package com.pdi.projetopdi.repository;
 
+import android.annotation.SuppressLint;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -61,7 +62,7 @@ public class PedidoRepository {
         return sql.toString();
     }
 
-    public void inserirPedido(Pedido pedido) throws ParseException {
+    public int inserirPedido(Pedido pedido) throws ParseException {
 
         ContentValues dados = new ContentValues();
 //        dados.put(IDPEDIDO, pedido.getIdPedido());
@@ -73,8 +74,10 @@ public class PedidoRepository {
         dados.put(TOTALPRODUTOS,pedido.getTotalProdutos().scaleByPowerOfTen(2).doubleValue());
         dados.put(VALORTOTAL,pedido.getValorTotal().scaleByPowerOfTen(2).doubleValue());
 
-        db.getWritableDatabase().insert(PEDIDO,null,dados);
+        long id = db.getWritableDatabase().insert(PEDIDO,null,dados);
         db.close();
+
+        return (int) id;
     }
 
     public ArrayList<Pedido> buscaPedidos(){
@@ -111,7 +114,7 @@ public class PedidoRepository {
                 ped.setIdUsuario(c.getInt(c.getColumnIndex(IDUSUARIO)));
                 ped.setCliente(c.getString(c.getColumnIndex(CLIENTE)));
                 ped.setEndereco(c.getString(c.getColumnIndex(ENDERECO)));
-//                ped.setDataPedido(c.getString(c.getColumnIndex(DATAPEDIDO)));
+                ped.setDataPedido(c.getString(c.getColumnIndex(DATAPEDIDO)));
                 ped.setTotalItens(c.getDouble(c.getColumnIndex(TOTALITENS)));
                 ped.setTotalProdutos(c.getDouble(c.getColumnIndex(TOTALPRODUTOS)));
                 ped.setValorTotal(c.getDouble(c.getColumnIndex(VALORTOTAL)));
@@ -120,29 +123,37 @@ public class PedidoRepository {
         }
 
 
-        public void inserirPrimeirosDadosPedido() throws ParseException {
-            ArrayList<Pedido> pedidos;
-            pedidos = buscaPedidos();
-//            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
-//            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
-            long date1 = System.currentTimeMillis();
-            FormatDate format = new FormatDate();
-            format.setDataLong(date1);
-            String data2 = format.getDataLong() ;
-            if(pedidos.isEmpty()) {
-                inserirPedido(new Pedido(1,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-                inserirPedido(new Pedido(2,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-
-            }
-        }
-
-//        @SuppressLint("Recycle")
-//        public void updatePedido(Pedido pedido){
-//            ContentValues data = new ContentValues();
-//            data.put(DESCRICAO,produto.getDescricao());
-//            data.put(PRECO,produto.getPreco().scaleByPowerOfTen(2).doubleValue());
-//            dao.getReadableDatabase().update(PRODUTO, data, IDPRODUTO + "="+ produto.getIdproduto(),null);
+//        public void inserirPrimeirosDadosPedido() throws ParseException {
+//            ArrayList<Pedido> pedidos;
+//            pedidos = buscaPedidos();
+////            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
+////            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
+//            long date1 = System.currentTimeMillis();
+//            FormatDate format = new FormatDate();
+//            format.setDataLong(date1);
+//            String data2 = format.getDataLong() ;
+//            if(pedidos.isEmpty()) {
+//                inserirPedido(new Pedido(1,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+//                inserirPedido(new Pedido(2,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
+//
+//            }
 //        }
+
+        @SuppressLint("Recycle")
+        public void updatePedido(Pedido pedido) throws ParseException {
+            ContentValues dados = new ContentValues();
+
+            dados.put(IDPEDIDO, pedido.getIdPedido());
+            dados.put(IDUSUARIO,pedido.getIdUsuario());
+            dados.put(CLIENTE,pedido.getCliente());
+            dados.put(ENDERECO,pedido.getEndereco());
+            dados.put(DATAPEDIDO,String.valueOf(pedido.getDataPedido()));
+            dados.put(TOTALITENS,pedido.getTotalItens().scaleByPowerOfTen(2).doubleValue());
+            dados.put(TOTALPRODUTOS,pedido.getTotalProdutos().scaleByPowerOfTen(2).doubleValue());
+            dados.put(VALORTOTAL,pedido.getValorTotal().scaleByPowerOfTen(2).doubleValue());
+
+            db.getReadableDatabase().update(PEDIDO, dados, IDPEDIDO + "="+ pedido.getIdPedido(),null);
+        }
 
 
 }

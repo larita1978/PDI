@@ -1,4 +1,4 @@
-package com.pdi.projetopdi.ui.logic.factory;
+package com.pdi.projetopdi.logic.factory;
 
 import com.pdi.projetopdi.repository.PedidoRepository;
 

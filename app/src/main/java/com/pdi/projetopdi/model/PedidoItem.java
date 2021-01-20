@@ -22,6 +22,8 @@ public class PedidoItem implements Parcelable {
         this.valorDesconto = valorDesconto;
     }
 
+    public PedidoItem(){}
+
     protected PedidoItem(Parcel in) {
         idPedidoItem = in.readLong();
         idProduto = in.readLong();
@@ -90,23 +92,23 @@ public class PedidoItem implements Parcelable {
         return precoOriginal;
     }
 
-    public void setPrecoOriginal(BigDecimal precoOriginal) {
-        this.precoOriginal = precoOriginal;
+    public void setPrecoOriginal(double precoOriginal) {
+        this.precoOriginal = new BigDecimal(precoOriginal);
     }
 
     public BigDecimal getPrecoVenda() {
         return precoVenda;
     }
 
-    public void setPrecoVenda(BigDecimal precoVenda) {
-        this.precoVenda = precoVenda;
+    public void setPrecoVenda(double precoVenda) {
+        this.precoVenda = new BigDecimal(precoVenda);
     }
 
     public BigDecimal getValorDesconto() {
         return valorDesconto;
     }
 
-    public void setValorDesconto(BigDecimal valorDesconto) {
-        this.valorDesconto = valorDesconto;
+    public void setValorDesconto(double valorDesconto) {
+        this.valorDesconto = new BigDecimal(valorDesconto);
     }
 }
