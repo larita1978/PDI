@@ -23,16 +23,17 @@ public class DialogEditarProdutoPedidoLogic {
 
     private Context context;
 
-    public DialogEditarProdutoPedidoLogic(Context context){
+    public DialogEditarProdutoPedidoLogic(Context context) {
         this.context = context;
         this.produtoRepository = ProdutoRepository.getInstance(context);
     }
+
     public BigDecimal getPrecoVendaBigDecimal() {
         return precoVendaBigDecimal;
     }
 
     public void setPrecoVendaBigDecimal(BigDecimal precoVendaBigDecimal) {
-        this.precoVendaBigDecimal =precoVendaBigDecimal;
+        this.precoVendaBigDecimal = precoVendaBigDecimal;
     }
 
     public BigDecimal getDescontoBigDecimal() {
@@ -55,48 +56,49 @@ public class DialogEditarProdutoPedidoLogic {
         this.produtoNovo = produtoNovo;
     }
 
-    public void buscaProduto(long idProduto){
+    public void buscaProduto(long idProduto) {
         setProdutoNovo(produtoRepository.buscaProdutoPorID(idProduto));
     }
 
-    public void calcularValoresAlterandoQntd(){
+    public void calcularValoresAlterandoQntd() {
         setPrecoVendaBigDecimal(precoOriginalBigDecimal.subtract(descontoBigDecimal));
         setDescontoBigDecimal(precoOriginalBigDecimal.subtract(precoVendaBigDecimal));
     }
 
-    public void calcularValoresAlterandoPrecoVenda(BigDecimal precoVendaBigDecimal){
+    public void calcularValoresAlterandoPrecoVenda(BigDecimal precoVendaBigDecimal) {
         setDescontoBigDecimal(precoOriginalBigDecimal.subtract(precoVendaBigDecimal));
         setPrecoVendaBigDecimal(precoVendaBigDecimal);
     }
 
-    public void calcularValoresAlterandoDesc(BigDecimal descontoBigDecimal){
+    public void calcularValoresAlterandoDesc(BigDecimal descontoBigDecimal) {
         setPrecoVendaBigDecimal(precoOriginalBigDecimal.subtract(descontoBigDecimal));
         setDescontoBigDecimal(descontoBigDecimal);
     }
 
-    public void buscaProduto(String produtoDigitado){
+    public boolean buscaProduto(String produtoDigitado) {
         produtoNovo = produtoRepository.buscaProdutoDescricaoAdd(produtoDigitado);
-        if(!(produtoNovo == null)) {
-            precoOriginalBigDecimal = produtoNovo.getPreco();
-            setProdutoNovo(produtoNovo);
-        }else{
-            Log.i("teste botao add", "entrou no if");
+        if (produtoNovo == null) {
+            return false;
         }
+        precoOriginalBigDecimal = produtoNovo.getPreco();
+        setProdutoNovo(produtoNovo);
+
+        return true;
     }
 
-    public PedidoItem salvarProduto(BigDecimal quantidadeBigDecimal){
+    public PedidoItem salvarProduto(BigDecimal quantidadeBigDecimal) {
 
         try {
             pedidoItem = new PedidoItem(this.produtoNovo.getIdproduto(),
                     quantidadeBigDecimal.intValue(), precoOriginalBigDecimal.setScale(2, RoundingMode.HALF_EVEN),
                     precoVendaBigDecimal.setScale(2, RoundingMode.HALF_EVEN),
                     descontoBigDecimal.setScale(2, RoundingMode.HALF_EVEN));
-        }catch (NullPointerException nullpointer){
+        } catch (NullPointerException nullpointer) {
             nullpointer.printStackTrace();
             return null;
         }
 
-        if(this.produtoNovo == null){
+        if (this.produtoNovo == null) {
             new PedidoItemRepository(context).atualiza(pedidoItem);
         }
 

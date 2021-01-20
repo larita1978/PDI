@@ -75,7 +75,7 @@ public class ProdutoRepository implements Closeable {
     }
 
     public Produto buscaProdutoPorID(Long idProduto){
-        String sql = "SELECT * FROM " + PRODUTO + " WHERE " + IDPRODUTO + " = " + idProduto;
+        String sql = "SELECT * FROM " + PRODUTO + " WHERE " + IDPRODUTO + " = " + idProduto+";";
         Cursor c = db.getReadableDatabase().rawQuery(sql,null);
 
         Produto prod = new Produto();

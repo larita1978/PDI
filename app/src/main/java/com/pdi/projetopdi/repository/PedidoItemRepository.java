@@ -46,7 +46,7 @@ public class PedidoItemRepository {
     public void inserirPedidoItem(PedidoItem pedidoItem) {
 
         ContentValues dados = new ContentValues();
-        dados.put(IDPEDIDOITEM, pedidoItem.getIdPedidoItem());
+
         dados.put(IDPRODUTO, pedidoItem.getIdProduto());
         dados.put(IDPEDIDO, pedidoItem.getIdPedido());
         dados.put(QUANTIDADE, pedidoItem.getQuantidade());
@@ -81,7 +81,7 @@ public class PedidoItemRepository {
 
     public ArrayList<PedidoItem> buscaPedidoItemPorIDPedido(int idpedido) {
         ArrayList<PedidoItem> listaItens = new ArrayList<>();
-        String sql = "SELECT * FROM " + PEDIDOITEM + " WHERE " + IDPEDIDO + " = " + idpedido;
+        String sql = "SELECT * FROM " + PEDIDOITEM + " WHERE " + IDPEDIDO + " = " + idpedido+";";
 
         Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 

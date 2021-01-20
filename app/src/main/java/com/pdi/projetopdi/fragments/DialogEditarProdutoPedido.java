@@ -15,10 +15,10 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.pdi.projetopdi.R;
+import com.pdi.projetopdi.logic.DialogEditarProdutoPedidoLogic;
 import com.pdi.projetopdi.model.PedidoItem;
 import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.ui.activity.NovoPedidoActivity;
-import com.pdi.projetopdi.logic.DialogEditarProdutoPedidoLogic;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -52,7 +52,8 @@ public class DialogEditarProdutoPedido extends DialogFragment {
         this.itemRecebidoEditar = item;
     }
 
-    public DialogEditarProdutoPedido(){}
+    public DialogEditarProdutoPedido() {
+    }
 
 
     @NonNull
@@ -111,7 +112,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
 
     private void SetandoValoresQuandoEditaPeditoItem() {
         dialogLogic.buscaProduto(itemRecebidoEditar.getIdProduto());
-        produtoNovo =dialogLogic.getProdutoNovo();
+        produtoNovo = dialogLogic.getProdutoNovo();
 
         produtoDigitadoEditText.setText(produtoNovo.getDescricao());
         quantidadeBigDecimal = new BigDecimal(itemRecebidoEditar.getQuantidade());
@@ -172,24 +173,28 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     }
 
     public void apresentarValores() {
-        precoVendaDigitadoEditText.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
-        descontoProdutoDigitadoEditText.setText(String.valueOf(dialogLogic.getDescontoBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
-        totalProdutoTextView.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().multiply(quantidadeBigDecimal).divide(new BigDecimal(100))));
+        precoVendaDigitadoEditText.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal()
+                .setScale(2, RoundingMode.HALF_EVEN)));
+        descontoProdutoDigitadoEditText.setText(String.valueOf(dialogLogic.getDescontoBigDecimal()
+                .setScale(2, RoundingMode.HALF_EVEN)));
+        totalProdutoTextView.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal()
+                .multiply(quantidadeBigDecimal)));
     }
 
     private void clicouBotaoBuscarProduto() {
         buscarProdutoDescricaoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                dialogLogic.buscaProduto(produtoDigitadoEditText.getText().toString());
-                produtoNovo = dialogLogic.getProdutoNovo();
-                if (!(produtoNovo== null)) {
+                if (dialogLogic.buscaProduto(produtoDigitadoEditText.getText().toString())) {
+                    produtoNovo = dialogLogic.getProdutoNovo();
                     produtoDigitadoEditText.setText(String.valueOf(produtoNovo.getDescricao()));
                     precoOriginalBancoTextView.setText(String.valueOf(produtoNovo.getPreco()));
-                    totalProdutoTextView.setText(String.valueOf(produtoNovo.getPreco().setScale(2, RoundingMode.HALF_EVEN)));
+                    totalProdutoTextView.setText(String.valueOf(produtoNovo.getPreco()
+                            .setScale(2, RoundingMode.HALF_EVEN)));
                 } else {
                     Toast.makeText(getContext(), "Produto não encontrado", Toast.LENGTH_SHORT).show();
                 }
+
             }
         });
     }
@@ -205,11 +210,11 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                             "Valor incorreto! Não é possível adicionar o produto.",
                             Toast.LENGTH_SHORT);
                 } else {
-                    try{
-                    itemRecebidoEditar = dialogLogic.salvarProduto(quantidadeBigDecimal);
-                    ((NovoPedidoActivity) getActivity()).listaPedidoItens.add(itemRecebidoEditar);
+                    try {
+                        itemRecebidoEditar = dialogLogic.salvarProduto(quantidadeBigDecimal);
+                        ((NovoPedidoActivity) getActivity()).listaPedidoItens.add(itemRecebidoEditar);
 
-                    }catch (NullPointerException nullPointer){
+                    } catch (NullPointerException nullPointer) {
                         nullPointer.printStackTrace();
                         Toast.makeText(getContext(), "Verifique as informações preenchidas!",
                                 Toast.LENGTH_SHORT).show();

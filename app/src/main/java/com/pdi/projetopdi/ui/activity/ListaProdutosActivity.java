@@ -8,13 +8,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.pdi.projetopdi.R;
 import com.pdi.projetopdi.adapter.ProdutoAdapter;
-import com.pdi.projetopdi.model.Produto;
 import com.pdi.projetopdi.logic.ListaProdutosLogic;
+import com.pdi.projetopdi.model.Produto;
 
 import java.util.ArrayList;
 

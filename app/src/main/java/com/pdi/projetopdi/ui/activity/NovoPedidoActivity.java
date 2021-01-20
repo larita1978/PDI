@@ -196,7 +196,7 @@ public class NovoPedidoActivity extends AppCompatActivity {
     public void exibirValoresResumo(BigDecimal totalQuantidade, BigDecimal totalItens, BigDecimal valorTotalPedido) {
         totalProdutosTextView.setText(String.valueOf(totalQuantidade));
         totalItensTextView.setText(String.valueOf(totalItens));
-        valorTotalTextView.setText(String.valueOf(valorTotalPedido.setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100))));
+        valorTotalTextView.setText(String.valueOf(valorTotalPedido.setScale(2, RoundingMode.HALF_EVEN)));
     }
 
     private void clicouBotaoGravarPedido() {
