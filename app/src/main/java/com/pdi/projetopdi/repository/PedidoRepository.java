@@ -65,7 +65,7 @@ public class PedidoRepository {
     public int inserirPedido(Pedido pedido) throws ParseException {
 
         ContentValues dados = new ContentValues();
-//        dados.put(IDPEDIDO, pedido.getIdPedido());
+
         dados.put(IDUSUARIO,pedido.getIdUsuario());
         dados.put(CLIENTE,pedido.getCliente());
         dados.put(ENDERECO,pedido.getEndereco());
