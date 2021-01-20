@@ -122,25 +122,8 @@ public class PedidoRepository {
             return ped;
         }
 
-
-//        public void inserirPrimeirosDadosPedido() throws ParseException {
-//            ArrayList<Pedido> pedidos;
-//            pedidos = buscaPedidos();
-////            SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.US);
-////            Date teste = format.parse(String.valueOf("22/07/2020 12:00:00"));
-//            long date1 = System.currentTimeMillis();
-//            FormatDate format = new FormatDate();
-//            format.setDataLong(date1);
-//            String data2 = format.getDataLong() ;
-//            if(pedidos.isEmpty()) {
-//                inserirPedido(new Pedido(1,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-//                inserirPedido(new Pedido(2,"Casa da Moda", "Rua Brasilia",data2,new BigDecimal("10"),new BigDecimal("5"),new BigDecimal("250.00")));
-//
-//            }
-//        }
-
         @SuppressLint("Recycle")
-        public void updatePedido(Pedido pedido) throws ParseException {
+        public void atualizaPedido(Pedido pedido) throws ParseException {
             ContentValues dados = new ContentValues();
 
             dados.put(IDPEDIDO, pedido.getIdPedido());

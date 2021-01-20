@@ -56,13 +56,19 @@ public class EditarProdutoActivity extends AppCompatActivity {
         salvarProdutoBotao.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (idProdutoSelecionado != null) {
-                    editarProdutoLogic.salvarPedidoEditado(
-                            produtoPrecoEditText.getText().toString(),
-                            produtoDescricaoEditText.getText().toString());
+                String precoDigitado = produtoPrecoEditText.getText().toString();
+                String descricaoDigitada = produtoDescricaoEditText.getText().toString();
+
+                if(precoDigitado == null || descricaoDigitada == null ) {
+                    if (idProdutoSelecionado != null) {
+                        editarProdutoLogic.salvarPedidoEditado(precoDigitado, descricaoDigitada);
+                    } else {
+                        editarProdutoLogic.salvarNovoProduto(precoDigitado,descricaoDigitada);
+                    }
                 }else{
-                    editarProdutoLogic.salvarNovoProduto(produtoPrecoEditText.getText().toString(),
-                            produtoDescricaoEditText.getText().toString());
+                    Toast.makeText(EditarProdutoActivity.this,
+                            "As informações não podem ficar vazias!",
+                            Toast.LENGTH_SHORT).show();
                 }
 
                 Toast.makeText(EditarProdutoActivity.this, "Poduto salvo!",

@@ -28,11 +28,12 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
     @NonNull
     @Override
     public ProdutoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.adapter_lista_produtos, parent,false);
-        ProdutoViewHolder viewHolder = new ProdutoViewHolder(view);
-        return viewHolder;
+        View view = LayoutInflater.from(context).inflate(R.layout.adapter_lista_produtos,
+                parent,false);
+
+        return new ProdutoViewHolder(view);
     }
-    //aqui preenche os dados do layout
+
     @Override
     public void onBindViewHolder(@NonNull ProdutoViewHolder holder, final int position) {
         final Produto produto = itens.get(position);
@@ -43,7 +44,7 @@ public class ProdutoAdapter extends RecyclerView.Adapter<ProdutoViewHolder> {
             @Override
             public void onClick(View v) {
                 Intent it = new Intent(context, EditarProdutoActivity.class);
-                it.putExtra("id",produto.getIdproduto());  // verificar para passar somente o id mais fácil (pesquisar)
+                it.putExtra("id",produto.getIdproduto());
                 context.startActivity(it);
             }
         });

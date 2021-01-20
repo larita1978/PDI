@@ -39,6 +39,18 @@ public class Pedido {
         this.valorTotal = valorTotal;
     }
 
+    public Pedido(int idPedido,int idUsuario, String cliente, String endereco,String dataPedido,
+                  BigDecimal totalItens,BigDecimal totalProdutos, BigDecimal valorTotal) {
+        this.idPedido = idPedido;
+        this.idUsuario = idUsuario;
+        this.cliente = cliente;
+        this.endereco = endereco;
+        this.dataPedido = dataPedido;
+        this.totalItens = totalItens;
+        this.totalProdutos = totalProdutos;
+        this.valorTotal = valorTotal;
+    }
+
     public int getIdPedido() {
         return idPedido;
     }

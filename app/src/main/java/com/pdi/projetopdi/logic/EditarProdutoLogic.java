@@ -11,6 +11,9 @@ public class EditarProdutoLogic {
     private ProdutoRepository produtoRepository;
     private Produto produto;
 
+    private BigDecimal precoProdutoNovo;
+    private String descricaoProdutoNovo;
+
     public EditarProdutoLogic(Context context) {
         this.produtoRepository = ProdutoRepository.getInstance(context);
     }
@@ -21,14 +24,15 @@ public class EditarProdutoLogic {
     }
 
     public void salvarPedidoEditado(String novoPreco, String novaDescricao){
-        BigDecimal novoPrdPrecoD = new BigDecimal(novoPreco);
-        String novoPrdDescricaoD = novaDescricao;
-        produtoRepository.updateProduto(new Produto(Math.toIntExact(produto.getIdproduto()),novoPrdDescricaoD,novoPrdPrecoD));
+        precoProdutoNovo = new BigDecimal(novoPreco);
+        descricaoProdutoNovo = novaDescricao;
+        produtoRepository.updateProduto(new Produto(Math.toIntExact(
+                produto.getIdproduto()), descricaoProdutoNovo,precoProdutoNovo));
     }
 
     public void salvarNovoProduto(String novoPreco, String novaDescricao){
-        BigDecimal novoPrdPrecoD = new BigDecimal(novoPreco);
-        String novoPrdDescricaoD = novaDescricao;
-        produtoRepository.inserirProduto(new Produto(novoPrdDescricaoD,novoPrdPrecoD));
+        precoProdutoNovo = new BigDecimal(novoPreco);
+        descricaoProdutoNovo = novaDescricao;
+        produtoRepository.inserirProduto(new Produto(descricaoProdutoNovo,precoProdutoNovo));
     }
 }

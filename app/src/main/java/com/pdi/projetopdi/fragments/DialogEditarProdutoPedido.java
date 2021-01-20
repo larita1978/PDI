@@ -97,7 +97,6 @@ public class DialogEditarProdutoPedido extends DialogFragment {
             precoOriginalBigDecimal = new BigDecimal(BigInteger.ZERO);
             precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
             descontoBigDecimal = new BigDecimal(BigInteger.ZERO);
-            precoVendaBigDecimal = new BigDecimal(BigInteger.ZERO);
             totalProdutoBigDecimal = new BigDecimal(BigInteger.ZERO);
         }
 
@@ -117,10 +116,13 @@ public class DialogEditarProdutoPedido extends DialogFragment {
         produtoDigitadoEditText.setText(produtoNovo.getDescricao());
         quantidadeBigDecimal = new BigDecimal(itemRecebidoEditar.getQuantidade());
         quantidadeProdutoDigitadoEditText.setText(String.valueOf(quantidadeBigDecimal));
+
         precoVendaBigDecimal = itemRecebidoEditar.getPrecoVenda();
         descontoBigDecimal = itemRecebidoEditar.getValorDesconto();
 
-        //setando valores recebidos
+        precoVendaDigitadoEditText.setText(String.valueOf(itemRecebidoEditar.getPrecoVenda()));
+        descontoProdutoDigitadoEditText.setText(String.valueOf(itemRecebidoEditar.getValorDesconto()));
+
         precoOriginalBancoTextView.setText(String.valueOf(itemRecebidoEditar.getPrecoOriginal()
                 .divide(new BigDecimal(100))));
         totalProdutoBigDecimal = produtoNovo.getPreco().multiply(quantidadeBigDecimal)
@@ -172,7 +174,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
     public void apresentarValores() {
         precoVendaDigitadoEditText.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
         descontoProdutoDigitadoEditText.setText(String.valueOf(dialogLogic.getDescontoBigDecimal().setScale(2, RoundingMode.HALF_EVEN)));
-        totalProdutoTextView.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().multiply(quantidadeBigDecimal).setScale(2, RoundingMode.HALF_EVEN)));
+        totalProdutoTextView.setText(String.valueOf(dialogLogic.getPrecoVendaBigDecimal().multiply(quantidadeBigDecimal).divide(new BigDecimal(100))));
     }
 
     private void clicouBotaoBuscarProduto() {
@@ -184,7 +186,7 @@ public class DialogEditarProdutoPedido extends DialogFragment {
                 if (!(produtoNovo== null)) {
                     produtoDigitadoEditText.setText(String.valueOf(produtoNovo.getDescricao()));
                     precoOriginalBancoTextView.setText(String.valueOf(produtoNovo.getPreco()));
-                    totalProdutoTextView.setText(String.valueOf(produtoNovo.getPreco()));
+                    totalProdutoTextView.setText(String.valueOf(produtoNovo.getPreco().setScale(2, RoundingMode.HALF_EVEN)));
                 } else {
                     Toast.makeText(getContext(), "Produto não encontrado", Toast.LENGTH_SHORT).show();
                 }

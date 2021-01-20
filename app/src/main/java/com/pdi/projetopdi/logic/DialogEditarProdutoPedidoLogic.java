@@ -9,6 +9,7 @@ import com.pdi.projetopdi.repository.PedidoItemRepository;
 import com.pdi.projetopdi.repository.ProdutoRepository;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 
 public class DialogEditarProdutoPedidoLogic {
 
@@ -26,7 +27,6 @@ public class DialogEditarProdutoPedidoLogic {
         this.context = context;
         this.produtoRepository = ProdutoRepository.getInstance(context);
     }
-
     public BigDecimal getPrecoVendaBigDecimal() {
         return precoVendaBigDecimal;
     }
@@ -74,9 +74,8 @@ public class DialogEditarProdutoPedidoLogic {
         setDescontoBigDecimal(descontoBigDecimal);
     }
 
-
     public void buscaProduto(String produtoDigitado){
-        produtoNovo = produtoRepository.buscaProdutoDesc(produtoDigitado);
+        produtoNovo = produtoRepository.buscaProdutoDescricaoAdd(produtoDigitado);
         if(!(produtoNovo == null)) {
             precoOriginalBigDecimal = produtoNovo.getPreco();
             setProdutoNovo(produtoNovo);
@@ -89,8 +88,9 @@ public class DialogEditarProdutoPedidoLogic {
 
         try {
             pedidoItem = new PedidoItem(this.produtoNovo.getIdproduto(),
-                    quantidadeBigDecimal.intValue(), precoOriginalBigDecimal,
-                    precoVendaBigDecimal, descontoBigDecimal);
+                    quantidadeBigDecimal.intValue(), precoOriginalBigDecimal.setScale(2, RoundingMode.HALF_EVEN),
+                    precoVendaBigDecimal.setScale(2, RoundingMode.HALF_EVEN),
+                    descontoBigDecimal.setScale(2, RoundingMode.HALF_EVEN));
         }catch (NullPointerException nullpointer){
             nullpointer.printStackTrace();
             return null;

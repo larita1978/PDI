@@ -105,7 +105,7 @@ public class ProdutoRepository implements Closeable {
         return ListaProdutos;
     }
 
-    public Produto buscaProdutoDesc(String valor){
+    public Produto buscaProdutoDescricaoAdd(String valor){
         String sql = "SELECT * FROM " + PRODUTO + " WHERE " + DESCRICAO + " like '%" + valor +"%';";
         Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 

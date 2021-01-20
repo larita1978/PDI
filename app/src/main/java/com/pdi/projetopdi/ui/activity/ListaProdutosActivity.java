@@ -47,7 +47,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
         recycler = findViewById(R.id.recycler);
         novoProdutoButton = findViewById(R.id.btNovoProduto);
 
-        listaProdutosLogic = new ListaProdutosLogic(this);
+        listaProdutosLogic = new ListaProdutosLogic(this, recycler);
 
         runOnUiThread(new Runnable() {
             @Override
@@ -89,11 +89,7 @@ public class ListaProdutosActivity extends AppCompatActivity {
     public void exibirLista(ArrayList<Produto> produtos){
         try{
             if (!produtos.isEmpty()){
-                adapter = new ProdutoAdapter(ListaProdutosActivity.this, produtos);
-                GridLayoutManager layoutManager = new GridLayoutManager(this,2);
-
-                recycler.setLayoutManager(layoutManager);
-                recycler.setAdapter(adapter);
+                listaProdutosLogic.exibirProdutos(produtos);
             }
         }catch (Exception e){
             Toast.makeText(ListaProdutosActivity.this, "Ocorreu um erro inesperado", Toast.LENGTH_SHORT).show();

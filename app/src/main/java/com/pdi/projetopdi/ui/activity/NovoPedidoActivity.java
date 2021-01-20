@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -24,6 +25,7 @@ import com.pdi.projetopdi.model.Pedido;
 import com.pdi.projetopdi.model.PedidoItem;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.text.ParseException;
 import java.util.ArrayList;
 
@@ -87,7 +89,7 @@ public class NovoPedidoActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onStart() {
+    protected void onStart(){
         super.onStart();
 
         //aqui pega o id do user logado
@@ -106,30 +108,34 @@ public class NovoPedidoActivity extends AppCompatActivity {
         pedidoViewModel = new NovoPedidoLogic(this);
 
         if (!(idPedido == 0)) {
-            Log.i("oi", "veio id");
             pedido = pedidoViewModel.buscaPedido(idPedido);
             listaPedidoItens = pedidoViewModel.buscaItens(idPedido);
 
             try {
-                nomeClienteEditText.setText(pedido.getCliente());
-                enderecoClienteEditText.setText(pedido.getEndereco());
-                dataPedidoTextView.setText(pedido.getDataPedido());
-                totalProdutosTextView.setText(String.valueOf(pedido.getTotalProdutos()));
-                totalItensTextView.setText(String.valueOf(pedido.getTotalItens()));
-                valorTotalTextView.setText(String.valueOf(pedido.getValorTotal()));
+                exibeInformacoesPedido();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
 
-        }else{
+        } else {
+            pedido = new Pedido();
             try {
                 exibeData();
             } catch (ParseException e) {
                 e.printStackTrace();
             }
         }
-        pedido = new Pedido();
 
+    }
+
+    private void exibeInformacoesPedido() throws ParseException {
+        nomeClienteEditText.setText(pedido.getCliente());
+        enderecoClienteEditText.setText(pedido.getEndereco());
+        dataPedidoTextView.setText(pedido.getDataPedido());
+        dataAtual=pedido.getDataPedido();
+        totalProdutosTextView.setText(String.valueOf(pedido.getTotalProdutos()));
+        totalItensTextView.setText(String.valueOf(pedido.getTotalItens()));
+        valorTotalTextView.setText(String.valueOf(pedido.getValorTotal()));
     }
 
     private void exibeData() throws ParseException {
@@ -176,7 +182,7 @@ public class NovoPedidoActivity extends AppCompatActivity {
         addProdutoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                runOnUiThread(new Runnable(){
+                runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
                         new DialogEditarProdutoPedido().show(getSupportFragmentManager(), "Novo Pedido");
@@ -190,7 +196,7 @@ public class NovoPedidoActivity extends AppCompatActivity {
     public void exibirValoresResumo(BigDecimal totalQuantidade, BigDecimal totalItens, BigDecimal valorTotalPedido) {
         totalProdutosTextView.setText(String.valueOf(totalQuantidade));
         totalItensTextView.setText(String.valueOf(totalItens));
-        valorTotalTextView.setText(String.valueOf(valorTotalPedido));
+        valorTotalTextView.setText(String.valueOf(valorTotalPedido.setScale(2, RoundingMode.HALF_EVEN).divide(new BigDecimal(100))));
     }
 
     private void clicouBotaoGravarPedido() {
@@ -198,14 +204,22 @@ public class NovoPedidoActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    String nomeClienteString = String.valueOf(nomeClienteEditText.getText());
-                    String enderecoString = String.valueOf(enderecoClienteEditText.getText());
-                    pedidoViewModel.validaCamposPreenchidos(idUsuarioLogadoLong,
+                    String nomeClienteString = nomeClienteEditText.getText().toString();
+                    String enderecoString = enderecoClienteEditText.getText().toString();
+
+                    boolean verificanull = pedidoViewModel.validaCamposPreenchidos(idUsuarioLogadoLong,
                             nomeClienteString, enderecoString, dataAtual,
                             totalItensTextView.getText().toString(),
                             totalProdutosTextView.getText().toString(),
-                            valorTotalTextView.getText().toString(), listaPedidoItens);
-                    startActivity(new Intent(NovoPedidoActivity.this, ListaPedidosActivity.class));
+                            valorTotalTextView.getText().toString(), listaPedidoItens,idPedido);
+
+                    if (!verificanull) {
+                        Toast.makeText(NovoPedidoActivity.this,
+                                "Verifique se as informações inseridas", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        startActivity(new Intent(NovoPedidoActivity.this, ListaPedidosActivity.class));
+                    }
 
 
                 } catch (ParseException e) {
