@@ -39,7 +39,7 @@ public class LoginLogic {
     }
 
     public void validacaoDigitadoNull(){
-        if(!(loginDigitado.length()==0) || !(senhaDigitada.length()==0)){
+        if((loginDigitado.length()!=0) || (senhaDigitada.length()!=0)){
             buscaUsuario();
         }
 

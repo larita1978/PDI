@@ -77,7 +77,7 @@ public class UsuarioRepository {
         String sql = "SELECT * FROM USUARIO LIMIT 1";
         Cursor c = db.getReadableDatabase().rawQuery(sql, null);
 
-//        c.moveToFirst();
+        c.moveToFirst();
         while(c.moveToNext()){
             user.setIdUsuario(c.getLong(c.getColumnIndex(IDUSUARIO)));
             user.setNome(c.getString(c.getColumnIndex(NOME)));
